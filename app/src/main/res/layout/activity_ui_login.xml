@@ -15,7 +15,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:background="#F5F7FA"
-    tools:context=".ui.UI_Login">
+    tools:context=".View.UI_Login">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

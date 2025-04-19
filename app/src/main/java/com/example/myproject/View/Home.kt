@@ -1,7 +1,5 @@
-package com.example.myproject.ui
+package com.example.myproject.View
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,11 +22,11 @@ class Home : AppCompatActivity() {
     }
 
     private fun events() {
-        binding.btnBack.setOnClickListener {
-            val intent = Intent()
-            intent.putExtra("reply", intent.getStringExtra("senInfo"))
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
+//        binding.btnBack.setOnClickListener {
+//            val intent = Intent()
+//            intent.putExtra("reply", intent.getStringExtra("senInfo"))
+//            setResult(Activity.RESULT_OK, intent)
+//            finish()
+//        }
     }
 }
