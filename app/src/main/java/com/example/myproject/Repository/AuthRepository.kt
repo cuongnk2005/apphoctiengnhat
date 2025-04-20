@@ -8,24 +8,31 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AuthRepository {
     private val mAuth = FirebaseAuth.getInstance()
+
     fun login(strEmail: String, strMk: String): LiveData<String> {
-        var result = MutableLiveData<String>()
+        val result = MutableLiveData<String>()
+        Log.d("testttt", "Đã gọi hàm repository")
 
-        mAuth.signInWithEmailAndPassword(strEmail, strMk).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val user = mAuth.currentUser
-                result.value = "Đăng nhập thành công: ${user?.email}"
-            } else {
-                val exception = task.exception
-                if (exception is FirebaseNetworkException) {
-                    result.value = "Lỗi mạng: Vui lòng kiểm tra kết nối"
+        mAuth.signInWithEmailAndPassword(strEmail, strMk)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = mAuth.currentUser
+                    result.postValue("Đăng nhập thành công: ${user?.email}")
                 } else {
-                    result.value = "Đăng nhập thất bại: ${exception?.message}"
-                    Log.e("DEBUGgg", "${exception?.message}")
+                    val exception = task.exception
+                    if (exception is FirebaseNetworkException) {
+                        result.postValue("Lỗi mạng: Vui lòng kiểm tra kết nối")
+                    } else {
+                        result.postValue("Đăng nhập thất bại: ${exception?.message}")
+                        Log.e("DEBUGgg", "${exception?.message}")
+                    }
                 }
-
             }
-        }
+            .addOnFailureListener { exception ->
+                result.postValue("Lỗi đăng nhập: ${exception.message}")
+                Log.e("DEBUGgg", "Thất bại hoàn toàn: ${exception.message}")
+            }
+
         return result
     }
 }
