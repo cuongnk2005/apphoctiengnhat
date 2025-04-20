@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -39,8 +40,7 @@ class UI_Login : AppCompatActivity() {
             val pass = binding.txtPassword.text.toString().trim()
 
             checkValid(username, pass)
-            attemptLogin(username,pass)
-            hideKeyboad()
+//            hideKeyboad()
 
         }
 
@@ -67,13 +67,23 @@ class UI_Login : AppCompatActivity() {
                 binding.txtPassword.requestFocus()
             }
             else -> {
+                Log.d("ttttt", "có chạy hàm này")
                 attemptLogin(username, password)
             }
         }
     }
 
     private fun attemptLogin(username: String, password: String) {
-        authModel.login(username, password)
+        authModel.login(username, password).observe(this) { messenger ->
+            if (messenger == null || messenger.isEmpty()) {
+                showErrorDialog(this, "Không nhận được phản hồi.")
+            } else if (messenger.contains("lỗi", ignoreCase = true)) {
+                showErrorDialog(this, messenger)
+            } else {
+                showSusscessDialog(this, messenger)
+
+            }
+        }
     }
 
 
@@ -96,6 +106,18 @@ class UI_Login : AppCompatActivity() {
         builder.setMessage(errorMessage)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+    private fun showSusscessDialog(context: Context, errorMessage: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Thông Báo")
+        builder.setMessage(errorMessage)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+            val intent = Intent(this, Home::class.java)
+            startActivity(intent)
         }
         val dialog = builder.create()
         dialog.show()
