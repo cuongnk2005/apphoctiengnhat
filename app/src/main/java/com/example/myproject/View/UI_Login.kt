@@ -30,10 +30,6 @@ class UI_Login : AppCompatActivity() {
 
     private fun events() {
 
-        binding.imgFb.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"))
-            startActivity(intent)
-        }
 
         binding.btnLogin.setOnClickListener {
             val username = binding.txtUser.text.toString().trim()
@@ -44,11 +40,8 @@ class UI_Login : AppCompatActivity() {
 
         }
 
-        binding.txtForgotPass.setOnClickListener {
 
-        }
-
-        binding.signUp.setOnClickListener{
+        binding.btnRegister.setOnClickListener{
             val intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
