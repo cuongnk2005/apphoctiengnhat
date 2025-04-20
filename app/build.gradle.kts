@@ -46,6 +46,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.facebook.android:facebook-login:16.0.1")
 
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
+
+    implementation ("com.google.android.material:material:1.8.0")
+
 
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
