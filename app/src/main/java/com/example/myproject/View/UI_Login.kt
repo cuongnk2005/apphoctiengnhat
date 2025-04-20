@@ -6,11 +6,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import com.example.myproject.ViewModel.LoginViewModel
 import com.example.myproject.databinding.ActivityUiLoginBinding
 
 class UI_Login : AppCompatActivity() {
+    private val authModel: LoginViewModel by viewModels()
     lateinit var binding: ActivityUiLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,18 +73,7 @@ class UI_Login : AppCompatActivity() {
     }
 
     private fun attemptLogin(username: String, password: String) {
-        val user = "kiet"
-        val pass = "123"
-        if (username==user && password == pass) {
-            Intent(this, Home::class.java).also {
-                startActivity(it)
-            }
-            showToast("Đăng nhập thành công")
-            hideKeyboad()
-        } else {
-            showErrorDialog(this, "Thông tin username hoặc mật khẩu không chính xác. Vui lòng nhập lại!")
-            binding.txtUser.requestFocus()
-        }
+        authModel.login(username, password)
     }
 
 
