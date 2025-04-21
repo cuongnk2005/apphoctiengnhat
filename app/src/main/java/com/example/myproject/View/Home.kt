@@ -22,6 +22,9 @@ class Home : AppCompatActivity() {
     }
 
     private fun events() {
+//        binding.bottomNav.setOnItemSelectedListener {
+//
+//        }
 //        binding.btnBack.setOnClickListener {
 //            val intent = Intent()
 //            intent.putExtra("reply", intent.getStringExtra("senInfo"))
