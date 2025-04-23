@@ -139,7 +139,7 @@
                 android:id="@+id/from_language"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tiếng Nhật"
+                android:text="Tiếng Việt"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -165,7 +165,7 @@
                 android:id="@+id/to_language"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tiếng Việt"
+                android:text="Tiếng Nhật"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -306,7 +306,7 @@
                     android:backgroundTint="@color/primaryColor"
                     android:text="Thêm vào danh sách học"
                     android:textColor="@color/white" />
-
+                
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>
@@ -349,5 +349,6 @@
             android:textAlignment="center"
             android:textColor="@color/secondaryTextColor" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

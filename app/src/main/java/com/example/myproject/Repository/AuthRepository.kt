@@ -35,4 +35,30 @@ class AuthRepository {
 
         return result
     }
-}
+    fun register(email:String, mk:String): LiveData<String>{
+        val result = MutableLiveData<String>()
+        mAuth.createUserWithEmailAndPassword(email,mk).addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                val user = mAuth.currentUser
+                user?.sendEmailVerification()?.addOnCompleteListener{
+                    veritask ->
+                    if (veritask.isSuccessful) {
+                        result.postValue( "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.")
+                    } else {
+                        result.postValue("Lỗi khi gửi email xác nhận")
+                    }
+                }
+            }else {
+                val exception = task.exception
+                result.postValue("Đăng nhập thất bại: ${exception?.message}")
+                Log.e("DEBUGgg", "${exception?.message}")
+            }
+
+    }
+    .addOnFailureListener { exception ->
+        result.postValue("Lỗi đăng nhập: ${exception.message}")
+        Log.e("DEBUGgg", "Thất bại hoàn toàn: ${exception.message}")
+    }
+        return result
+        }
+    }
