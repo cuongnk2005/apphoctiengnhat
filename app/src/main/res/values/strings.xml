@@ -11,6 +11,8 @@
     <string name="facebook_login">Facebook Login</string>
     <string name="google_login">Google Login</string>
     <string name="dont_have_account">Don\'t have an account? Sign Up</string>
-    <string name="my_app">MochiMochi</string>
+        <string name="my_app">Duo Nihongo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

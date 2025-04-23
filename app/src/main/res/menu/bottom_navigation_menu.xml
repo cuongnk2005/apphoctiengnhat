@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_search"
         android:title="Search"
         android:icon="@drawable/ic_search" />
 
@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_learn" />
 
     <item
-        android:id="@+id/nav_review"
+        android:id="@+id/nav_home"
         android:title="Ôn tập"
         android:icon="@drawable/ic_leaderboard" />
 
