@@ -109,7 +109,7 @@ class UI_Login : AppCompatActivity() {
         builder.setMessage(errorMessage)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
-            val intent = Intent(this, Home::class.java)
+            val intent = Intent(this, HomeFragment::class.java)
             startActivity(intent)
         }
         val dialog = builder.create()

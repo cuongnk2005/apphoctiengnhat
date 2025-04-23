@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.myproject.R
 
 class Intro : AppCompatActivity() {
-    private val intro: Long = 3000
+    private val intro: Long = 2000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
