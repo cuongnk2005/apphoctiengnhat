@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         // Mặc định là Trang chủ
         loadFragment(HomeFragment())
-
+        binding.bottomNav.selectedItemId = R.id.nav_home
         binding.bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.nav_home -> loadFragment(HomeFragment())
