@@ -19,16 +19,7 @@
             android:name=".View.UI_Login"
             android:exported="false" />
         <activity
-            android:name=".View.LearnVocabulary"
-            android:exported="false" />
-        <activity
-            android:name=".View.DictionarySearch"
-            android:exported="false" />
-        <activity
             android:name=".View.Register"
-            android:exported="false" />
-        <activity
-            android:name=".View.Home"
             android:exported="false" />
         <activity
             android:name=".View.MainActivity"
