@@ -27,4 +27,8 @@ class LearnVocabulary_Adapter:RecyclerView.Adapter<LearnVocabulary_Adapter.LearV
     override fun getItemCount(): Int {
         return listTopic.size
     }
+    fun updateData(newTopics: ArrayList<Topic>) {
+        listTopic = newTopics
+        notifyDataSetChanged()
+    }
 }
