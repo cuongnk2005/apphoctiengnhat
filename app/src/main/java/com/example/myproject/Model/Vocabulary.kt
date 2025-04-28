@@ -8,4 +8,4 @@ class Vocabulary(
                  val viDu: String?,
                  val phienAm: String?,
                  val daThuoc: Boolean = false ) {
-}
+} 

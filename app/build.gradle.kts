@@ -40,9 +40,27 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/**",
+                "google/protobuf/any.proto",
+                "google/protobuf/descriptor.proto",
+                "google/protobuf/duration.proto",
+                "google/protobuf/empty.proto",
+                "google/protobuf/field_mask.proto",
+                "google/protobuf/struct.proto",
+                "google/protobuf/timestamp.proto",
+                "google/protobuf/wrappers.proto"
+            )
+        }
+    }
 }
 
 dependencies {
+<<<<<<< HEAD
+=======
 //    implementation("mysql:mysql-connector-java:8.0.33")
 //    implementation("com.google.android.gms:play-services-auth:20.7.0")
 //    implementation("com.facebook.android:facebook-login:16.0.1")
@@ -80,12 +98,17 @@ dependencies {
 //    androidTestImplementation(libs.androidx.espresso.core)
 
 
+>>>>>>> ebd1ef533122542a6a98895a2d080abf4dd71a3d
     // Firebase (quản lý bằng BoM)
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-messaging")
+<<<<<<< HEAD
+    implementation("com.google.firebase:firebase-database")
+=======
     implementation("com.google.firebase:firebase-firestore-ktx")
+>>>>>>> ebd1ef533122542a6a98895a2d080abf4dd71a3d
     implementation(libs.firebase.storage)
 
     // Room
@@ -121,5 +144,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
 }
