@@ -1,5 +1,6 @@
 package com.example.myproject.View
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
+
+
+        // set Action cho image, để chuyển sang profile
+        binding.avatar.setOnClickListener {
+            val intent = Intent(requireContext(), Profile::class.java)
+            startActivity(intent)
+        }
     }
     private fun setupRecyclerView() {
         adaterLervocabulary = LearnVocabulary_Adapter()
