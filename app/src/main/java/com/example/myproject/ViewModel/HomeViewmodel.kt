@@ -4,26 +4,27 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myproject.Model.Topic
-import com.example.myproject.Model.Vocabulary
-import com.example.myproject.Repository.AuthRepository
+import com.example.myproject.Repository.TopicRepository
+import kotlinx.coroutines.launch
 
 class HomeViewmodel: ViewModel() {
-    private var listtvs : ArrayList<Vocabulary> = ArrayList()
-    private  val _studentList = MutableLiveData<List<Topic>>().apply {
-        value = listOf(
-            Topic("1", "Nguyen Van A",listtvs),
-            Topic("2", "Tran Thi B",listtvs),
-            Topic("3", "Le Thi C",listtvs),
-            Topic("1", "Nguyen Van A",listtvs),
-            Topic("2", "Tran Thi B",listtvs),
-            Topic("1", "Nguyen Van A",listtvs),
-            Topic("2", "Tran Thi B",listtvs),
-            Topic("3", "Le Thi C",listtvs),
-            Topic("1", "Nguyen Van A",listtvs),
-            Topic("2", "Tran Thi B",listtvs)
+    private val topicRepository = TopicRepository()
+    private val _topics =  MutableLiveData<List<Topic>>()
+    val topics: LiveData<List<Topic>> get() = _topics
 
-        ) // Hoặc có thể là một danh sách sinh viên mặc định
+    fun fetchTopics(){
+        viewModelScope.launch {
+try {
+    val listTopics = topicRepository.getTopics()
+    _topics.postValue(listTopics)
+}catch (e: Exception){
+    throw e
+    Log.e("HomeViewmodel", "loi ${e}")
+}
+        }
     }
-    val studentList: LiveData<List<Topic>> = _studentList
+
+
 }
