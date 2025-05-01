@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        homeviewModel.fetchTopics()
         observeViewModel()
 
 
@@ -50,11 +51,12 @@ class HomeFragment : Fragment() {
         binding.lessonsRecyclerView.adapter = adaterLervocabulary
     }
     private fun observeViewModel() {
-        homeviewModel.studentList.observe(viewLifecycleOwner, Observer { topic ->
-            topic?.let {
-                adaterLervocabulary.updateData(ArrayList(it)) // Cập nhật dữ liệu cho adapter
+        homeviewModel.topics.observe(viewLifecycleOwner) { topic ->
+            topic?.let{
+                adaterLervocabulary.updateData(topic)
             }
-        })
+
+        }
     }
 
     override fun onDestroyView() {

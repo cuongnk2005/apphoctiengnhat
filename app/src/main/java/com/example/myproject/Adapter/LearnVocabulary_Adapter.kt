@@ -9,7 +9,7 @@ import com.example.myproject.Model.Topic
 import com.example.myproject.R
 
 class LearnVocabulary_Adapter:RecyclerView.Adapter<LearnVocabulary_Adapter.LearVocabularyViewHolder>(){
-    private var listTopic: ArrayList<Topic> = ArrayList();
+    private var listTopic: List<Topic> = ArrayList();
     inner class LearVocabularyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtlessontitle: TextView = itemView.findViewById(R.id.lesson_title)
         val txtDescipition: TextView = itemView.findViewById(R.id.lesson_description)
@@ -27,7 +27,7 @@ class LearnVocabulary_Adapter:RecyclerView.Adapter<LearnVocabulary_Adapter.LearV
     override fun getItemCount(): Int {
         return listTopic.size
     }
-    fun updateData(newTopics: ArrayList<Topic>) {
+    fun updateData(newTopics: List<Topic>) {
         listTopic = newTopics
         notifyDataSetChanged()
     }
