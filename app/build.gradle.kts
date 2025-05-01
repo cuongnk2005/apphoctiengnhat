@@ -59,23 +59,14 @@ android {
 }
 
 dependencies {
-<<<<<<< HEAD
 
-=======
->>>>>>> 16f9fbdd68a56da56c7a11eb3f329285b9738bf3
     // Firebase (quản lý bằng BoM)
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-database")
-<<<<<<< HEAD
 
-
-
-=======
-    implementation("com.google.firebase:firebase-firestore-ktx")
->>>>>>> 16f9fbdd68a56da56c7a11eb3f329285b9738bf3
     implementation(libs.firebase.storage)
 
     // Room
