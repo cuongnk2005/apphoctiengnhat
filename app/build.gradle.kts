@@ -59,21 +59,29 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 16f9fbdd68a56da56c7a11eb3f329285b9738bf3
     // Firebase (quản lý bằng BoM)
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-database")
+<<<<<<< HEAD
 
 
 
+=======
+    implementation("com.google.firebase:firebase-firestore-ktx")
+>>>>>>> 16f9fbdd68a56da56c7a11eb3f329285b9738bf3
     implementation(libs.firebase.storage)
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.recyclerview)
     kapt("androidx.room:room-compiler:2.6.1")
 
     // AndroidX
@@ -96,7 +104,6 @@ dependencies {
     // Other libs
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
-    implementation(libs.mysql.connector.java)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     // Test
