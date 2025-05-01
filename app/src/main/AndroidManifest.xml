@@ -16,7 +16,7 @@
             android:name=".View.Profile"
             android:exported="false" />
         <activity
-            android:name=".View.Intro"
+            android:name=".View.MainActivity"
             android:exported="false" />
         <activity
             android:name=".View.UI_Login"
@@ -25,7 +25,7 @@
             android:name=".View.Register"
             android:exported="false" />
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.Intro"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

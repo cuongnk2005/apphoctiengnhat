@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myproject.R
 import com.example.myproject.databinding.ActivityProfileBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class Profile : AppCompatActivity() {
     lateinit var binding: ActivityProfileBinding
@@ -36,13 +37,18 @@ class Profile : AppCompatActivity() {
         events()
     }
 
-
-
     private fun events() {
         // back lại trang home
         binding.backButton.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            AlertDialog.Builder(this)
+                .setTitle("Xác nhận lưu")
+                .setPositiveButton("Xác nhận") { dialog, _ ->
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Hủy", null)
+                .show()
+
         }
 
         // Xử lý sự kiện thay đổi ảnh đại diện
@@ -54,6 +60,7 @@ class Profile : AppCompatActivity() {
         binding.changeProfileImage.setOnClickListener {
             imagePickerLauncher.launch("image/*") // Mở thư viện chọn ảnh
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -64,15 +71,150 @@ class Profile : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                Toast.makeText(this, "Cài đặt", Toast.LENGTH_SHORT).show()
+            R.id.action_changeName -> {
+                showChangeNameDialog()
                 true
             }
-            R.id.action_about -> {
-                Toast.makeText(this, "Giới thiệu", Toast.LENGTH_SHORT).show()
+            R.id.action_changePassword -> {
+                showChangePasswordDialog()
+                true
+            }
+            R.id.action_deleteAccount -> {
+                showDeleteAccountDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    // Hiển thị dialog cho đổi tên
+    private fun showChangeNameDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_change_name, null)
+        val nameEditText = dialogView.findViewById<TextInputEditText>(R.id.etNewName)
+
+        AlertDialog.Builder(this)
+            .setTitle("Đổi tên người dùng")
+            .setView(dialogView)
+            .setPositiveButton("Xác nhận") { dialog, _ ->
+                val newName = nameEditText.text.toString().trim()
+                if (newName.isNotEmpty()) {
+                    // Gọi hàm thay đổi tên
+                    changeName(newName)
+                } else {
+                    Toast.makeText(this, "Tên không được để trống", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
+    }
+
+    // Hàm xử lý đổi tên
+    private fun changeName(name: String) {
+        // Ở đây bạn sẽ thực hiện gọi API hoặc cập nhật dữ liệu vào SharedPreferences hoặc bất kỳ cơ sở dữ liệu nào
+        // Ví dụ:
+        val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString("user_name", name).apply()
+
+        // Cập nhật UI nếu cần
+        // binding.tvUserName.text = name
+
+        Toast.makeText(this, "Đã đổi tên thành công", Toast.LENGTH_SHORT).show()
+    }
+
+    // Hiển thị dialog cho đổi mật khẩu
+    private fun showChangePasswordDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)
+        val currentPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.etCurrentPassword)
+        val newPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.etNewPassword)
+        val confirmPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.etConfirmPassword)
+
+        AlertDialog.Builder(this)
+            .setTitle("Đổi mật khẩu")
+            .setView(dialogView)
+            .setPositiveButton("Lưu") { dialog, _ ->
+                val currentPassword = currentPasswordEditText.text.toString()
+                val newPassword = newPasswordEditText.text.toString()
+                val confirmPassword = confirmPasswordEditText.text.toString()
+
+                when {
+                    currentPassword.isEmpty() -> {
+                        Toast.makeText(this, "Vui lòng nhập mật khẩu hiện tại", Toast.LENGTH_SHORT).show()
+                    }
+                    newPassword.isEmpty() -> {
+                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới", Toast.LENGTH_SHORT).show()
+                    }
+                    newPassword != confirmPassword -> {
+                        Toast.makeText(this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        // Gọi hàm thay đổi mật khẩu
+                        changePassword(currentPassword, newPassword)
+                    }
+                }
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
+    }
+
+    // Hàm xử lý đổi mật khẩu
+    private fun changePassword(currentPassword: String, newPassword: String) {
+        // Kiểm tra mật khẩu hiện tại có đúng không
+        // Nếu đúng thì cập nhật mật khẩu mới
+
+        // Đây là giả lập việc kiểm tra mật khẩu, trong thực tế bạn cần kiểm tra với API hoặc dữ liệu lưu trữ
+        val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        val savedPassword = sharedPreferences.getString("password", "")
+
+        if (currentPassword == savedPassword) {
+            // Cập nhật mật khẩu mới
+            sharedPreferences.edit().putString("password", newPassword).apply()
+            Toast.makeText(this, "Đã đổi mật khẩu thành công", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Mật khẩu hiện tại không đúng", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Hiển thị dialog xác nhận xóa tài khoản
+    private fun showDeleteAccountDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_account, null)
+        val passwordEditText = dialogView.findViewById<TextInputEditText>(R.id.etPasswordConfirm)
+
+        AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton("Xóa tài khoản") { dialog, _ ->
+                val password = passwordEditText.text.toString()
+                if (password.isEmpty()) {
+                    Toast.makeText(this, "Vui lòng nhập mật khẩu để xác nhận", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Gọi hàm xóa tài khoản
+                    deleteAccount(password)
+                }
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
+    }
+
+    // Hàm xử lý xóa tài khoản
+    private fun deleteAccount(password: String) {
+        // Kiểm tra mật khẩu có đúng không
+        val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        val savedPassword = sharedPreferences.getString("password", "")
+
+        if (password == savedPassword) {
+            // Thực hiện xóa tài khoản
+            // Xóa dữ liệu người dùng khỏi SharedPreferences hoặc gọi API xóa tài khoản
+            sharedPreferences.edit().clear().apply()
+
+            // Hiển thị thông báo và chuyển người dùng về màn hình đăng nhập
+            Toast.makeText(this, "Tài khoản đã được xóa", Toast.LENGTH_SHORT).show()
+
+            // Chuyển đến màn hình đăng nhập và xóa stack hoạt động để người dùng không thể quay lại
+            val intent = Intent(this, UI_Login::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(this, "Mật khẩu không đúng, không thể xóa tài khoản", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -149,7 +149,6 @@
                 android:hint="Nhập tên của bạn"
                 android:inputType="textPersonName"
                 android:padding="16dp"
-                android:text="Nguyễn Gia Kiệt"
                 android:editable="false"
                 android:focusable="false"
                 android:cursorVisible="false"
@@ -177,38 +176,10 @@
                 android:hint="Nhập tên đăng nhập"
                 android:inputType="text"
                 android:padding="16dp"
-                android:text="NguynGiaKi223113"
                 android:editable="false"
                 android:focusable="false"
                 android:cursorVisible="false"
                 app:layout_constraintTop_toBottomOf="@id/usernameLabel" />
-
-            <!-- Mật khẩu -->
-            <TextView
-                android:id="@+id/passwordLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Mật khẩu"
-                android:textStyle="bold"
-                android:textColor="#757575"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/usernameEditText" />
-
-            <EditText
-                android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rounded_edittext_background"
-                android:hint="Nhập mật khẩu"
-                android:inputType="textPassword"
-                android:padding="16dp"
-                android:editable="false"
-                android:focusable="false"
-                android:cursorVisible="false"
-                app:layout_constraintTop_toBottomOf="@id/passwordLabel" />
 
             <!-- Email -->
             <TextView
@@ -221,7 +192,7 @@
                 android:textColor="#757575"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+                app:layout_constraintTop_toBottomOf="@id/usernameEditText" />
 
             <EditText
                 android:id="@+id/emailEditText"
@@ -232,7 +203,6 @@
                 android:hint="Nhập email"
                 android:inputType="textEmailAddress"
                 android:padding="16dp"
-                android:text="kietnguyengia20005@gmail.com"
                 android:editable="false"
                 android:focusable="false"
                 android:cursorVisible="false"
