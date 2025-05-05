@@ -6,13 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myproject.Model.Topic
+import com.example.myproject.Model.User
+import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.Repository.TopicRepository
 import kotlinx.coroutines.launch
+import okhttp3.Callback
 
 class HomeViewmodel: ViewModel() {
     private val topicRepository = TopicRepository()
     private val _topics =  MutableLiveData<List<Topic>>()
     val topics: LiveData<List<Topic>> get() = _topics
+    private val authReporitory = AuthRepository()
 
     fun fetchTopics(){
         viewModelScope.launch {
@@ -24,6 +28,9 @@ try {
     Log.e("HomeViewmodel", "loi ${e}")
 }
         }
+    }
+    fun getUser(callback: (User?) -> Unit){
+        authReporitory.getUserByID(callback)
     }
 
 

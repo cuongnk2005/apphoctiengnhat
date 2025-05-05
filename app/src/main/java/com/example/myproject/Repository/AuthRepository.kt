@@ -8,7 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.myproject.Model.User
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import okhttp3.Callback
+import okhttp3.EventListener
 
 
 class AuthRepository {
@@ -23,7 +28,12 @@ class AuthRepository {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
-                    result.postValue("Đăng nhập thành công: ${user?.email}")
+                    if(user!= null && user.isEmailVerified){
+                        result.postValue("Đăng nhập thành công: ${user?.email}")
+                    } else{
+                        result.postValue("vui lòng xác thực email")
+                    }
+
                 } else {
                     val exception = task.exception
                     if (exception is FirebaseNetworkException) {
@@ -81,7 +91,25 @@ class AuthRepository {
                 Log.e("errorForPushUser", "loi ${error}")
             }
     }
+     fun getUserByID(callback: (User?) -> Unit){
+        val userID = mAuth.currentUser?.uid
+        val userRef = usersRef.child("users").child(userID.toString())
+        var result =  User()
+        userRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                    callback(user)
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("errorForGetUser", "loi ${error}")
+            }
+        }
+        )
+
+
+
+}
 }
 
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myproject.Adapter.LearnVocabulary_Adapter
+import com.example.myproject.Model.User
 import com.example.myproject.R
 import com.example.myproject.ViewModel.HomeViewmodel
 import com.example.myproject.databinding.FragmentHomeBinding
@@ -41,8 +42,17 @@ class HomeFragment : Fragment() {
 
         // set Action cho image, để chuyển sang profile
         binding.avatar.setOnClickListener {
-            val intent = Intent(requireContext(), Profile::class.java)
-            startActivity(intent)
+
+            fun getUser(user: User?) {
+                if (user!= null){
+                   var userForProfile:User = user
+                    val intent = Intent(requireContext(), Profile::class.java)
+                    intent.putExtra("user121",userForProfile)
+                    startActivity(intent)
+                }
+
+            }
+
         }
     }
     private fun setupRecyclerView() {

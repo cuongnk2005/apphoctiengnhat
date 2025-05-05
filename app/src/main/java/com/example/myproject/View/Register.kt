@@ -30,6 +30,10 @@ class Register : AppCompatActivity() {
             var confirmPassword = binding.txtConfirmPassword.text.toString()
             checkValid(gmail,password,confirmPassword)
         }
+        binding.btnLogin.setOnClickListener{
+            var intent = Intent(this,UI_Login::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun checkValid(username: String, password:String, confirmPassword: String) {

@@ -17,20 +17,17 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.myproject.Model.CloudinaryHelper
-import com.example.myproject.Model.ImageUploader
+import com.example.myproject.Model.User
 import com.example.myproject.R
 import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.databinding.ActivityProfileBinding
 import com.google.android.material.textfield.TextInputEditText
-import java.io.File
-import java.io.FileOutputStream
-import com.imagekit.android.ImageKit
 
 class Profile : AppCompatActivity() {
     lateinit var binding: ActivityProfileBinding
     private lateinit var uriImage: Uri
     private val authRepository = AuthRepository()
-    private val imageUploader = ImageUploader()
+//    private val imageUploader = ImageUploader()
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -51,6 +48,14 @@ class Profile : AppCompatActivity() {
         events()
     }
 
+    private fun writeInformation(){
+     val user = intent.getSerializableExtra("user121") as? User
+        user?.let {
+            binding.nameEditText.setText(it.username)
+            binding.emailEditText.setText(it.gmail)
+        }
+
+    }
     private fun events() {
         // back lại trang home
         binding.backButton.setOnClickListener{
@@ -65,6 +70,7 @@ class Profile : AppCompatActivity() {
                 .show()
 
         }
+
 
         // Xử lý sự kiện thay đổi ảnh đại diện
         binding.profileImage.setOnClickListener {

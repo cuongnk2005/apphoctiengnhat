@@ -70,7 +70,10 @@ class UI_Login : AppCompatActivity() {
         authModel.login(username, password).observe(this) { messenger ->
             if (messenger == null || messenger.isEmpty()) {
                 showErrorDialog(this, "Không nhận được phản hồi.")
-            } else if (messenger.contains("lỗi", ignoreCase = true)) {
+            }else if(messenger == "vui lòng xác thực email"){
+                showErrorDialog(this,messenger)
+            }
+            else if (messenger.contains("lỗi", ignoreCase = true)) {
                 showErrorDialog(this, messenger)
             } else {
                 showSusscessDialog(this, messenger)
