@@ -98,7 +98,7 @@ class AuthRepository {
         userRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
-                    callback(user)
+                callback(user)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -110,6 +110,16 @@ class AuthRepository {
 
 
 }
+    fun updateUserByID(userId:String, map: Map<String, Any>){
+           val newUserRef = usersRef.child("users").child(userId)
+           newUserRef.updateChildren(map)
+               .addOnSuccessListener {
+                   Log.d("sucessAddUser", "them thanh cong")
+               }
+               .addOnFailureListener{ error ->
+                   Log.e("errorForPushUser", "loi ${error}")
+               }
+    }
 }
 
 

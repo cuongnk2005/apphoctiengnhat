@@ -32,6 +32,8 @@ try {
     fun getUser(callback: (User?) -> Unit){
         authReporitory.getUserByID(callback)
     }
-
+  fun updateUserByID(userId:String, map: Map<String, Any>){
+      authReporitory.updateUserByID(userId, map)
+  }
 
 }

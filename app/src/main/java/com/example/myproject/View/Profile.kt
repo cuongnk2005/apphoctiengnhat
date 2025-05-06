@@ -13,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
@@ -27,7 +28,9 @@ class Profile : AppCompatActivity() {
     lateinit var binding: ActivityProfileBinding
     private lateinit var uriImage: Uri
     private val authRepository = AuthRepository()
-//    private val imageUploader = ImageUploader()
+    private var url:String = ""
+    private var username:String = ""
+    private var password:String = ""
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -45,14 +48,20 @@ class Profile : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        writeInformation()
         events()
     }
 
     private fun writeInformation(){
-     val user = intent.getSerializableExtra("user121") as? User
+        val user = intent.getSerializableExtra("user121") as? User
         user?.let {
             binding.nameEditText.setText(it.username)
             binding.emailEditText.setText(it.gmail)
+            if(it.url!= null){
+                Glide.with(this)
+                    .load(it.url)
+                    .into(binding.profileImage)
+            }
         }
 
     }
@@ -63,6 +72,11 @@ class Profile : AppCompatActivity() {
                 .setTitle("Xác nhận lưu")
                 .setPositiveButton("Xác nhận") { dialog, _ ->
                     uploadToCloudinary(uriImage)
+                    val updatemap = mapOf<String, Any>(
+                        "username" to binding.nameEditText.text.toString(),
+                        "url" to url
+                    )
+                   
 //                    val intent = Intent(this, MainActivity::class.java)
 //                    startActivity(intent)
                 }
@@ -142,16 +156,6 @@ class Profile : AppCompatActivity() {
         Toast.makeText(this, "Đã đổi tên thành công", Toast.LENGTH_SHORT).show()
     }
 
-    // lay file tu uri
-//    fun createTempFileFromUri(uri:Uri, context: Context): File?{
-//        val inputStream = context.contentResolver.openInputStream(uri)?: return null
-//        val filename = "tem_file_${System.currentTimeMillis()}"
-//        val temfile = File.createTempFile(filename, ".png", context.cacheDir)
-//        temfile.outputStream().use { output ->
-//                inputStream.copyTo(output)
-//        }
-//        return temfile
-//    }
 
     // hàm upload anh bang cloudinary
     private fun uploadToCloudinary(uri: Uri){
@@ -170,9 +174,8 @@ class Profile : AppCompatActivity() {
                 override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
                     resultData?.let { data ->
                         // Lấy giá trị "url" và cast sang String
-                        val url = data["url"] as? String
-                        Toast.makeText(this@Profile, "Upload thành công: $url", Toast.LENGTH_LONG)
-                            .show()
+                         url = (data["url"] as? String).toString()
+
                         Log.d("sucesss", "upload Thanh cong")
                     }
                 }
