@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Rotate -->
+    <objectAnimator
+        android:propertyName="rotationY"
+        android:duration="500"
+        android:valueFrom="180"
+        android:valueTo="0"
+        android:valueType="floatType"
+        android:interpolator="@android:interpolator/accelerate_decelerate" />
+
+    <!-- Change alpha to handle halfway point visibility -->
+    <objectAnimator
+        android:propertyName="alpha"
+        android:duration="1"
+        android:startOffset="250"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+</set>

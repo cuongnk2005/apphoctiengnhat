@@ -60,14 +60,12 @@ class Profile : AppCompatActivity() {
         binding.changeProfileImage.setOnClickListener {
             imagePickerLauncher.launch("image/*") // Mở thư viện chọn ảnh
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
