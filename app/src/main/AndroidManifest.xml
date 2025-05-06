@@ -26,6 +26,9 @@
             android:exported="false" />
         <activity
             android:name=".View.Intro"
+            android:exported="false" />
+        <activity
+            android:name=".View.LearnByFlashcard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
