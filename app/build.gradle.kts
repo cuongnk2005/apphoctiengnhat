@@ -73,6 +73,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.androidx.recyclerview)
+    implementation(libs.play.services.cast.tv)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.play.services.fido)
     kapt("androidx.room:room-compiler:2.6.1")
 
     // AndroidX
@@ -96,9 +99,25 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // ImageKit
+    implementation("com.github.imagekit-developer.imagekit-android:imagekit-android:3.0.1")
+    implementation("com.github.imagekit-developer.imagekit-android:imagekit-glide-extension:3.0.1")
+    implementation("com.github.imagekit-developer.imagekit-android:imagekit-picasso-extension:3.0.1")
+    implementation("com.github.imagekit-developer.imagekit-android:imagekit-coil-extension:3.0.1")
+    implementation("com.github.imagekit-developer.imagekit-android:imagekit-fresco-extension:3.0.1")
+
+    // thu vien cloudinary
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+    // Glide (optional - để hiển thị ảnh)
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation ("org.jetbrains.kotlin:kotlin-reflect:1.8.21")
+
+
 }

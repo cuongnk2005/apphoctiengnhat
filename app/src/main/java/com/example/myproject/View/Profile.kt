@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,25 +13,36 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
+import com.example.myproject.Model.CloudinaryHelper
+import com.example.myproject.Model.ImageUploader
 import com.example.myproject.R
+import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.databinding.ActivityProfileBinding
 import com.google.android.material.textfield.TextInputEditText
+import java.io.File
+import java.io.FileOutputStream
+import com.imagekit.android.ImageKit
 
 class Profile : AppCompatActivity() {
     lateinit var binding: ActivityProfileBinding
+    private lateinit var uriImage: Uri
+    private val authRepository = AuthRepository()
+    private val imageUploader = ImageUploader()
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
             binding.profileImage.setImageURI(uri)
-            // Nếu cần, lưu lại uri vào ViewModel hoặc SharedPreferences
+            uriImage = uri
+
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CloudinaryHelper(applicationContext)
         enableEdgeToEdge()
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -43,8 +56,9 @@ class Profile : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle("Xác nhận lưu")
                 .setPositiveButton("Xác nhận") { dialog, _ ->
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    uploadToCloudinary(uriImage)
+//                    val intent = Intent(this, MainActivity::class.java)
+//                    startActivity(intent)
                 }
                 .setNegativeButton("Hủy", null)
                 .show()
@@ -117,6 +131,53 @@ class Profile : AppCompatActivity() {
         // binding.tvUserName.text = name
 
         Toast.makeText(this, "Đã đổi tên thành công", Toast.LENGTH_SHORT).show()
+    }
+
+    // lay file tu uri
+//    fun createTempFileFromUri(uri:Uri, context: Context): File?{
+//        val inputStream = context.contentResolver.openInputStream(uri)?: return null
+//        val filename = "tem_file_${System.currentTimeMillis()}"
+//        val temfile = File.createTempFile(filename, ".png", context.cacheDir)
+//        temfile.outputStream().use { output ->
+//                inputStream.copyTo(output)
+//        }
+//        return temfile
+//    }
+
+    // hàm upload anh bang cloudinary
+    private fun uploadToCloudinary(uri: Uri){
+        val uploadPreset = "Lear_nihongo"
+        com.cloudinary.android.MediaManager.get().upload(uri)
+            .unsigned(uploadPreset)
+            .callback(object : UploadCallback {
+                override fun onStart(requestId: String?) {
+                    Log.d("Cloudinary","Upload bat dau")
+                }
+
+                override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+
+                }
+
+                override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                    resultData?.let { data ->
+                        // Lấy giá trị "url" và cast sang String
+                        val url = data["url"] as? String
+                        Toast.makeText(this@Profile, "Upload thành công: $url", Toast.LENGTH_LONG)
+                            .show()
+                        Log.d("sucesss", "upload Thanh cong")
+                    }
+                }
+
+                override fun onError(requestId: String?, error: ErrorInfo?) {
+                    Toast.makeText(this@Profile, "Lỗi: ${error.toString()}", Toast.LENGTH_LONG).show()
+                    Log.e("loicloud", "Lỗi: ${error.toString()}")
+                }
+
+                override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+
+                }
+            })
+            .dispatch()
     }
 
     // Hiển thị dialog cho đổi mật khẩu
