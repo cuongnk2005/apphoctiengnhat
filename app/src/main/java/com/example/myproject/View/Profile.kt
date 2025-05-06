@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -19,16 +20,18 @@ import com.example.myproject.Model.CloudinaryHelper
 import com.example.myproject.Model.User
 import com.example.myproject.R
 import com.example.myproject.Repository.AuthRepository
+import com.example.myproject.ViewModel.ProfileModel
 import com.example.myproject.databinding.ActivityProfileBinding
 import com.google.android.material.textfield.TextInputEditText
 
 class Profile : AppCompatActivity() {
     lateinit var binding: ActivityProfileBinding
-    private lateinit var uriImage: Uri
-    private val authRepository = AuthRepository()
+    private  var uriImage: Uri? = null
     private var url:String = ""
     private var username:String = ""
     private var password:String = ""
+    private var userfromIntent:User? = null
+    private val profileModel: ProfileModel by viewModels()
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -41,7 +44,7 @@ class Profile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CloudinaryHelper(applicationContext)
+        CloudinaryHelper.init(this)
         enableEdgeToEdge()
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,14 +54,21 @@ class Profile : AppCompatActivity() {
     }
 
     private fun writeInformation(){
-        val user = intent.getSerializableExtra("user121") as? User
-        user?.let {
+        userfromIntent = intent.getSerializableExtra("user121") as? User
+
+        userfromIntent?.let {
+            profileModel.setUserData(it)
+            profileModel.user.observe(this){user ->
             binding.nameEditText.setText(it.username)
             binding.emailEditText.setText(it.gmail)
-            if(it.url!= null){
+            if(user.url!= null){
+                Log.d("Url tu user", "${user.url}")
                 Glide.with(this)
-                    .load(it.url)
+                    .load(user.url)
+                    .centerCrop()
+                    .error(R.drawable.avatar)
                     .into(binding.profileImage)
+            }
             }
         }
 
@@ -69,19 +79,30 @@ class Profile : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle("Xác nhận lưu")
                 .setPositiveButton("Xác nhận") { dialog, _ ->
-                    uploadToCloudinary(uriImage)
-                    val updatemap = mapOf<String, Any>(
-                        "username" to binding.nameEditText.text.toString(),
-                        "url" to url
-                    )
-                   
-//                    val intent = Intent(this, MainActivity::class.java)
-//                    startActivity(intent)
+
+                    if(uriImage == null){
+                        val updatemap = mapOf<String, Any>(
+                            "username" to binding.nameEditText.text.toString(),
+                        )
+                        profileModel.updateUserByID(updatemap)
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }else {
+                        uploadToCloudinary(uriImage!!, {
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        })
+                    }
+
+                    Log.d("Urltest", url)
+
                 }
                 .setNegativeButton("Hủy", null)
                 .show()
 
         }
+
+
 
 
         // Xử lý sự kiện thay đổi ảnh đại diện
@@ -94,6 +115,7 @@ class Profile : AppCompatActivity() {
             imagePickerLauncher.launch("image/*") // Mở thư viện chọn ảnh
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
@@ -147,46 +169,74 @@ class Profile : AppCompatActivity() {
         sharedPreferences.edit().putString("user_name", name).apply()
 
         // Cập nhật UI nếu cần
-        // binding.tvUserName.text = name
+         binding.nameEditText.setText(name)
+        Log.d("testname", "${binding.nameEditText.text.toString()}")
 
-        Toast.makeText(this, "Đã đổi tên thành công", Toast.LENGTH_SHORT).show()
     }
 
 
     // hàm upload anh bang cloudinary
-    private fun uploadToCloudinary(uri: Uri){
-        val uploadPreset = "Lear_nihongo"
-        com.cloudinary.android.MediaManager.get().upload(uri)
-            .unsigned(uploadPreset)
-            .callback(object : UploadCallback {
-                override fun onStart(requestId: String?) {
-                    Log.d("Cloudinary","Upload bat dau")
-                }
+    private fun uploadToCloudinary(uri: Uri , callback:() -> Unit){
 
-                override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-
-                }
-
-                override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-                    resultData?.let { data ->
-                        // Lấy giá trị "url" và cast sang String
-                         url = (data["url"] as? String).toString()
-
-                        Log.d("sucesss", "upload Thanh cong")
+            val uploadPreset = "Lear_nihongo"
+            com.cloudinary.android.MediaManager.get().upload(uri)
+                .unsigned(uploadPreset)
+                .callback(object : UploadCallback {
+                    override fun onStart(requestId: String?) {
+                        Log.d("Cloudinary", "Upload bat dau")
                     }
-                }
 
-                override fun onError(requestId: String?, error: ErrorInfo?) {
-                    Toast.makeText(this@Profile, "Lỗi: ${error.toString()}", Toast.LENGTH_LONG).show()
-                    Log.e("loicloud", "Lỗi: ${error.toString()}")
-                }
+                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
 
-                override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+                    }
 
-                }
-            })
-            .dispatch()
+                    override fun onSuccess(
+                        requestId: String?,
+                        resultData: MutableMap<Any?, Any?>?
+                    ) {
+                        resultData?.let { data ->
+                            // Lấy giá trị "url" và cast sang String
+                            url = (data["url"] as? String).toString().replace("http://", "https://")
+
+                            val updatemap = mapOf<String, Any>(
+
+                                "username" to binding.nameEditText.text.toString(),
+                                "url" to url
+                            )
+                            profileModel.updateUserByID(updatemap)
+                            Toast.makeText(
+                                this@Profile,
+                                "cập nhật thông tin thành công ",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            Log.d("sucesss", "upload Thanh cong$url")
+                            callback()
+                        }
+
+                    }
+
+                    override fun onError(requestId: String?, error: ErrorInfo?) {
+                        Toast.makeText(this@Profile, "Lỗi: ${error.toString()}", Toast.LENGTH_LONG)
+                            .show()
+                        Log.e("loicloud", "Lỗi: ${error.toString()}")
+                    }
+
+                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+
+                    }
+                })
+                .dispatch()
+
     }
+    // update user
+//    suspend fun updateUser() {
+//        delay(2000)
+//        val updatemap = mapOf<String, Any>(
+//            "username" to binding.nameEditText.text.toString(),
+//            "url" to url
+//        )
+//        profileModel.updateUserByID(updatemap)
+//    }
 
     // Hiển thị dialog cho đổi mật khẩu
     private fun showChangePasswordDialog() {

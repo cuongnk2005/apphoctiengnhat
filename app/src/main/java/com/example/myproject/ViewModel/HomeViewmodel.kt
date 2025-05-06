@@ -16,6 +16,8 @@ class HomeViewmodel: ViewModel() {
     private val topicRepository = TopicRepository()
     private val _topics =  MutableLiveData<List<Topic>>()
     val topics: LiveData<List<Topic>> get() = _topics
+    private val _user =  MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
     private val authReporitory = AuthRepository()
 
     fun fetchTopics(){
@@ -32,8 +34,11 @@ try {
     fun getUser(callback: (User?) -> Unit){
         authReporitory.getUserByID(callback)
     }
-  fun updateUserByID(userId:String, map: Map<String, Any>){
-      authReporitory.updateUserByID(userId, map)
-  }
+    fun setUserData(user: User) {
+        _user.value = user
+    }
+    fun getUerInViewModel(): User? {
+        return _user.value
+    }
 
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.myproject.Adapter.LearnVocabulary_Adapter
 import com.example.myproject.Model.User
 import com.example.myproject.R
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
 //onViewCreated là hàm kế thừa dùng viet các hàm tương tác với frame
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setAvatar()
         setupRecyclerView()
         homeviewModel.fetchTopics()
         observeViewModel()
@@ -42,13 +44,14 @@ class HomeFragment : Fragment() {
 
         // set Action cho image, để chuyển sang profile
         binding.avatar.setOnClickListener {
-            homeviewModel.getUser { user ->  if (user!= null){
+            val user = homeviewModel.getUerInViewModel()
+            if(user!== null){
                 var userForProfile:User = user
                 val intent = Intent(requireContext(), Profile::class.java)
                 intent.putExtra("user121",userForProfile)
                 startActivity(intent)  }
 
-            }
+
 
         }
     }
@@ -56,6 +59,18 @@ class HomeFragment : Fragment() {
         adaterLervocabulary = LearnVocabulary_Adapter()
         binding.lessonsRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.lessonsRecyclerView.adapter = adaterLervocabulary
+    }
+    private fun setAvatar(){
+        homeviewModel.getUser { user: User? ->
+            if (user != null) {
+                homeviewModel.setUserData(user)
+                Glide.with(this)
+                    .load(user.url)
+                    .centerCrop()
+                    .error(R.drawable.avatar)
+                    .into(binding.avatar)
+            }
+        }
     }
     private fun observeViewModel() {
         homeviewModel.topics.observe(viewLifecycleOwner) { topic ->

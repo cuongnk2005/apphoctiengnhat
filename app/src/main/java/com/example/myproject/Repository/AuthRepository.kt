@@ -94,8 +94,7 @@ class AuthRepository {
      fun getUserByID(callback: (User?) -> Unit){
         val userID = mAuth.currentUser?.uid
         val userRef = usersRef.child("users").child(userID.toString())
-        var result =  User()
-        userRef.addListenerForSingleValueEvent(object: ValueEventListener {
+        userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
                 callback(user)
@@ -110,8 +109,9 @@ class AuthRepository {
 
 
 }
-    fun updateUserByID(userId:String, map: Map<String, Any>){
-           val newUserRef = usersRef.child("users").child(userId)
+    fun updateUserByID( map: Map<String, Any>){
+        val userID = mAuth.currentUser?.uid.toString()
+           val newUserRef = usersRef.child("users").child(userID)
            newUserRef.updateChildren(map)
                .addOnSuccessListener {
                    Log.d("sucessAddUser", "them thanh cong")

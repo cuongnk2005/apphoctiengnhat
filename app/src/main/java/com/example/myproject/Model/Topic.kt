@@ -6,7 +6,7 @@ class Topic(
     var theme: String = "",
     var NameTopic: String = "",
     var description: String = "",
-    var vocabulary_list: ArrayList<Vocabulary> = ArrayList()
+    var vocabulary_list: ArrayList<FlashcardModel> = ArrayList()
 ) {
     // Constructor không tham số (Firebase yêu cầu)
     constructor() : this("","", "", ArrayList())

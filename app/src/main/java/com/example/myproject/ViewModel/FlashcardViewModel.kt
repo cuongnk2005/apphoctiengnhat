@@ -12,11 +12,11 @@ class FlashcardViewModel : ViewModel() {
 
     // LiveData for current flashcard
     private val _currentFlashcard = MutableLiveData<FlashcardModel>()
-    val currentFlashcard: LiveData<FlashcardModel> = _currentFlashcard
+    val currentFlashcard: LiveData<FlashcardModel> get() = _currentFlashcard
 
     // LiveData for progress
     private val _progressText = MutableLiveData<String>()
-    val progressText: LiveData<String> = _progressText
+    val progressText: LiveData<String> get() = _progressText
 
     private val _progressPercentage = MutableLiveData<Int>()
     val progressPercentage: LiveData<Int> = _progressPercentage
@@ -106,6 +106,8 @@ class FlashcardViewModel : ViewModel() {
         // In a real app, this would return actual audio resources
         // For now, we'll return a placeholder resource
 //        return R.raw.sample_audio
+//    }
+//    }
 //    }
 
     // Get all flashcards in the current set
