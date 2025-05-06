@@ -73,6 +73,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.androidx.recyclerview)
+    implementation(libs.play.services.cast.tv)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.play.services.fido)
     kapt("androidx.room:room-compiler:2.6.1")
 
     // AndroidX
@@ -113,5 +116,8 @@ dependencies {
     implementation("com.cloudinary:cloudinary-android:2.3.1")
     // Glide (optional - để hiển thị ảnh)
     implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation ("org.jetbrains.kotlin:kotlin-reflect:1.8.21")
+
 
 }

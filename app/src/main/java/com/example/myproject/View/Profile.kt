@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -14,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.myproject.Model.CloudinaryHelper
@@ -95,14 +93,12 @@ class Profile : AppCompatActivity() {
         binding.changeProfileImage.setOnClickListener {
             imagePickerLauncher.launch("image/*") // Mở thư viện chọn ảnh
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -160,7 +156,7 @@ class Profile : AppCompatActivity() {
     // hàm upload anh bang cloudinary
     private fun uploadToCloudinary(uri: Uri){
         val uploadPreset = "Lear_nihongo"
-        MediaManager.get().upload(uri)
+        com.cloudinary.android.MediaManager.get().upload(uri)
             .unsigned(uploadPreset)
             .callback(object : UploadCallback {
                 override fun onStart(requestId: String?) {
