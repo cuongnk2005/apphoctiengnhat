@@ -226,7 +226,7 @@
                         android:layout_height="48dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Thêm vào yêu thích"
-                        android:src="@drawable/ic_favorite"
+                        android:src="@drawable/ic_heart_plus"
                         app:tint="@color/primaryColor" />
 
                     <ImageButton
@@ -251,6 +251,7 @@
 
                 <!-- Word Types and Meanings -->
                 <TextView
+                    android:id="@+id/wordType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -266,6 +267,7 @@
 
                 <!-- Definition 1 -->
                 <TextView
+                    android:id="@+id/wordTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -273,6 +275,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/wordDecribe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -282,6 +285,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/wordExample"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -290,6 +294,7 @@
                     android:textStyle="italic" />
 
                 <TextView
+                    android:id="@+id/wordMean"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -306,7 +311,6 @@
                     android:backgroundTint="@color/primaryColor"
                     android:text="Thêm vào danh sách học"
                     android:textColor="@color/white" />
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>

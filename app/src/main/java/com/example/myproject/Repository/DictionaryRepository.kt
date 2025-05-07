@@ -14,7 +14,9 @@ class DictionaryRepository(private val context: Context) {
             "りんご",
             "ringo",
             "Quả táo",
-            listOf(Example("私は毎日りんごを食べます。", "Tôi ăn một quả táo mỗi ngày.")),
+            "Quả của cây táo, có hình tròn với vỏ màu đỏ, vàng hoặc xanh lá cây",
+            "私は毎日りんごを食べます。",
+            "Tôi ăn một quả táo mỗi ngày.",
             "Danh từ"
         ),
         DictionaryEntry(
@@ -22,7 +24,9 @@ class DictionaryRepository(private val context: Context) {
             "学生",
             "gakusei",
             "Học sinh, sinh viên",
-            listOf(Example("彼は大学の学生です。", "Anh ấy là sinh viên đại học.")),
+            "Là người đang theo học tại các cơ sở giáo dục.",
+            "彼は大学の学生です。",
+            "Anh ấy là sinh viên đại học.",
             "Danh từ"
         ),
         DictionaryEntry(
@@ -30,7 +34,9 @@ class DictionaryRepository(private val context: Context) {
             "食べる",
             "taberu",
             "Ăn",
-            listOf(Example("朝ごはんを食べましたか？", "Bạn đã ăn sáng chưa?")),
+            " Là hành động đưa thức ăn vào cơ thể để nuôi sống và duy trì sức khỏe.",
+            "朝ごはんを食べましたか？",
+            "Bạn đã ăn sáng chưa?",
             "Động từ"
         ),
         DictionaryEntry(
@@ -38,7 +44,9 @@ class DictionaryRepository(private val context: Context) {
             "水",
             "mizu",
             "Nước",
-            listOf(Example("水を飲みたいです。", "Tôi muốn uống nước.")),
+            "Là chất lỏng không màu, không mùi, cần thiết cho sự sống.",
+            "水を飲みたいです。",
+            "Tôi muốn uống nước.",
             "Danh từ"
         ),
         DictionaryEntry(
@@ -46,7 +54,9 @@ class DictionaryRepository(private val context: Context) {
             "行く",
             "iku",
             "Đi",
-            listOf(Example("学校に行きます。", "Tôi đi đến trường.")),
+            "Là hành động di chuyển từ nơi này đến nơi khác.",
+            "学校に行きます。",
+            "Tôi đi đến trường.",
             "Động từ"
         )
     )

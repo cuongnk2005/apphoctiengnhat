@@ -17,7 +17,7 @@
             android:name=".View.Profile"
             android:exported="false" />
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.LearnByFlashcard"
             android:exported="false" />
         <activity
             android:name=".View.UI_Login"
@@ -29,7 +29,7 @@
             android:name=".View.Intro"
             android:exported="false" />
         <activity
-            android:name=".View.LearnByFlashcard"
+            android:name=".View.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
