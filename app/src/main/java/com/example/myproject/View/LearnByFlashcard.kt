@@ -98,13 +98,12 @@ class LearnByFlashcard : AppCompatActivity() {
 
     private fun setupClickListeners() {
 
-
-        // Back button
         binding.btnAudio.setOnClickListener{
             Log.d("rjsfjks", "co chay ham am thamh nay")
             Toast.makeText(this, "co chay ham nay", Toast.LENGTH_SHORT).show()
-
         }
+
+        // Back button
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
@@ -129,9 +128,9 @@ class LearnByFlashcard : AppCompatActivity() {
         }
 
         // Audio pronunciation
-        binding.btnAudio.setOnClickListener {
-            playPronunciation()
-        }
+//        binding.btnAudio.setOnClickListener {
+//            playPronunciation()
+//        }
 
         // Navigation buttons
         binding.btnPrevious.setOnClickListener {

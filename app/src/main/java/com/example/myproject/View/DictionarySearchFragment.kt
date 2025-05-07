@@ -34,12 +34,12 @@ class DictionarySearchFragment : Fragment() {
 
         }
 
-        binding.searchInput.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event?.keyCode == KeyEvent.KEYCODE_ENTER && event?.action == KeyEvent.ACTION_DOWN)) {
-                performSearch()
-
-            }
-        }
+//        binding.searchInput.setOnEditorActionListener { _, actionId, event ->
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event?.keyCode == KeyEvent.KEYCODE_ENTER && event?.action == KeyEvent.ACTION_DOWN)) {
+//                performSearch()
+//
+//            }
+//        }
     }
 
     private fun performSearch() {
