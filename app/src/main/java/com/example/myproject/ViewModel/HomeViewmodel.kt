@@ -40,5 +40,8 @@ try {
     fun getUerInViewModel(): User? {
         return _user.value
     }
+    fun getTopicByposition(position: Int): Topic?{
+        return _topics.value?.get(position)
+    }
 
 }
