@@ -41,6 +41,7 @@ class FlashcardViewModel : ViewModel() {
             if(topic!= null){
                 flashcards = topic.vocabulary_list
                 _currentFlashcard.value = flashcards[0]
+                updateProgress()
             }
         }
         flashcardSet = FlashcardSetInfo(

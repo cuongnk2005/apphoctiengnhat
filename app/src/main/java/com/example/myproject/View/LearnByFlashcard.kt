@@ -99,8 +99,14 @@ class LearnByFlashcard : AppCompatActivity() {
     private fun setupClickListeners() {
 
         binding.btnAudio.setOnClickListener{
-            Log.d("rjsfjks", "co chay ham am thamh nay")
-            Toast.makeText(this, "co chay ham nay", Toast.LENGTH_SHORT).show()
+            tts = TextToSpeech(this) { status ->
+                if (status == TextToSpeech.SUCCESS) {
+                    tts.language = Locale.JAPAN
+                    var nihongo = viewModel.currentFlashcard?.value?.hiragana
+                    tts.speak(nihongo, TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+            }
+
         }
 
         // Back button
@@ -144,13 +150,7 @@ class LearnByFlashcard : AppCompatActivity() {
         // Knowledge tracking buttons
         binding.btnKnow.setOnClickListener {
             viewModel.markAsKnown()
-                        tts = TextToSpeech(this) { status ->
-                if (status == TextToSpeech.SUCCESS) {
-                    tts.language = Locale.JAPAN
 
-                    tts.speak("こんにちは", TextToSpeech.QUEUE_FLUSH, null, null)
-                }
-            }
             moveToNextCard()
         }
 
