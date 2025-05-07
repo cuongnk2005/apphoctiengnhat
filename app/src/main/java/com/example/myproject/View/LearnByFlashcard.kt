@@ -54,7 +54,7 @@ class LearnByFlashcard : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        // Observe current flashcard
+        // Quan sát thẻ flash card hiện tại
         viewModel.currentFlashcard.observe(this) { flashcard ->
             updateFlashcardDisplay(flashcard)
         }
@@ -76,13 +76,13 @@ class LearnByFlashcard : AppCompatActivity() {
             flipCard()
         }
 
-        // Update front side
+        // Cập nhật thông tin mặt trước của thẻ khi thay đổi
         binding.kanjiDisplay.text = flashcard.kanji
         binding.japaneseWord.text = flashcard.kanji
         binding.hiraganaText.text = flashcard.hiragana
         binding.romajiText.text = flashcard.romaji
 
-        // Update back side
+        // Cập nhật thông tin mặt sau của thẻ khi thay đổi
         binding.meaningText.text = flashcard.meaning
         binding.definitionText.text = flashcard.definition
         binding.exampleJapanese.text = flashcard.exampleJapanese
@@ -202,7 +202,7 @@ class LearnByFlashcard : AppCompatActivity() {
     }
 
     private fun moveToNextCard() {
-        // Add slight delay before moving to next card for better UX
+        // Thêm độ trễ nhỏ để người dùng kịp nhận phản hồi trước khi đổi thẻ.
         binding.root.postDelayed({
             viewModel.nextFlashcard()
         }, 300)
@@ -237,7 +237,6 @@ class LearnByFlashcard : AppCompatActivity() {
 
     private fun showFlashcardSetInfo() {
         val setInfo = viewModel.getFlashcardSetInfo()
-
         AlertDialog.Builder(this)
             .setTitle(setInfo.title)
             .setMessage("Tổng số từ: ${setInfo.totalCards}\n" +

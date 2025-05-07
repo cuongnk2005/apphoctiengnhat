@@ -82,8 +82,6 @@ class UI_Login : AppCompatActivity() {
         }
     }
 
-
-
     private fun showToast(msg:String) {
         Toast.makeText(this,msg, Toast.LENGTH_SHORT).show()
     }
