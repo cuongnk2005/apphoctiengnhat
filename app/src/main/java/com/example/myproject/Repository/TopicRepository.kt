@@ -64,4 +64,28 @@ fun pushTopic(topic:Topic, onSuccess:()->Unit , onFailure:(Exception)->Unit ){
 
         }
     }
+    suspend fun getTopicByID(id:String): Topic? {
+
+
+         return withContext(Dispatchers.IO){
+            try {
+                var  topic = Topic()
+                var snapshot = topicsRef.child(id).get().await()
+
+                  var Ntopic = snapshot.getValue(Topic::class.java)!!
+                   if(Ntopic!=null) {
+                       topic = Ntopic
+                   }
+                topic
+               }
+
+
+                 catch (e: Exception){
+                Log.e("TopicRepository", "loi ${e}")
+                 null
+            }
+
+
+        }
+    }
 }

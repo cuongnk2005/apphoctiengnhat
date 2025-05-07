@@ -2,6 +2,7 @@ package com.example.myproject.View
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +60,12 @@ class HomeFragment : Fragment() {
         adaterLervocabulary = LearnVocabulary_Adapter()
         binding.lessonsRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.lessonsRecyclerView.adapter = adaterLervocabulary
+        adaterLervocabulary.onItemClick = { position ->
+            val intent = Intent(requireContext(), LearnByFlashcard::class.java)
+            intent.putExtra("FLASHCARD_SET_ID", homeviewModel.getTopicByposition(position)?.id)
+
+            startActivity(intent)
+        }
     }
     private fun setAvatar(){
         homeviewModel.getUser { user: User? ->

@@ -11,12 +11,15 @@ import com.example.myproject.R
 import com.example.myproject.databinding.ActivityLearnByFlashcardBinding
 
 import android.media.MediaPlayer
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.activity.viewModels
 import com.example.myproject.Model.FlashcardModel
 import com.example.myproject.ViewModel.FlashcardViewModel
+import java.util.Locale
 
 class LearnByFlashcard : AppCompatActivity() {
     private lateinit var binding: ActivityLearnByFlashcardBinding
@@ -28,7 +31,7 @@ class LearnByFlashcard : AppCompatActivity() {
     private lateinit var frontToBackAnimation: AnimatorSet
     private lateinit var backToFrontAnimation: AnimatorSet
     private var isFrontVisible = true
-
+    private lateinit var tts: TextToSpeech
     private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +44,11 @@ class LearnByFlashcard : AppCompatActivity() {
         setupCardAnimations()
 
         // Get flashcard set ID from intent if available
-        val flashcardSetId = intent.getIntExtra("FLASHCARD_SET_ID", -1)
-        if (flashcardSetId != -1) {
+        val flashcardSetId = intent.getStringExtra("FLASHCARD_SET_ID")
+        Log.d("eeeeeee", "$flashcardSetId")
+        if (flashcardSetId != null) {
             viewModel.loadFlashcards(flashcardSetId)
+
         } else {
             // For testing purposes, load sample data if no ID provided
             viewModel.loadSampleFlashcards()
@@ -56,6 +61,7 @@ class LearnByFlashcard : AppCompatActivity() {
     private fun setupObservers() {
         // Observe current flashcard
         viewModel.currentFlashcard.observe(this) { flashcard ->
+
             updateFlashcardDisplay(flashcard)
         }
 
@@ -91,7 +97,14 @@ class LearnByFlashcard : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
+
+
         // Back button
+        binding.btnAudio.setOnClickListener{
+            Log.d("rjsfjks", "co chay ham am thamh nay")
+            Toast.makeText(this, "co chay ham nay", Toast.LENGTH_SHORT).show()
+
+        }
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
@@ -132,6 +145,13 @@ class LearnByFlashcard : AppCompatActivity() {
         // Knowledge tracking buttons
         binding.btnKnow.setOnClickListener {
             viewModel.markAsKnown()
+                        tts = TextToSpeech(this) { status ->
+                if (status == TextToSpeech.SUCCESS) {
+                    tts.language = Locale.JAPAN
+
+                    tts.speak("こんにちは", TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+            }
             moveToNextCard()
         }
 
