@@ -1,11 +1,11 @@
 package com.example.myproject.Repository
 
 import android.util.Log
+import com.example.myproject.Model.OldTopic
 import com.example.myproject.Model.Topic
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.google.firebase.auth.FirebaseAuth
+
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 class TopicRepository {
     private val db = FirebaseDatabase.getInstance()
     private var topicsRef = db.getReference("topics")
+    private var mAuth = FirebaseAuth.getInstance()
 fun pushTopic(topic:Topic, onSuccess:()->Unit , onFailure:(Exception)->Unit ){
     var newTopicRef = topicsRef.push()
     newTopicRef.setValue(topic)
@@ -48,6 +49,7 @@ fun pushTopic(topic:Topic, onSuccess:()->Unit , onFailure:(Exception)->Unit ){
     suspend fun getTopics(): MutableList<Topic>{
         return withContext(Dispatchers.IO){
             try {
+                val Uid = mAuth.currentUser?.uid
                 var snapshot = topicsRef.get().await()
                 var list = ArrayList<Topic>()
                 for(item in snapshot.children){
@@ -61,6 +63,32 @@ fun pushTopic(topic:Topic, onSuccess:()->Unit , onFailure:(Exception)->Unit ){
                Log.e("TopicRepository", "loi ${e}")
                 mutableListOf<Topic>()
         }
+
+        }
+    }
+
+    suspend fun getOldTopics(): MutableList<Topic>{
+        return withContext(Dispatchers.IO){
+            try {
+                val UID = mAuth.currentUser?.uid.toString()
+                var snapshot = db.getReference("users").child(UID).child("listTopicStuded").get().await()
+                var list = ArrayList<Topic>()
+                for(item in snapshot.children){
+                    var oldtopic = item.getValue(OldTopic::class.java)
+                    if(oldtopic!=null){
+                        var topic = getTopicByID(oldtopic.id)
+                        topic?.let {
+                            list.add(it)
+                        }
+
+                    }
+                }
+
+                list
+            } catch (e: Exception){
+                Log.e("TopicRepository", "loi ${e}")
+                mutableListOf<Topic>()
+            }
 
         }
     }
@@ -88,4 +116,5 @@ fun pushTopic(topic:Topic, onSuccess:()->Unit , onFailure:(Exception)->Unit ){
 
         }
     }
+
 }

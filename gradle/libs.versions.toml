@@ -43,7 +43,7 @@ play-services-fido = { group = "com.google.android.gms", name = "play-services-f
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version = "1.9.23" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.1.0" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version = "2.1.0" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

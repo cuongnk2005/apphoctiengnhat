@@ -10,7 +10,6 @@ import com.example.myproject.Model.User
 import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.Repository.TopicRepository
 import kotlinx.coroutines.launch
-import okhttp3.Callback
 
 class HomeViewmodel: ViewModel() {
     private val topicRepository = TopicRepository()
@@ -23,7 +22,7 @@ class HomeViewmodel: ViewModel() {
     fun fetchTopics(){
         viewModelScope.launch {
 try {
-    val listTopics = topicRepository.getTopics()
+    val listTopics = topicRepository.getOldTopics()
     _topics.postValue(listTopics)
 }catch (e: Exception){
     throw e
@@ -32,8 +31,15 @@ try {
         }
     }
     fun getUser(callback: (User?) -> Unit){
-        authReporitory.getUserByID(callback)
+        try {
+            authReporitory.getUserByID(callback)
+        } catch (e: Exception){
+
+            Log.e("debugdetUser", "loi ${e}")
+        }
+
     }
+
     fun setUserData(user: User) {
         _user.value = user
     }

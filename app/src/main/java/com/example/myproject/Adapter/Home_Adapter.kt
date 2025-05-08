@@ -14,7 +14,11 @@ class Home_Adapter:RecyclerView.Adapter<Home_Adapter.HomeViewHolder>(){
         val txtlessontitle: TextView = itemView.findViewById(R.id.lesson_title)
         val txtDescipition: TextView = itemView.findViewById(R.id.lesson_description)
     }
+<<<<<<< HEAD
     var onItemClick: ((Int) -> Unit)? = null
+=======
+  var onItemClick: ((Int) -> Unit)? = null
+>>>>>>> 58ad0257e018e0ba0616747d581ce0f1b0dec4d8
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_lesson, parent, false)
         return HomeViewHolder(view)
