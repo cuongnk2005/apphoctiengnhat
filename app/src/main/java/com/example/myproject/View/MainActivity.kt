@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> loadFragment(HomeFragment())
                 R.id.nav_search -> loadFragment(DictionarySearchFragment())
                 R.id.nav_study -> loadFragment(LearnVocabularyFragment())
+
             }
             true
         }

@@ -63,7 +63,6 @@ class HomeFragment : Fragment() {
         adaterLervocabulary.onItemClick = { position ->
             val intent = Intent(requireContext(), LearnByFlashcard::class.java)
             intent.putExtra("FLASHCARD_SET_ID", homeviewModel.getTopicByposition(position)?.id)
-
             startActivity(intent)
         }
     }

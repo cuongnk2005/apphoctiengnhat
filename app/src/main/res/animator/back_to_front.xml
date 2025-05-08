@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Rotate -->
+    <!-- Initially invisible and rotated 180 degrees -->
     <objectAnimator
+        android:duration="0"
+        android:propertyName="alpha"
+        android:valueFrom="0.0"
+        android:valueTo="0.0" />
+
+    <objectAnimator
+        android:duration="0"
         android:propertyName="rotationY"
-        android:duration="500"
+        android:valueFrom="180"
+        android:valueTo="180" />
+
+    <!-- Rotate back to 0 and make visible -->
+    <objectAnimator
+        android:duration="300"
+        android:propertyName="rotationY"
+        android:startOffset="150"
         android:valueFrom="180"
         android:valueTo="0"
         android:valueType="floatType"
         android:interpolator="@android:interpolator/accelerate_decelerate" />
 
-    <!-- Change alpha to handle halfway point visibility -->
     <objectAnimator
-        android:propertyName="alpha"
         android:duration="1"
-        android:startOffset="250"
+        android:propertyName="alpha"
+        android:startOffset="150"
         android:valueFrom="0.0"
         android:valueTo="1.0" />
 </set>
