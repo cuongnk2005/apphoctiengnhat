@@ -5,6 +5,8 @@ import com.imagekit.android.ImageKit
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.myproject.Model.OldTopic
+import com.example.myproject.Model.Topic
 import com.example.myproject.Model.User
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +14,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import okhttp3.Callback
 import okhttp3.EventListener
 
@@ -61,7 +65,7 @@ class AuthRepository {
                     if (veritask.isSuccessful) {
                         result.postValue( "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.")
                         user.uid.let{
-                           var nUser = User(email,mk, username = "", url = "")
+                           var nUser = User(email,mk, username = "", url = "", listTopicStuded = ArrayList())
                              pushUser(nUser, user.uid);
                         }
                     } else {
@@ -92,11 +96,13 @@ class AuthRepository {
             }
     }
      fun getUserByID(callback: (User?) -> Unit){
+         Log.d("fsfss","co chay get userripository")
         val userID = mAuth.currentUser?.uid
         val userRef = usersRef.child("users").child(userID.toString())
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
+                Log.d("userr","${user.toString()}")
                 callback(user)
             }
 
@@ -120,6 +126,28 @@ class AuthRepository {
                    Log.e("errorForPushUser", "loi ${error}")
                }
     }
+    suspend fun getOldTopicsFromUser():MutableList<String> {
+        return withContext(kotlinx.coroutines.Dispatchers.IO) {
+            try {
+                val userID = mAuth.currentUser?.uid.toString()
+                val userRef = usersRef.child("users").child(userID).child("listTopicStuded")
+                val snapshot = userRef.get().await()
+                var listOldTopic = ArrayList<String>()
+                for (item in snapshot.children) {
+                    var oldtopic = item.getValue(OldTopic::class.java)
+                    if (oldtopic != null) {
+                        listOldTopic.add(oldtopic.id)
+                    }
+                }
+
+                listOldTopic
+            } catch (e:Exception ){
+                mutableListOf<String>()
+            }
+
+        }
+    }
+
 }
 
 

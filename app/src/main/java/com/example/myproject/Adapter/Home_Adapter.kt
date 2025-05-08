@@ -8,19 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myproject.Model.Topic
 import com.example.myproject.R
 
-class LearnVocabulary_Adapter: RecyclerView.Adapter<LearnVocabulary_Adapter.LearVocabularyViewHolder>() {
+class Home_Adapter:RecyclerView.Adapter<Home_Adapter.HomeViewHolder>(){
     private var listTopic: List<Topic> = ArrayList();
-    inner class LearVocabularyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtlessontitle: TextView = itemView.findViewById(R.id.lesson_title)
         val txtDescipition: TextView = itemView.findViewById(R.id.lesson_description)
     }
-    var onItemClick: ((Int) -> Unit)? = null
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LearVocabularyViewHolder {
+  var onItemClick: ((Int) -> Unit)? = null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_lesson, parent, false)
-        return LearVocabularyViewHolder(view)
+        return HomeViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: LearVocabularyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         var topic = listTopic[position]
         holder.txtlessontitle.text = topic.NameTopic
         holder.txtDescipition.text = topic.description

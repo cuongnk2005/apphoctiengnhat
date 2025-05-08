@@ -9,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myproject.Adapter.LearnVocabulary_Adapter
+import com.example.myproject.Adapter.Home_Adapter
 import com.example.myproject.Model.User
 import com.example.myproject.R
 import com.example.myproject.ViewModel.HomeViewmodel
@@ -22,7 +20,7 @@ import com.example.myproject.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adaterLervocabulary: LearnVocabulary_Adapter
+    private lateinit var adaterLervocabulary: Home_Adapter
     private val homeviewModel: HomeViewmodel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,19 +55,19 @@ class HomeFragment : Fragment() {
         }
     }
     private fun setupRecyclerView() {
-        adaterLervocabulary = LearnVocabulary_Adapter()
+        adaterLervocabulary = Home_Adapter()
         binding.lessonsRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.lessonsRecyclerView.adapter = adaterLervocabulary
         adaterLervocabulary.onItemClick = { position ->
             val intent = Intent(requireContext(), LearnByFlashcard::class.java)
             intent.putExtra("FLASHCARD_SET_ID", homeviewModel.getTopicByposition(position)?.id)
-
             startActivity(intent)
         }
     }
     private fun setAvatar(){
+        Log.d("testxde", "Đã gọi hàm fragment")
         homeviewModel.getUser { user: User? ->
-            if (user != null) {
+            if (user != null  && _binding != null) {
                 homeviewModel.setUserData(user)
                 Glide.with(this)
                     .load(user.url)
