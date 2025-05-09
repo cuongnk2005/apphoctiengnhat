@@ -47,8 +47,16 @@ class HomeFragment : Fragment() {
             if (user !== null) {
                 var userForProfile: User = user
                 val intent = Intent(requireContext(), Profile::class.java)
-                intent.putExtra("user121", userForProfile)
+
+                intent.putExtra("user121",userForProfile)
                 startActivity(intent)
+        }
+        }
+        binding.btnLearn.setOnClickListener{
+            val activity = binding.root.context
+            if (activity is MainActivity) {
+                activity.loadLearFragment(LearnVocabularyFragment())
+
             }
         }
 
@@ -90,4 +98,5 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null // tránh memory leak
     }
+
 }

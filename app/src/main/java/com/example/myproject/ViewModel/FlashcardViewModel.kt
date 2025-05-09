@@ -40,6 +40,7 @@ class FlashcardViewModel : ViewModel() {
          val topic = topicRepository.getTopicByID(setId)
             if(topic!= null){
                 flashcards = topic.vocabulary_list
+
                 flashcardSet = FlashcardSetInfo(
                     id = 1,
                     title = "Từ vựng tiếng Nhật cơ bản",
@@ -48,7 +49,6 @@ class FlashcardViewModel : ViewModel() {
                     level = "N5",
                     category = "Cơ bản"
                 )
-
                 if (flashcards.isNotEmpty()) {
                     _currentFlashcard.value = flashcards[0]
                     updateProgress()

@@ -1,6 +1,8 @@
 package com.example.myproject.Model
 
-class OldTopic(var id:String = "")  {
+import java.io.Serializable
+
+class OldTopic(var id:String = "") :Serializable {
     constructor(): this(id = "")
 
     override fun toString(): String {
