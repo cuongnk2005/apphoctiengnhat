@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myproject.Model.DictionaryEntry
 import com.example.myproject.Repository.DictionaryRepository
 import kotlinx.coroutines.launch
+
 class DictionaryViewModel(private val repository: DictionaryRepository) : ViewModel() {
 
     // LiveData cho một từ

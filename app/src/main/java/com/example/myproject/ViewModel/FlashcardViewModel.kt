@@ -38,22 +38,30 @@ class FlashcardViewModel : ViewModel() {
     // Load flashcards from database by set ID
     fun loadFlashcards(setId: String) {
         viewModelScope.launch {
-         var topic =topicRepository.getTopicByID(setId)
+         val topic = topicRepository.getTopicByID(setId)
             if(topic!= null){
                 flashcards = topic.vocabulary_list
+
                 Log.d("numbersize", "${flashcards.size}")
                 _currentFlashcard.value = flashcards[0]
                 updateProgress()
+
+
+                flashcardSet = FlashcardSetInfo(
+                    id = 1,
+                    title = "Từ vựng tiếng Nhật cơ bản",
+                    totalCards = flashcards.size,
+                    learnedCards = 0,
+                    level = "N5",
+                    category = "Cơ bản"
+                )
+                if (flashcards.isNotEmpty()) {
+                    _currentFlashcard.value = flashcards[0]
+                    updateProgress()
+                }
+
             }
         }
-        flashcardSet = FlashcardSetInfo(
-            id = 1,
-            title = "Từ vựng tiếng Nhật cơ bản",
-            totalCards = flashcards.size,
-            learnedCards = 0,
-            level = "N5",
-            category = "Cơ bản"
-        )
 
 
     }
@@ -154,6 +162,8 @@ class FlashcardViewModel : ViewModel() {
         // Update flashcard set info
         val learnedCards = flashcards.count { it.isKnown }
         flashcardSet = flashcardSet.copy(learnedCards = learnedCards)
+
+
     }
 
     // Sample data for testing

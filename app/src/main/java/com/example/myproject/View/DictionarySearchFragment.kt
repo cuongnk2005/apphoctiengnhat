@@ -1,6 +1,7 @@
 package com.example.myproject.View
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.getSystemService
@@ -52,6 +54,8 @@ class DictionarySearchFragment : Fragment() {
     private fun setupEvents() {
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+//            val intent = Intent(requireContext(), HomeFragment::class.java)
+//            startActivity(intent)
         }
 
         binding.btnSearch.setOnClickListener {
@@ -98,8 +102,14 @@ class DictionarySearchFragment : Fragment() {
             }
         }
 
+        // hien thi loading
+        val loadingLayout = view?.findViewById<LinearLayout>(R.id.loadingLayout)
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            // TODO: Hiển thị loading indicator nếu cần
+            if (loadingLayout != null) {
+                loadingLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
+            }
+
+
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
@@ -117,6 +127,7 @@ class DictionarySearchFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Vui lòng nhập từ cần tra cứu", Toast.LENGTH_SHORT).show()
         }
+        hideKeyboard()
     }
 
     private fun updateResultCard(entry: DictionaryEntry) {
@@ -145,6 +156,16 @@ class DictionarySearchFragment : Fragment() {
     private fun showEmptyState() {
         binding.emptyState.visibility = View.VISIBLE
         binding.resultCard.visibility = View.GONE
+    }
+
+    // hàm ẩn bàn phím
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
     }
 
     override fun onDestroyView() {
