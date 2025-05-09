@@ -50,14 +50,22 @@ class TopicRepository {
     suspend fun getTopics(): MutableList<Topic>{
         return withContext(Dispatchers.IO){
             try {
-                val Uid = mAuth.currentUser?.uid
-                var snapshot = topicsRef.get().await()
+//
                 var list = ArrayList<Topic>()
-                for(item in snapshot.children){
-                    var topic = item.getValue(Topic::class.java)
-                    if(topic!=null){
-                        list.add(topic)
-                    }
+
+                var snapshotTheme = topicsRef.get().await()
+
+
+                for(item in snapshotTheme.children){
+                    val key:String = item.key.toString()
+                    var snapshotTopic = topicsRef.child(key).get().await()
+                     for(item in snapshotTopic.children){
+                        var topic = item.getValue(Topic::class.java)
+                        if(topic!=null){
+                            list.add(topic)
+                        }
+                     }
+
             }
                 list
         } catch (e: Exception){

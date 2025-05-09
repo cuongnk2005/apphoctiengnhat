@@ -42,11 +42,6 @@ class FlashcardViewModel : ViewModel() {
             if(topic!= null){
                 flashcards = topic.vocabulary_list
 
-                Log.d("numbersize", "${flashcards.size}")
-                _currentFlashcard.value = flashcards[0]
-                updateProgress()
-
-
                 flashcardSet = FlashcardSetInfo(
                     id = 1,
                     title = "Từ vựng tiếng Nhật cơ bản",
@@ -60,8 +55,10 @@ class FlashcardViewModel : ViewModel() {
                     updateProgress()
                 }
 
+
             }
         }
+
 
 
     }

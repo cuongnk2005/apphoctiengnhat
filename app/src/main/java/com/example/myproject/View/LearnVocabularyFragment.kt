@@ -54,7 +54,6 @@ class LearnVocabularyFragment : Fragment() {
             val id:String = viewModel.getTopicByposition(position)?.id.toString()
             viewModel.changeListIdOldTopic(id)
             intent.putExtra("FLASHCARD_SET_ID", id)
-
             startActivity(intent)
         }
     }
