@@ -43,17 +43,17 @@ class HomeFragment : Fragment() {
 
         // set Action cho image, để chuyển sang profile
         binding.avatar.setOnClickListener {
-            val user = homeviewModel.getUerInViewModel()
-            if(user!== null){
-                var userForProfile:User = user
+            val user = homeviewModel.getUserInViewModel()
+            if (user !== null) {
+                var userForProfile: User = user
                 val intent = Intent(requireContext(), Profile::class.java)
-                intent.putExtra("user121",userForProfile)
-                startActivity(intent)  }
-
-
-
+                intent.putExtra("user121", userForProfile)
+                startActivity(intent)
+            }
         }
+
     }
+
     private fun setupRecyclerView() {
         adaterLervocabulary = Home_Adapter()
         binding.lessonsRecyclerView.layoutManager = LinearLayoutManager(requireActivity())

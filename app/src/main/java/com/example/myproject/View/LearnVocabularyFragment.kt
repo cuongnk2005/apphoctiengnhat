@@ -34,7 +34,17 @@ class LearnVocabularyFragment : Fragment() {
         viewModel.fetchTopics()
         viewModel.getListIdOldTopic()
         observeViewModel()
+        events()
     }
+
+    private fun events() {
+        binding.btnBack.setOnClickListener {
+//            val intent = Intent(requireContext(), HomeFragment::class.java)
+//            startActivity(intent)
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
     private fun setUpRecycleView(){
         adapterLear = LearnVocabulary_Adapter()
         binding.wordRecyclerView.layoutManager = LinearLayoutManager(requireActivity())

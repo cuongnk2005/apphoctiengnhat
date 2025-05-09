@@ -43,7 +43,7 @@ try {
     fun setUserData(user: User) {
         _user.value = user
     }
-    fun getUerInViewModel(): User? {
+    fun getUserInViewModel(): User? {
         return _user.value
     }
     fun getTopicByposition(position: Int): Topic?{

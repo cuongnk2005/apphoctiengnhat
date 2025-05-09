@@ -61,7 +61,6 @@ class LearnByFlashcard : AppCompatActivity() {
     private fun setupObservers() {
         // Quan sát thẻ flash card hiện tại
         viewModel.currentFlashcard.observe(this) { flashcard ->
-
             updateFlashcardDisplay(flashcard)
         }
 
