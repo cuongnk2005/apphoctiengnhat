@@ -1,5 +1,6 @@
 package com.example.myproject.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,6 +41,7 @@ class FlashcardViewModel : ViewModel() {
          var topic =topicRepository.getTopicByID(setId)
             if(topic!= null){
                 flashcards = topic.vocabulary_list
+                Log.d("numbersize", "${flashcards.size}")
                 _currentFlashcard.value = flashcards[0]
                 updateProgress()
             }

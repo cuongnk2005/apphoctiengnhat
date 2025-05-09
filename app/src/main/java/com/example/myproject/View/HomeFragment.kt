@@ -48,10 +48,15 @@ class HomeFragment : Fragment() {
                 var userForProfile:User = user
                 val intent = Intent(requireContext(), Profile::class.java)
                 intent.putExtra("user121",userForProfile)
-                startActivity(intent)  }
+                startActivity(intent)
+        }
+        }
+        binding.btnLearn.setOnClickListener{
+            val activity = binding.root.context
+            if (activity is MainActivity) {
+                activity.loadLearFragment(LearnVocabularyFragment())
 
-
-
+            }
         }
     }
     private fun setupRecyclerView() {
@@ -90,4 +95,5 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null // tránh memory leak
     }
+
 }
