@@ -53,8 +53,10 @@ class FlashcardViewModel : ViewModel() {
                     _currentFlashcard.value = flashcards[0]
                     updateProgress()
                 }
+
             }
         }
+
 
 
     }
