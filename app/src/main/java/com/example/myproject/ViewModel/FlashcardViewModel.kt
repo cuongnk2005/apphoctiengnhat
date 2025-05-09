@@ -1,6 +1,5 @@
 package com.example.myproject.ViewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,7 +53,6 @@ class FlashcardViewModel : ViewModel() {
                     _currentFlashcard.value = flashcards[0]
                     updateProgress()
                 }
-
 
             }
         }

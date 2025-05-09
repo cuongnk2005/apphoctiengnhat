@@ -12,11 +12,13 @@ import com.example.myproject.Adapter.LearnVocabulary_Adapter
 import com.example.myproject.R
 import com.example.myproject.ViewModel.LearVocabularyViewModel
 import com.example.myproject.databinding.FragmentLearnVocabularyBinding
+import com.google.android.material.chip.Chip
 
 
 class LearnVocabularyFragment : Fragment() {
     private var _binding : FragmentLearnVocabularyBinding? = null
     private val binding get() = _binding!!
+    private var selectedCategory : String = "all"
     private lateinit  var adapterLear: LearnVocabulary_Adapter
     private val viewModel: LearVocabularyViewModel by viewModels()
     override fun onCreateView(
@@ -35,6 +37,34 @@ class LearnVocabularyFragment : Fragment() {
         viewModel.getListIdOldTopic()
         observeViewModel()
         events()
+        setupUI()
+    }
+
+    private fun setupUI() {
+        setupChips()
+
+
+    }
+
+    private fun setupChips() {
+        binding.chipAll.isCheckable = true
+
+        binding.chipAll.setOnClickListener {selectedChip(it as Chip, "all")}
+        binding.chipFood.setOnClickListener { selectedChip(it as Chip, "food") }
+        binding.chipAnimals.setOnClickListener { selectedChip(it as Chip, "animals") }
+        binding.chipTransport.setOnClickListener { selectedChip(it as Chip, "transport") }
+        binding.chipNature.setOnClickListener { selectedChip(it as Chip, "nature") }
+    }
+
+    private fun selectedChip(selectedChip: Chip, category: String) {
+        binding.chipAll.isCheckable = false
+        binding.chipFood.isChecked = false
+        binding.chipAnimals.isChecked = false
+        binding.chipTransport.isChecked = false
+        binding.chipNature.isChecked = false
+        selectedChip.isCheckable = true
+        selectedCategory = category
+
     }
 
     private fun events() {
