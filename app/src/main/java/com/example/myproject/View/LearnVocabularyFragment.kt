@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myproject.Adapter.LearnVocabulary_Adapter
@@ -13,6 +14,7 @@ import com.example.myproject.R
 import com.example.myproject.ViewModel.LearVocabularyViewModel
 import com.example.myproject.databinding.FragmentLearnVocabularyBinding
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 
 class LearnVocabularyFragment : Fragment() {
@@ -41,31 +43,31 @@ class LearnVocabularyFragment : Fragment() {
     }
 
     private fun setupUI() {
-        setupChips()
-
-
-    }
-
-    private fun setupChips() {
-        binding.chipAll.isCheckable = true
-
-        binding.chipAll.setOnClickListener {selectedChip(it as Chip, "all")}
-        binding.chipFood.setOnClickListener { selectedChip(it as Chip, "food") }
-        binding.chipAnimals.setOnClickListener { selectedChip(it as Chip, "animals") }
-        binding.chipTransport.setOnClickListener { selectedChip(it as Chip, "transport") }
-        binding.chipNature.setOnClickListener { selectedChip(it as Chip, "nature") }
-    }
-
-    private fun selectedChip(selectedChip: Chip, category: String) {
-        binding.chipAll.isCheckable = false
-        binding.chipFood.isChecked = false
-        binding.chipAnimals.isChecked = false
-        binding.chipTransport.isChecked = false
-        binding.chipNature.isChecked = false
-        selectedChip.isCheckable = true
-        selectedCategory = category
+//        setupChips()
+        creatChip()
 
     }
+
+//    private fun setupChips() {
+//        binding.chipAll.isCheckable = true
+//
+//        binding.chipAll.setOnClickListener {selectedChip(it as Chip, "all")}
+//        binding.chipFood.setOnClickListener { selectedChip(it as Chip, "food") }
+//        binding.chipAnimals.setOnClickListener { selectedChip(it as Chip, "animals") }
+//        binding.chipTransport.setOnClickListener { selectedChip(it as Chip, "transport") }
+//        binding.chipNature.setOnClickListener { selectedChip(it as Chip, "nature") }
+//    }
+//
+//    private fun selectedChip(selectedChip: Chip, category: String) {
+//        binding.chipAll.isCheckable = false
+//        binding.chipFood.isChecked = false
+//        binding.chipAnimals.isChecked = false
+//        binding.chipTransport.isChecked = false
+//        binding.chipNature.isChecked = false
+//        selectedChip.isCheckable = true
+//        selectedCategory = category
+//
+//    }
 
     private fun events() {
         binding.btnBack.setOnClickListener {
@@ -98,5 +100,35 @@ class LearnVocabularyFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // tránh memory leak
+    }
+    fun creatChip(){
+        val topics = listOf("Tất cả", "Thức ăn", "Động vật", "Phương tiện", "Thiên nhiên")
+        if(binding != null){
+            val chipGroup = binding.chipGroup
+
+            topics.forEachIndexed { index, topic ->
+                val chip = Chip(requireContext()).apply {
+                    text = topic
+                    isCheckable = true
+                    isChecked = index == 0 // Chip đầu tiên được chọn mặc định
+                    setChipBackgroundColorResource(R.color.chip_background_selector)
+                    layoutParams = ViewGroup.MarginLayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        marginEnd = resources.getDimensionPixelSize(R.dimen.chip_margin_end) // tạo dimen chip_margin_end trong res
+                    }
+                    setOnClickListener {
+                      if(index == 0){
+
+                      }else {
+
+                      }
+                    }
+                }
+                chipGroup.addView(chip)
+            }
+        }
+
     }
 }
