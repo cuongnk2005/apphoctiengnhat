@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myproject.Adapter.LearnVocabulary_Adapter
@@ -15,6 +16,7 @@ import com.example.myproject.R
 import com.example.myproject.ViewModel.LearVocabularyViewModel
 import com.example.myproject.databinding.FragmentLearnVocabularyBinding
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 
 class LearnVocabularyFragment : Fragment() {
@@ -43,92 +45,66 @@ class LearnVocabularyFragment : Fragment() {
     }
 
     private fun setupUI() {
-        setupChips()
-
+//        setupChips()
+        creatChip()
 
     }
 
-//    private fun setupChips() {
-//        // Mặc định chip "Tất cả" được chọn
-//        binding.chipAll.isChecked = true
+//private fun setupChips() {
+//    // Danh sách các chip và category tương ứng
+//    val chipList = listOf(
+//        binding.chipAll to "all",
+//        binding.chipFood to "food",
+//        binding.chipAnimals to "animals",
+//        binding.chipTransport to "transport",
+//        binding.chipNature to "nature"
+//    )
 //
-//        // Thiết lập sự kiện khi chọn chip
-//        binding.chipAll.setOnClickListener { handleChipSelection(it as Chip, "all") }
-//        binding.chipFood.setOnClickListener { handleChipSelection(it as Chip, "food") }
-//        binding.chipAnimals.setOnClickListener { handleChipSelection(it as Chip, "animals") }
-//        binding.chipTransport.setOnClickListener { handleChipSelection(it as Chip, "transport") }
-//        binding.chipNature.setOnClickListener { handleChipSelection(it as Chip, "nature") }
+//    // Thiết lập sự kiện cho mỗi chip
+//    chipList.forEach { (chip, category) ->
+//        chip.setOnClickListener {
+//            selectChip(chip, category)
+//        }
 //    }
 //
-//    private fun handleChipSelection(selectedChip: Chip, category: String) {
-//        // Bỏ chọn tất cả các chip
-//        binding.chipAll.isChecked = false
-//        binding.chipFood.isChecked = false
-//        binding.chipAnimals.isChecked = false
-//        binding.chipTransport.isChecked = false
-//        binding.chipNature.isChecked = false
+//    // Mặc định chọn chip đầu tiên (All)
+//    selectChip(binding.chipAll, "all")
+//}
+//
+//    private fun selectChip(selectedChip: Chip, category: String) {
+//        // Danh sách tất cả chip
+//        val allChips = listOf(
+//            binding.chipAll,
+//            binding.chipFood,
+//            binding.chipAnimals,
+//            binding.chipTransport,
+//            binding.chipNature
+//        )
+//
+//        // Bỏ chọn tất cả chip
+//        allChips.forEach { chip ->
+//            chip.isChecked = false
+//        }
 //
 //        // Chọn chip hiện tại
 //        selectedChip.isChecked = true
 //
-//        // Lưu lại chủ đề đã chọn
+//        // Lưu lại category đã chọn
 //        selectedCategory = category
 //
+//        // Lọc danh sách từ vựng theo category
+//        filterVocabularyByCategory(category)
+//
+//        // Ẩn bàn phím nếu đang hiển thị
+//        hideKeyboard()
 //    }
-private fun setupChips() {
-    // Danh sách các chip và category tương ứng
-    val chipList = listOf(
-        binding.chipAll to "all",
-        binding.chipFood to "food",
-        binding.chipAnimals to "animals",
-        binding.chipTransport to "transport",
-        binding.chipNature to "nature"
-    )
-
-    // Thiết lập sự kiện cho mỗi chip
-    chipList.forEach { (chip, category) ->
-        chip.setOnClickListener {
-            selectChip(chip, category)
-        }
-    }
-
-    // Mặc định chọn chip đầu tiên (All)
-    selectChip(binding.chipAll, "all")
-}
-
-    private fun selectChip(selectedChip: Chip, category: String) {
-        // Danh sách tất cả chip
-        val allChips = listOf(
-            binding.chipAll,
-            binding.chipFood,
-            binding.chipAnimals,
-            binding.chipTransport,
-            binding.chipNature
-        )
-
-        // Bỏ chọn tất cả chip
-        allChips.forEach { chip ->
-            chip.isChecked = false
-        }
-
-        // Chọn chip hiện tại
-        selectedChip.isChecked = true
-
-        // Lưu lại category đã chọn
-        selectedCategory = category
-
-        // Lọc danh sách từ vựng theo category
-        filterVocabularyByCategory(category)
-
-        // Ẩn bàn phím nếu đang hiển thị
-        hideKeyboard()
-    }
 
     private fun filterVocabularyByCategory(category: String) {
         // Triển khai logic lọc danh sách từ vựng theo category
         // Đây là nơi bạn sẽ gọi đến ViewModel để lấy dữ liệu theo category
         viewModel.filterTopicsByCategory(category)
     }
+
 
     private fun events() {
         binding.btnBack.setOnClickListener {
@@ -170,5 +146,35 @@ private fun setupChips() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // tránh memory leak
+    }
+    fun creatChip(){
+        val topics = listOf("Tất cả", "Thức ăn", "Động vật", "Phương tiện", "Thiên nhiên")
+        if(binding != null){
+            val chipGroup = binding.chipGroup
+
+            topics.forEachIndexed { index, topic ->
+                val chip = Chip(requireContext()).apply {
+                    text = topic
+                    isCheckable = true
+                    isChecked = index == 0 // Chip đầu tiên được chọn mặc định
+                    setChipBackgroundColorResource(R.color.chip_background_selector)
+                    layoutParams = ViewGroup.MarginLayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        marginEnd = resources.getDimensionPixelSize(R.dimen.chip_margin_end) // tạo dimen chip_margin_end trong res
+                    }
+                    setOnClickListener {
+                      if(index == 0){
+
+                      }else {
+
+                      }
+                    }
+                }
+                chipGroup.addView(chip)
+            }
+        }
+
     }
 }
