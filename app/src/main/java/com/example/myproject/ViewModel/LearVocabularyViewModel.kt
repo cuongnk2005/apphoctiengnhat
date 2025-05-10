@@ -16,6 +16,10 @@ class LearVocabularyViewModel: ViewModel() {
     val topics: LiveData<List<Topic>> get() = _topics
     private var _ListIdOldTopic = MutableLiveData<List<String>>()
     val ListIdOldTopic: LiveData<List<String>> get() = _ListIdOldTopic
+    // Biến lưu trữ danh sách đầy đủ để dùng khi lọc
+    private var allTopics: List<Topic> = listOf()
+    // Biến lưu trữ topic đang được chọn
+    private var selectedTopic: Topic? = null
     private val topicRepository = TopicRepository()
     private val authRepository = AuthRepository()
     fun fetchTopics() {
@@ -28,10 +32,36 @@ class LearVocabularyViewModel: ViewModel() {
                 Log.e("HomeViewmodel", "loi ${e}")
             }
         }
+        // Lưu lại danh sách đầy đủ
+        _topics.value?.let {
+            allTopics = it
+        }
     }
 
+    // Phương thức lọc topics theo category
+    fun filterTopicsByCategory(category: String) {
+        if (category == "all") {
+            // Nếu chọn "all", hiển thị tất cả
+            _topics.value = allTopics
+        } else {
+            // Lọc theo category
+            _topics.value = allTopics.filter { it.NameTopic == category }
+        }
+    }
+
+    // Lấy topic đang được chọn
+    fun getSelectedTopic(): Topic? {
+        return selectedTopic
+    }
+
+    // Đặt topic được chọn
+    fun setSelectedTopic(topic: Topic) {
+        selectedTopic = topic
+    }
+
+    // Các phương thức hiện tại của bạn
     fun getTopicByposition(position: Int): Topic? {
-        return _topics.value?.get(position)
+        return topics.value?.getOrNull(position)
     }
 
     fun getListIdOldTopic() {
@@ -73,8 +103,9 @@ class LearVocabularyViewModel: ViewModel() {
         var map = mutableMapOf<String, Any>(
             "listTopicStuded" to listTopic
         )
-
         authRepository.updateUserByID(map)
 
     }
+
+
 }

@@ -157,8 +157,6 @@ class FlashcardViewModel : ViewModel() {
         // Update flashcard set info
         val learnedCards = flashcards.count { it.isKnown }
         flashcardSet = flashcardSet.copy(learnedCards = learnedCards)
-
-
     }
 
     // Sample data for testing
