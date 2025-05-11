@@ -4,7 +4,6 @@ import android.util.Base64
 import com.imagekit.android.ImageKit
 import android.util.Log
 import android.widget.Toast
-import android.widget.Toast.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myproject.Model.OldTopic
@@ -26,10 +25,10 @@ class AuthRepository {
     private val mAuth = FirebaseAuth.getInstance()
     private val db = FirebaseDatabase.getInstance()
     private var usersRef = db.getReference()
+
     fun login(strEmail: String, strMk: String): LiveData<String> {
         val result = MutableLiveData<String>()
         Log.d("testttt", "Đã gọi hàm repository")
-
         mAuth.signInWithEmailAndPassword(strEmail, strMk)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -37,7 +36,7 @@ class AuthRepository {
                     if(user!= null && user.isEmailVerified){
                         result.postValue("Đăng nhập thành công: ${user?.email}")
                     } else{
-                        result.postValue("vui lòng xác thực email")
+                        result.postValue("Vui lòng xác thực email")
                     }
 
                 } else {
@@ -51,7 +50,7 @@ class AuthRepository {
                 }
             }
             .addOnFailureListener { exception ->
-                result.postValue("Lỗi đăng nhập: ${exception.message}")
+                result.postValue("Lỗi đăng nhập. Vui lòng kiểm tra lại email hoặc password!")
                 Log.e("DEBUGgg", "Thất bại hoàn toàn: ${exception.message}")
             }
 
@@ -62,8 +61,7 @@ class AuthRepository {
         mAuth.createUserWithEmailAndPassword(email,mk).addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 val user = mAuth.currentUser
-                user?.sendEmailVerification()?.addOnCompleteListener{
-                    veritask ->
+                user?.sendEmailVerification()?.addOnCompleteListener{ veritask ->
                     if (veritask.isSuccessful) {
                         result.postValue( "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.")
                         user.uid.let{
@@ -79,16 +77,15 @@ class AuthRepository {
                 result.postValue("Đăng ký thất bại: ${exception?.message}")
                 Log.e("DEBUGgg", "${exception?.message}")
             }
-
     }
     .addOnFailureListener { exception ->
-        result.postValue("Lỗi đăng nhập: ${exception.message}")
+        result.postValue("Lỗi đăng ký. Vui lòng kiểm tra lại mạng!")
         Log.e("DEBUGgg", "Thất bại hoàn toàn: ${exception.message}")
-    }
-        return result
         }
-    private fun pushUser(user:User, uid:String){
+        return result
+    }
 
+    private fun pushUser(user:User, uid:String){
             usersRef.child("users").child(uid).setValue(user)
             .addOnSuccessListener {
                 Log.d("sucessAddUser", "them thanh cong")
@@ -97,6 +94,7 @@ class AuthRepository {
                 Log.e("errorForPushUser", "loi ${error}")
             }
     }
+
      fun getUserByID(callback: (User?) -> Unit){
          Log.d("fsfss","co chay get userripository")
         val userID = mAuth.currentUser?.uid
@@ -128,6 +126,7 @@ class AuthRepository {
                    Log.e("errorForPushUser", "loi ${error}")
                }
     }
+
     suspend fun getOldTopicsFromUser():MutableList<String> {
         return withContext(kotlinx.coroutines.Dispatchers.IO) {
             try {

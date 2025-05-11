@@ -51,12 +51,12 @@ class UI_Login : AppCompatActivity() {
     private fun checkValid(username: String, password: String) {
         when {
             username.isEmpty() -> {
-                binding.txtUser.error = "Please enter username!"
+                binding.txtUser.error = "Vui lòng nhập email!"
                 binding.txtUser.requestFocus()
             }
 
             password.isEmpty() -> {
-                binding.txtPassword.error = "Please enter password!"
+                binding.txtPassword.error = "Vui lòng nhập password!"
                 binding.txtPassword.requestFocus()
             }
             else -> {
@@ -77,7 +77,7 @@ class UI_Login : AppCompatActivity() {
                 showErrorDialog(this, messenger)
             } else {
                 showSusscessDialog(this, messenger)
-
+                hideKeyboad()
             }
         }
     }
