@@ -16,10 +16,8 @@ class LearVocabularyViewModel: ViewModel() {
     val topics: LiveData<List<Topic>> get() = _topics
     private var _ListIdOldTopic = MutableLiveData<List<String>>()
     val ListIdOldTopic: LiveData<List<String>> get() = _ListIdOldTopic
-    // Biến lưu trữ danh sách đầy đủ để dùng khi lọc
-    private var allTopics: List<Topic> = listOf()
-    // Biến lưu trữ topic đang được chọn
-    private var selectedTopic: Topic? = null
+    private var _theme = MutableLiveData<List<String>>()
+    val theme: LiveData<List<String>> get() = _theme
     private val topicRepository = TopicRepository()
     private val authRepository = AuthRepository()
     fun fetchTopics() {
@@ -33,30 +31,22 @@ class LearVocabularyViewModel: ViewModel() {
             }
         }
         // Lưu lại danh sách đầy đủ
-        _topics.value?.let {
-            allTopics = it
-        }
+
     }
 
     // Phương thức lọc topics theo category
-    fun filterTopicsByCategory(category: String) {
-        if (category == "all") {
-            // Nếu chọn "all", hiển thị tất cả
-            _topics.value = allTopics
-        } else {
-            // Lọc theo category
-            _topics.value = allTopics.filter { it.NameTopic == category }
+    fun fetchTopicsByTheme(theme: String) {
+        viewModelScope.launch {
+            try {
+                val listTopics = topicRepository.getTopicByTheme(theme)
+                _topics.postValue(listTopics)
+            } catch (e: Exception) {
+                throw e
+                Log.e("HomeViewmodel", "loi ${e}")
+            }
         }
-    }
+        // Lưu lại danh sách đầy đủ
 
-    // Lấy topic đang được chọn
-    fun getSelectedTopic(): Topic? {
-        return selectedTopic
-    }
-
-    // Đặt topic được chọn
-    fun setSelectedTopic(topic: Topic) {
-        selectedTopic = topic
     }
 
     // Các phương thức hiện tại của bạn
@@ -89,14 +79,14 @@ class LearVocabularyViewModel: ViewModel() {
 
         // Thêm id mới vào đầu danh sách
         currentList.add(0, id)
-          Log.d("test", "${currentList.size}")
+        Log.d("test", "${currentList.size}")
         _ListIdOldTopic.postValue(currentList)
     }
 
-    fun updateUser(){
-        var listTopic =  ArrayList<OldTopic>()
+    fun updateUser() {
+        var listTopic = ArrayList<OldTopic>()
         _ListIdOldTopic.value?.forEach { id ->
-             var OldTopic = OldTopic(id)
+            var OldTopic = OldTopic(id)
             listTopic.add(OldTopic)
         }
 
@@ -107,5 +97,17 @@ class LearVocabularyViewModel: ViewModel() {
 
     }
 
+    fun getTheme() {
+        viewModelScope.launch {
+            try {
+                val listTheme = topicRepository.getTheme()
+                listTheme.add(0, "Tất cả")
+               _theme.postValue(listTheme)
+            } catch (e: Exception) {
+                throw e
+            }
+        }
 
+
+    }
 }

@@ -101,6 +101,41 @@ class TopicRepository {
 
         }
     }
+    suspend fun getTopicByTheme(id:String): MutableList<Topic>{
+        return withContext(Dispatchers.IO){
+            try {
+                var list = ArrayList<Topic>()
+                var snapshot = topicsRef.child(id).get().await()
+                for(item in snapshot.children) {
+                    var topic = item.getValue(Topic::class.java)
+                    if (topic != null) {
+                        list.add(topic)
+                    }
+                }
+                list
+            }catch (e:Exception){
+               Log.d("TopicRepository", "loi ${e}")
+                mutableListOf<Topic>()
+            }
+        }
+
+    }
+    suspend fun getTheme(): MutableList<String>{
+        return withContext(Dispatchers.IO){
+            try {
+                var list = ArrayList<String>()
+                var snapshot = topicsRef.get().await()
+                for(item in snapshot.children){
+                    var key = item.key.toString()
+                    list.add(key)
+                }
+                list
+            } catch (e:Exception){
+                Log.d("loigetTheme","${e}")
+                mutableListOf<String>()
+            }
+        }
+    }
 //    suspend fun getTopicByID(id:String): Topic? {
 //         return withContext(Dispatchers.IO){
 //            try {
