@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
@@ -22,23 +23,33 @@ import com.example.myproject.R
 import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.ViewModel.ProfileModel
 import com.example.myproject.databinding.ActivityProfileBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
 class Profile : AppCompatActivity() {
-    lateinit var binding: ActivityProfileBinding
-    private  var uriImage: Uri? = null
+    private lateinit var binding: ActivityProfileBinding
+    private var uriImage: Uri? = null
     private var url:String = ""
-    private var username:String = ""
-    private var password:String = ""
+//    private var username:String = ""
+//    private var password:String = ""
     private var userfromIntent:User? = null
     private val profileModel: ProfileModel by viewModels()
+
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            binding.profileImage.setImageURI(uri)
             uriImage = uri
-
+            Glide.with(this)
+                .load(uri)
+                .circleCrop()
+                .placeholder(R.drawable.avatar)
+                .error(R.drawable.avatar)
+                .into(binding.profileImage)
+            Snackbar.make(binding.root, "Ảnh đã được tải lên.", Snackbar.LENGTH_LONG).apply {
+                view.translationY = (-100f)
+                    show()
+            }
         }
     }
 
@@ -79,7 +90,6 @@ class Profile : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle("Xác nhận lưu")
                 .setPositiveButton("Xác nhận") { dialog, _ ->
-
                     if(uriImage == null){
                         val updatemap = mapOf<String, Any>(
                             "username" to binding.nameEditText.text.toString(),
@@ -102,8 +112,27 @@ class Profile : AppCompatActivity() {
 
         }
 
+        binding.logoutButton.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Xác nhận đăng xuất")
+                .setMessage("Bạn có chắc chắn muốn đăng xuất?")
+                .setPositiveButton("Đăng xuất") {dialog, _ ->
+                    // xoa thong tin dang nhap da luu
+                    val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().clear().apply()
 
+                    showToast("Đăng xuất thành công")
 
+                    // chuyen ve dang nhap
+                    val intent = Intent(this, UI_Login::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    finish()
+                }
+                .setNegativeButton("Hủy", null)
+                .show()
+        }
 
         // Xử lý sự kiện thay đổi ảnh đại diện
         binding.profileImage.setOnClickListener {
@@ -121,6 +150,7 @@ class Profile : AppCompatActivity() {
         menuInflater.inflate(R.menu.options_menu, menu)
         return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -177,7 +207,6 @@ class Profile : AppCompatActivity() {
 
     // hàm upload anh bang cloudinary
     private fun uploadToCloudinary(uri: Uri , callback:() -> Unit){
-
             val uploadPreset = "Lear_nihongo"
             com.cloudinary.android.MediaManager.get().upload(uri)
                 .unsigned(uploadPreset)
@@ -333,5 +362,9 @@ class Profile : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Mật khẩu không đúng, không thể xóa tài khoản", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showToast(msg:String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

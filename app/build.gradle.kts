@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.play.services.cast.tv)
     implementation(libs.androidx.espresso.core)
     implementation(libs.play.services.fido)
+    implementation(libs.firebase.firestore.ktx)
     kapt("androidx.room:room-compiler:2.6.1")
 
     // AndroidX
