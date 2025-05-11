@@ -3,6 +3,8 @@ import android.content.Context
 import android.util.Base64
 import com.imagekit.android.ImageKit
 import android.util.Log
+import android.widget.Toast
+import android.widget.Toast.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myproject.Model.OldTopic
@@ -146,6 +148,37 @@ class AuthRepository {
             }
 
         }
+    }
+    fun changePassword(oldPassword:String, newPassword:String, callback: (String) -> Unit){
+        val user = mAuth.currentUser
+
+
+        val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(user?.email.toString(), oldPassword)
+       user?.let {
+           user.reauthenticate(credential)
+               .addOnCompleteListener{ reAuthtask ->
+                   if(reAuthtask.isSuccessful){
+                       user.updatePassword(newPassword)
+                           .addOnCompleteListener{ updateTask->
+                               if (updateTask.isSuccessful){
+
+                                   var map = mapOf<String, Any>(
+                                       "password" to newPassword
+                                   )
+                                   updateUserByID(map)
+                                   callback("Đổi mật khẩu thành công")
+                               } else {
+                                   callback("Đổi mật khẩu thất bại")
+                               }
+                           }
+                   } else{
+                       callback("Mật khẩu cũ không đúng")
+                   }
+
+               }
+       }
+
+
     }
 
 }

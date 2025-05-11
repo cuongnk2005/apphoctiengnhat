@@ -260,6 +260,9 @@ class Profile : AppCompatActivity() {
                     newPassword.isEmpty() -> {
                         Toast.makeText(this, "Vui lòng nhập mật khẩu mới", Toast.LENGTH_SHORT).show()
                     }
+                    newPassword.length < 6 -> {
+                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới trên 5 kí tự", Toast.LENGTH_SHORT).show()
+                    }
                     newPassword != confirmPassword -> {
                         Toast.makeText(this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show()
                     }
@@ -275,20 +278,19 @@ class Profile : AppCompatActivity() {
 
     // Hàm xử lý đổi mật khẩu
     private fun changePassword(currentPassword: String, newPassword: String) {
-        // Kiểm tra mật khẩu hiện tại có đúng không
-        // Nếu đúng thì cập nhật mật khẩu mới
-
-        // Đây là giả lập việc kiểm tra mật khẩu, trong thực tế bạn cần kiểm tra với API hoặc dữ liệu lưu trữ
-        val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val savedPassword = sharedPreferences.getString("password", "")
-
-        if (currentPassword == savedPassword) {
-            // Cập nhật mật khẩu mới
-            sharedPreferences.edit().putString("password", newPassword).apply()
-            Toast.makeText(this, "Đã đổi mật khẩu thành công", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Mật khẩu hiện tại không đúng", Toast.LENGTH_SHORT).show()
+         profileModel.changePassword(currentPassword, newPassword){
+             showSusscessDialog(this, it)
+         }
+    }
+    private fun showSusscessDialog(context: Context, errorMessage: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Thông Báo")
+        builder.setMessage(errorMessage)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
         }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     // Hiển thị dialog xác nhận xóa tài khoản

@@ -16,4 +16,7 @@ class ProfileModel: ViewModel() {
     fun updateUserByID( map: Map<String, Any>){
         authReporitory.updateUserByID(map)
     }
+    fun changePassword(oldPassword:String, newPassword:String, callback: (String) -> Unit){
+        authReporitory.changePassword(oldPassword, newPassword, callback)
+    }
 }
