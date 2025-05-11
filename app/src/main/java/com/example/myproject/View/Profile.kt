@@ -47,7 +47,7 @@ class Profile : AppCompatActivity() {
                 .error(R.drawable.avatar)
                 .into(binding.profileImage)
             Snackbar.make(binding.root, "Ảnh đã được tải lên.", Snackbar.LENGTH_LONG).apply {
-                view.translationY = (-100f)
+                view.translationY = (-70f)
                     show()
             }
         }
@@ -183,6 +183,8 @@ class Profile : AppCompatActivity() {
                 if (newName.isNotEmpty()) {
                     // Gọi hàm thay đổi tên
                     changeName(newName)
+
+                    showToast("Đổi tên thành công!")
                 } else {
                     Toast.makeText(this, "Tên không được để trống", Toast.LENGTH_SHORT).show()
                 }
@@ -295,6 +297,7 @@ class Profile : AppCompatActivity() {
                     else -> {
                         // Gọi hàm thay đổi mật khẩu
                         changePassword(currentPassword, newPassword)
+
                     }
                 }
             }

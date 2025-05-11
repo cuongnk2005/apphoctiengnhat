@@ -20,16 +20,6 @@ class Intro : AppCompatActivity() {
         // Hide action bar if present
         supportActionBar?.hide()
 
-        // Set full screen (optional)
-        /*
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        }
-        */
-
         // Navigate to main activity after delay
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, UI_Login::class.java)

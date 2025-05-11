@@ -160,8 +160,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp"
-            >
+            android:padding="12dp">
+
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
@@ -180,12 +180,12 @@
                 android:id="@+id/signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="Don't have an account?"
-                android:layout_gravity="center"
-                android:textColor="#666666"
-                android:layout_marginBottom="16dp" />
+                android:textColor="#666666" />
 
             <!-- Register Button -->
             <Button
@@ -200,6 +200,15 @@
                 android:textColor="#333333"
                 android:textSize="18sp"
                 app:cornerRadius="12dp" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="#4CAF50"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -3,6 +3,7 @@ package com.example.myproject.View
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -10,6 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myproject.ViewModel.RegisterViewModel
 import com.example.myproject.databinding.ActivityRegisterBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class Register : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
@@ -31,8 +36,13 @@ class Register : AppCompatActivity() {
             checkValid(gmail,password,confirmPassword)
         }
         binding.btnLogin.setOnClickListener{
-            var intent = Intent(this,UI_Login::class.java)
-            startActivity(intent)
+            binding.loading.visibility = View.VISIBLE
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(500)
+                binding.loading.visibility = View.GONE
+                val intent = Intent(this@Register, UI_Login::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -87,8 +97,14 @@ class Register : AppCompatActivity() {
         builder.setMessage(errorMessage)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
-            val intent = Intent(this, UI_Login::class.java)
-            startActivity(intent)
+            binding.loading.visibility = View.VISIBLE
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(2000)
+                binding.loading.visibility = View.GONE
+                val intent = Intent(this@Register, UI_Login::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
         val dialog = builder.create()
         dialog.show()

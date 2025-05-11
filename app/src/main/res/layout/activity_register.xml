@@ -292,6 +292,15 @@
                     android:textColor="#333333"
                     android:textSize="18sp"
                     app:cornerRadius="12dp" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="#4CAF50"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
