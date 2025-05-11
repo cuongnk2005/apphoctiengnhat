@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myproject.Model.User
 import com.example.myproject.Repository.AuthRepository
-import com.google.firebase.firestore.FirebaseFirestore
+
 
 class ProfileModel: ViewModel() {
     private val authReporitory = AuthRepository()
@@ -18,6 +18,10 @@ class ProfileModel: ViewModel() {
     }
     fun updateUserByID( map: Map<String, Any>){
         authReporitory.updateUserByID(map)
+    }
+
+    fun changePassword(oldPassword:String, newPassword:String, callback: (String) -> Unit){
+        authReporitory.changePassword(oldPassword, newPassword, callback)
     }
 
 }
