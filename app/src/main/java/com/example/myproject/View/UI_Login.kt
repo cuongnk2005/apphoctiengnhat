@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.example.myproject.ViewModel.LoginViewModel
 import com.example.myproject.databinding.ActivityUiLoginBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class UI_Login : AppCompatActivity() {
     private val authModel: LoginViewModel by viewModels()
@@ -29,21 +34,23 @@ class UI_Login : AppCompatActivity() {
     }
 
     private fun events() {
-
-
         binding.btnLogin.setOnClickListener {
             val username = binding.txtUser.text.toString().trim()
             val pass = binding.txtPassword.text.toString().trim()
-
             checkValid(username, pass)
-//            hideKeyboad()
-
         }
 
 
         binding.btnRegister.setOnClickListener{
-            val intent = Intent(this, Register::class.java)
-            startActivity(intent)
+            binding.loading.visibility = View.VISIBLE
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(500)
+                binding.loading.visibility = View.GONE
+                val intent = Intent(this@UI_Login, Register::class.java)
+                startActivity(intent)
+                finish()
+            }
+
         }
 
     }
@@ -110,9 +117,19 @@ class UI_Login : AppCompatActivity() {
         builder.setMessage(errorMessage)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+
+            binding.loading.visibility = View.VISIBLE
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(2000)
+                binding.loading.visibility = View.GONE
+                val intent = Intent(this@UI_Login, MainActivity::class.java)
+                startActivity(intent)
+            }
+
         }
         val dialog = builder.create()
         dialog.show()

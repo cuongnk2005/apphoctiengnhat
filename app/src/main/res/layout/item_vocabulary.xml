@@ -21,11 +21,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/word_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="Hình ảnh từ vựng"
+                app:civ_border_color="@color/primaryColor"
+                app:civ_border_width="2dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/apple_example" />
         </androidx.cardview.widget.CardView>
