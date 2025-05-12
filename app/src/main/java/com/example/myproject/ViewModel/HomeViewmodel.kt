@@ -22,7 +22,7 @@ class HomeViewmodel: ViewModel() {
     fun fetchTopics(){
         viewModelScope.launch {
 try {
-    val listTopics = topicRepository.getOldTopics()
+    val listTopics = topicRepository.getOldTopicsByHome()
     _topics.postValue(listTopics)
 }catch (e: Exception){
     throw e

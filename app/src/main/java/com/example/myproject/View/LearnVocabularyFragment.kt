@@ -12,13 +12,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myproject.Adapter.LearnVocabulary_Adapter
+import com.example.myproject.Model.OldTopic
 import com.example.myproject.R
 import com.example.myproject.ViewModel.LearVocabularyViewModel
 import com.example.myproject.databinding.FragmentLearnVocabularyBinding
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-
-
 class LearnVocabularyFragment : Fragment() {
     private var _binding: FragmentLearnVocabularyBinding? = null
     private val binding get() = _binding!!
@@ -36,13 +34,19 @@ class LearnVocabularyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycleView()
-        viewModel.fetchTopics()
-        viewModel.getListIdOldTopic()
+
+
         observeViewModel()
         events()
         setupUI()
-    }
 
+    }
+    override fun onResume() {
+        super.onResume()
+        // Cập nhật danh sách topics hoặc trạng thái từ ViewModel
+      viewModel.fetchTopics()
+        viewModel.getListIdOldTopic()
+    }
     private fun setupUI() {
 //        setupChips()
         creatChip()
@@ -65,7 +69,7 @@ class LearnVocabularyFragment : Fragment() {
         adapterLear.onItemClick = { position ->
             val intent = Intent(requireContext(), LearnByFlashcard::class.java)
             val id: String = viewModel.getTopicByposition(position)?.id.toString()
-            viewModel.changeListIdOldTopic(id)
+            viewModel.changeListOldTopic(id)
             intent.putExtra("FLASHCARD_SET_ID", id)
             startActivity(intent)
         }
@@ -73,11 +77,10 @@ class LearnVocabularyFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.topics.observe(viewLifecycleOwner) { topics ->
-
-
-            adapterLear.submitList(topics)
+            val arrayList: ArrayList<OldTopic> = ArrayList(viewModel.ListOldTopic.value ?: emptyList())
+            adapterLear.updateData(topics,arrayList )
         }
-        viewModel.ListIdOldTopic.observe(viewLifecycleOwner) {
+        viewModel.ListOldTopic.observe(viewLifecycleOwner) {
             viewModel.updateUser()
         }
     }

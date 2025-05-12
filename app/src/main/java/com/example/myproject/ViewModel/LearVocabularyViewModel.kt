@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myproject.Model.OldTopic
 import com.example.myproject.Model.Topic
+import com.example.myproject.Model.User
 import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.Repository.TopicRepository
 import kotlinx.coroutines.launch
@@ -14,12 +15,14 @@ import kotlinx.coroutines.launch
 class LearVocabularyViewModel: ViewModel() {
     private var _topics = MutableLiveData<List<Topic>>()
     val topics: LiveData<List<Topic>> get() = _topics
-    private var _ListIdOldTopic = MutableLiveData<List<String>>()
-    val ListIdOldTopic: LiveData<List<String>> get() = _ListIdOldTopic
+    private var _ListOldTopic = MutableLiveData<List<OldTopic>>()
+    val ListOldTopic: LiveData<List<OldTopic>> get() = _ListOldTopic
     private var _theme = MutableLiveData<List<String>>()
     val theme: LiveData<List<String>> get() = _theme
     private val topicRepository = TopicRepository()
     private val authRepository = AuthRepository()
+    private var oldTopic = OldTopic()
+    private val userInstance = User()
     fun fetchTopics() {
         viewModelScope.launch {
             try {
@@ -45,7 +48,6 @@ class LearVocabularyViewModel: ViewModel() {
                 Log.e("HomeViewmodel", "loi ${e}")
             }
         }
-        // Lưu lại danh sách đầy đủ
 
     }
 
@@ -58,7 +60,7 @@ class LearVocabularyViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val listIdTopics = authRepository.getOldTopicsFromUser()
-                _ListIdOldTopic.postValue(listIdTopics)
+                _ListOldTopic.postValue(listIdTopics)
             } catch (e: Exception) {
 
             }
@@ -66,34 +68,14 @@ class LearVocabularyViewModel: ViewModel() {
 
     }
 
-    fun changeListIdOldTopic(id: String) {
-        val currentList = _ListIdOldTopic.value?.toMutableList() ?: mutableListOf()
-
-        // Nếu đã tồn tại id trong danh sách, xóa nó để tránh trùng lặp
-        currentList.remove(id)
-
-        // Nếu danh sách đã đủ 3 phần tử, xóa phần tử cuối cùng trước
-        if (currentList.size >= 3) {
-            currentList.removeAt(currentList.lastIndex)
-        }
-
-        // Thêm id mới vào đầu danh sách
-        currentList.add(0, id)
-        Log.d("test", "${currentList.size}")
-        _ListIdOldTopic.postValue(currentList)
+    fun changeListOldTopic(id: String) {
+        var currentList = _ListOldTopic.value?.toMutableList() ?: mutableListOf()
+        currentList =  oldTopic.changeListOldTopic(id, currentList)
+        _ListOldTopic.postValue(currentList)
     }
 
     fun updateUser() {
-        var listTopic = ArrayList<OldTopic>()
-        _ListIdOldTopic.value?.forEach { id ->
-            var OldTopic = OldTopic(id)
-            listTopic.add(OldTopic)
-        }
-
-        var map = mutableMapOf<String, Any>(
-            "listTopicStuded" to listTopic
-        )
-        authRepository.updateUserByID(map)
+        userInstance.updateUser(_ListOldTopic)
 
     }
 

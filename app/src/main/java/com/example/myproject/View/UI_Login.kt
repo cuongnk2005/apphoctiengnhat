@@ -112,6 +112,7 @@ class UI_Login : AppCompatActivity() {
             dialog.dismiss()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
         val dialog = builder.create()
         dialog.show()
