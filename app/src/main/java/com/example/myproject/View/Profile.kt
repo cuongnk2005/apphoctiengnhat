@@ -66,7 +66,6 @@ class Profile : AppCompatActivity() {
 
     private fun writeInformation(){
         userfromIntent = intent.getSerializableExtra("user121") as? User
-
         userfromIntent?.let {
             profileModel.setUserData(it)
             profileModel.user.observe(this){user ->

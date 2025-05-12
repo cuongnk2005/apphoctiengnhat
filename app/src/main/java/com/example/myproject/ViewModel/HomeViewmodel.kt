@@ -26,13 +26,13 @@ class HomeViewmodel: ViewModel() {
 
     fun fetchTopics(){
         viewModelScope.launch {
-try {
-    val listTopics = topicRepository.getOldTopicsByHome()
-    _topics.postValue(listTopics)
-}catch (e: Exception){
-    throw e
-    Log.e("HomeViewmodel", "loi ${e}")
-}
+            try {
+                val listTopics = topicRepository.getOldTopicsByHome()
+                _topics.postValue(listTopics)
+            }catch (e: Exception){
+                throw e
+                Log.e("HomeViewmodel", "loi ${e}")
+            }
         }
     }
     fun getUser(callback: (User?) -> Unit){
@@ -54,20 +54,21 @@ try {
     fun getTopicByposition(position: Int): Topic?{
         return _topics.value?.get(position)
     }
-       fun updatepercen(){
-          viewModelScope.launch {
-              val ListTopic = topicRepository.getTopics()
-              val total = ListTopic.size
-              authReporitory.getUserByID {
-                  if (it != null) {
-                 var leanerd =   it.listTopicStuded.count { it.status == true }
-                      var percent = (leanerd*100)/total
-                      _progressText.postValue("Tiến độ học tập: ${percent}%")
-                      _progressPercentage.postValue((leanerd*100)/total)
-                  }
+    fun updatepercen(){
+        viewModelScope.launch {
+            val ListTopic = topicRepository.getTopics()
+            val total = ListTopic.size
+            authReporitory.getUserByID {
+                if (it != null) {
+                    var leanerd =   it.listTopicStuded.count { it.status == true }
+                    var percent = (leanerd*100)/total
+                    _progressText.postValue("Tiến độ học tập: ${percent}%")
+                    _progressPercentage.postValue((leanerd*100)/total)
+                }
 
-              }
-          }
+            }
+        }
 
-      }
+    }
+>>>>>>> 7731c374b4abe37e926fa4b75fa2e7707d70995e
 }
