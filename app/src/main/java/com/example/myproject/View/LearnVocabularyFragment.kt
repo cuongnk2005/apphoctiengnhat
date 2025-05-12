@@ -68,12 +68,13 @@ class LearnVocabularyFragment : Fragment() {
         adapterLear = LearnVocabulary_Adapter()
         binding.wordRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.wordRecyclerView.adapter = adapterLear
-        adapterLear.onItemClick = { position ->
-            val intent = Intent(requireContext(), LearnByFlashcard::class.java)
+        adapterLear.onItemClick = {
+            position ->
+            val intentss = Intent(requireContext(), LearnByFlashcard::class.java)
             val id: String = viewModel.getTopicByposition(position)?.id.toString()
             viewModel.changeListOldTopic(id)
-            intent.putExtra("FLASHCARD_SET_ID", id)
-            startActivity(intent)
+            intentss.putExtra("FLASHCARD_SET_ID", id)
+            startActivity(intentss)
         }
     }
 
