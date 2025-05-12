@@ -23,6 +23,7 @@ class HomeViewmodel: ViewModel() {
 
     private val _progressPercentage = MutableLiveData<Int>()
     val progressPercentage: LiveData<Int> = _progressPercentage
+
     fun fetchTopics(){
         viewModelScope.launch {
 try {

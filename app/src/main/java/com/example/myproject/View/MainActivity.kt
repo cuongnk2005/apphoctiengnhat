@@ -2,6 +2,7 @@ package com.example.myproject.View
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,9 +32,23 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_search -> loadFragment(DictionarySearchFragment())
                 R.id.nav_study -> loadFragment(LearnVocabularyFragment())
                 R.id.nav_more -> {
-                    val intent = Intent(this, Profile::class.java)
-                    startActivity(intent)
-                    return@setOnItemSelectedListener false
+                    try {
+                        val user = homeviewModel.getUser {
+                            if (it != null) {
+                            val userForProfile: User = it
+                            val intent = Intent(this, Profile::class.java)
+                            intent.putExtra("user121", userForProfile)
+                            startActivity(intent)
+                        } else {
+                            Log.e("avatarClick", "User is null")
+                        }
+                        }
+
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        Log.e("avatarClick", "Error: ${e.message}")
+                    }
                 }
             }
             true
