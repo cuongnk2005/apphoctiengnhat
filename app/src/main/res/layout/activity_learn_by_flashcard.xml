@@ -97,9 +97,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_dont_know"
@@ -134,7 +134,7 @@
                     android:gravity="center"
                     android:text="水"
                     android:textColor="@color/primaryColor"
-                    android:textSize="120sp"
+                    android:textSize="80sp"
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
@@ -386,7 +386,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/errorColor"
         android:text="Không biết"
         android:textColor="@color/white"
@@ -400,7 +400,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/successColor"
         android:text="Đã biết"
         android:textColor="@color/white"
