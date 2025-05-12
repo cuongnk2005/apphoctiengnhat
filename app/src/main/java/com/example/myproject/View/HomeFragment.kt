@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         homeviewModel.fetchTopics()
         observeViewModel()
+        homeviewModel.updatepercen()
 
 
         // set Action cho image, để chuyển sang profile
@@ -97,8 +98,18 @@ class HomeFragment : Fragment() {
         homeviewModel.topics.observe(viewLifecycleOwner) { topic ->
             topic?.let{
                 adaterLervocabulary.updateData(topic)
+                binding.loadingProgressBar.visibility = View.GONE
+                binding.mainContentLayout.visibility = View.VISIBLE
             }
 
+        }
+        homeviewModel.progressText.observe(viewLifecycleOwner) { progressText ->
+            binding.progressText.text = progressText
+        }
+
+        // Observe progress percentage
+        homeviewModel.progressPercentage.observe(viewLifecycleOwner) { percentage ->
+            binding.progressBar.progress = percentage
         }
     }
 

@@ -43,6 +43,8 @@ class LearnVocabularyFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
+        binding.progressBar.visibility = View.VISIBLE
+        binding.wordRecyclerView.visibility = View.GONE
         // Cập nhật danh sách topics hoặc trạng thái từ ViewModel
       viewModel.fetchTopics()
         viewModel.getListIdOldTopic()
@@ -79,6 +81,8 @@ class LearnVocabularyFragment : Fragment() {
         viewModel.topics.observe(viewLifecycleOwner) { topics ->
             val arrayList: ArrayList<OldTopic> = ArrayList(viewModel.ListOldTopic.value ?: emptyList())
             adapterLear.updateData(topics,arrayList )
+            binding.progressBar.visibility = View.GONE
+            binding.wordRecyclerView.visibility = View.VISIBLE
         }
         viewModel.ListOldTopic.observe(viewLifecycleOwner) {
             viewModel.updateUser()

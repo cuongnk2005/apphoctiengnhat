@@ -112,27 +112,16 @@ class UI_Login : AppCompatActivity() {
         dialog.show()
     }
     private fun showSusscessDialog(context: Context, errorMessage: String) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông Báo")
-        builder.setMessage(errorMessage)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
 
             binding.loading.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.Main) {
-                delay(2000)
+                delay(1000)
                 binding.loading.visibility = View.GONE
                 val intent = Intent(this@UI_Login, MainActivity::class.java)
                 startActivity(intent)
-            }
+                finish()
 
         }
-        val dialog = builder.create()
-        dialog.show()
     }
 
 }
