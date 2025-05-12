@@ -13,8 +13,8 @@
         android:padding="12dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/lesson_number_card"
-        android:layout_width="60dp"
+    android:id="@+id/lesson_number_card"
+    android:layout_width="60dp"
     android:layout_height="60dp"
     app:cardBackgroundColor="@color/secondaryColor"
     app:cardCornerRadius="30dp"

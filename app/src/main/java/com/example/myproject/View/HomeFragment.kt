@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -50,8 +50,9 @@ class HomeFragment : Fragment() {
 
                 intent.putExtra("user121",userForProfile)
                 startActivity(intent)
+            }
         }
-        }
+
         binding.btnLearn.setOnClickListener{
             val activity = binding.root.context
             if (activity is MainActivity) {
