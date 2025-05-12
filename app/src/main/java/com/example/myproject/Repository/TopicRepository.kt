@@ -101,6 +101,35 @@ class TopicRepository {
 
         }
     }
+    suspend fun getOldTopicsByHome(): MutableList<Topic>{
+        return withContext(Dispatchers.IO){
+            try {
+                val UID = mAuth.currentUser?.uid.toString()
+                var snapshot = db.getReference("users").child(UID).child("listTopicStuded").get().await()
+                var list = ArrayList<Topic>()
+                for(item in snapshot.children){
+                    var oldtopic = item.getValue(OldTopic::class.java)
+                    if(oldtopic!=null){
+                        var topic = getTopicByID(oldtopic.id)
+                        topic?.let {
+                            list.add(it)
+                        }
+
+                    }
+                    if (list.size == 3){
+                        break
+                    }
+
+                }
+
+                list
+            } catch (e: Exception){
+                Log.e("TopicRepository", "loi ${e}")
+                mutableListOf<Topic>()
+            }
+
+        }
+    }
     suspend fun getTopicByTheme(id:String): MutableList<Topic>{
         return withContext(Dispatchers.IO){
             try {

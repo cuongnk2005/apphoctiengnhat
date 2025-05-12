@@ -127,23 +127,23 @@ class AuthRepository {
                }
     }
 
-    suspend fun getOldTopicsFromUser():MutableList<String> {
+    suspend fun getOldTopicsFromUser():MutableList<OldTopic> {
         return withContext(kotlinx.coroutines.Dispatchers.IO) {
             try {
                 val userID = mAuth.currentUser?.uid.toString()
                 val userRef = usersRef.child("users").child(userID).child("listTopicStuded")
                 val snapshot = userRef.get().await()
-                var listOldTopic = ArrayList<String>()
+                var listOldTopic = ArrayList<OldTopic>()
                 for (item in snapshot.children) {
                     var oldtopic = item.getValue(OldTopic::class.java)
                     if (oldtopic != null) {
-                        listOldTopic.add(oldtopic.id)
+                        listOldTopic.add(oldtopic)
                     }
                 }
 
                 listOldTopic
             } catch (e:Exception ){
-                mutableListOf<String>()
+                mutableListOf<OldTopic>()
             }
 
         }

@@ -117,6 +117,11 @@ class UI_Login : AppCompatActivity() {
         builder.setMessage(errorMessage)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+
             binding.loading.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.Main) {
                 delay(2000)
@@ -124,6 +129,7 @@ class UI_Login : AppCompatActivity() {
                 val intent = Intent(this@UI_Login, MainActivity::class.java)
                 startActivity(intent)
             }
+
         }
         val dialog = builder.create()
         dialog.show()

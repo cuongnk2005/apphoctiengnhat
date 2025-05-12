@@ -2,6 +2,7 @@ package com.example.myproject.View
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.activity.viewModels
 import com.example.myproject.Model.FlashcardModel
 import com.example.myproject.ViewModel.FlashcardViewModel
+import kotlinx.coroutines.delay
 import java.util.Locale
 
 class LearnByFlashcard : AppCompatActivity() {
@@ -33,7 +35,7 @@ class LearnByFlashcard : AppCompatActivity() {
     private var isFrontVisible = true
     private lateinit var tts: TextToSpeech
     private var mediaPlayer: MediaPlayer? = null
-
+    private var flashcardSetId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,7 +46,7 @@ class LearnByFlashcard : AppCompatActivity() {
         setupCardAnimations()
 
         // Get flashcard set ID from intent if available
-        val flashcardSetId = intent.getStringExtra("FLASHCARD_SET_ID")
+         flashcardSetId = intent.getStringExtra("FLASHCARD_SET_ID").toString()
         Log.d("eeeeeee", "$flashcardSetId")
         if (flashcardSetId != null) {
             viewModel.loadFlashcards(flashcardSetId)
@@ -61,7 +63,14 @@ class LearnByFlashcard : AppCompatActivity() {
     private fun setupObservers() {
         // Quan sát thẻ flash card hiện tại
         viewModel.currentFlashcard.observe(this) { flashcard ->
-            updateFlashcardDisplay(flashcard)
+            if(flashcard!= null){
+                updateFlashcardDisplay(flashcard)
+            } else {
+
+            viewModel.updateStatusOFLesson(flashcardSetId)
+                onBackPressed()
+            }
+
         }
 
         // Observe progress
@@ -132,15 +141,12 @@ class LearnByFlashcard : AppCompatActivity() {
             }
         }
 
-        // Audio pronunciation
-//        binding.btnAudio.setOnClickListener {
-//            playPronunciation()
-//        }
+
 
         // Navigation buttons
-        binding.btnPrevious.setOnClickListener {
-            viewModel.previousFlashcard()
-        }
+//        binding.btnPrevious.setOnClickListener {
+//            viewModel.previousFlashcard()
+//        }
 
         binding.btnNext.setOnClickListener {
             viewModel.nextFlashcard()
@@ -149,12 +155,11 @@ class LearnByFlashcard : AppCompatActivity() {
         // Knowledge tracking buttons
         binding.btnKnow.setOnClickListener {
             viewModel.markAsKnown()
-
             moveToNextCard()
         }
 
         binding.btnDontKnow.setOnClickListener {
-            viewModel.markAsUnknown()
+//            viewModel.markAsUnknown()
             moveToNextCard()
         }
     }
@@ -233,7 +238,9 @@ class LearnByFlashcard : AppCompatActivity() {
             .setTitle("Tùy chọn")
             .setItems(options) { _, which ->
                 when (which) {
-                    0 -> viewModel.resetAllFlashcardsProgress()
+                    0 -> {
+                        viewModel.updateStatusOFLesson(flashcardSetId,false)
+                        viewModel.resetAllFlashcardsProgress()}
                     1 -> Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show()
                     2 -> showAllFlashcardsDialog()
                     3 -> showFlashcardSetInfo()
