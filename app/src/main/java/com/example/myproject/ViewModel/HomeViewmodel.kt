@@ -70,5 +70,5 @@ class HomeViewmodel: ViewModel() {
         }
 
     }
->>>>>>> 7731c374b4abe37e926fa4b75fa2e7707d70995e
+
 }
