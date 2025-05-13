@@ -89,6 +89,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -97,6 +98,22 @@
                         android:textStyle="bold" />
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_vocab_set"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:boxBackgroundColor="@color/white"
+                        app:endIconMode="dropdown_menu">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/auto_vocab_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Chọn bộ từ"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Front Side -->
                     <TextView

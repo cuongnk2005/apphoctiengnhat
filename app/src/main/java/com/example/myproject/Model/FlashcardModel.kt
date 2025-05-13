@@ -10,17 +10,12 @@ data class FlashcardModel(
     val exampleJapanese: String = "",
     val exampleReading: String = "",
     val exampleMeaning: String = "",
-    val imageUrl: String = "",
-    val audioUrl: String = "",
-    var isKnown: Boolean = false,
-    var reviewCount: Int = 0,
-    var lastReviewedTime: Long = 0,
-    var nextReviewDue: Long = 0,
-    var accuracyRate: Float = 0f
+    var isKnown: Boolean = false
+
 ) {
     constructor() : this(
-        1, "", "", "", "", "", "", "", "", 
-        "", "", false, 0, 0, 0, 0f
+        1, "", "", "", "",  "", "",
+        "", "", false
     )
 }
 

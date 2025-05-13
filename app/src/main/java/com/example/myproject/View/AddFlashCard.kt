@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.myproject.R
+import com.example.myproject.ViewModel.AddFlashCardViewModel
 import com.example.myproject.databinding.ActivityAddFlashCardBinding
 
 
 class AddFlashCard : AppCompatActivity() {
     private lateinit var binding:ActivityAddFlashCardBinding
     private var isFabMenuOpen = false
+    private val addFlashCardViewmodel : AddFlashCardViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,6 +28,7 @@ class AddFlashCard : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         events()
         setupFabEvents()
+
 
     }
 
@@ -39,6 +43,7 @@ class AddFlashCard : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_of_add_flashcard, menu)
         return true
     }
+
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -186,7 +191,28 @@ class AddFlashCard : AppCompatActivity() {
 
     private fun handleCreateDeck() {
         // Xử lý logic tạo bộ thẻ
-        Toast.makeText(this, "Tạo bộ thẻ", Toast.LENGTH_SHORT).show()
+        val editext = EditText(this).apply {
+            hint = "Nhập tên bộ thẻ"
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Thêm bộ từ vựng")
+            .setView(editext)
+            .setPositiveButton("Thêm") { _, _ ->
+                val  inputtext = editext.text.toString()
+                if (inputtext!= null){
+                    addFlashCardViewmodel.addFlashcardIntoAnki(inputtext)
+                    Toast.makeText(this, "Thêm bộ thẻ $inputtext", Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(this, "Thêm that bai $inputtext", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+            .setNegativeButton("Hủy"){ dialog,_ ->
+                dialog.dismiss()
+
+            }
+            .create()
+            .show()
     }
 
     private fun handleAddItem() {
@@ -195,4 +221,5 @@ class AddFlashCard : AppCompatActivity() {
         startActivity(intent)
         Toast.makeText(this, "Thêm", Toast.LENGTH_SHORT).show()
     }
+
 }
