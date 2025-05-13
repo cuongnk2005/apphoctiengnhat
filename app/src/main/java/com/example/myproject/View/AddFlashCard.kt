@@ -1,5 +1,6 @@
 package com.example.myproject.View
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -17,6 +18,7 @@ import com.example.myproject.Adapter.Home_Adapter
 import com.example.myproject.R
 import com.example.myproject.ViewModel.AddFlashCardViewModel
 import com.example.myproject.databinding.ActivityAddFlashCardBinding
+import com.google.android.material.textfield.TextInputEditText
 
 
 class AddFlashCard : AppCompatActivity() {
@@ -42,9 +44,9 @@ class AddFlashCard : AppCompatActivity() {
         binding.rvFlashcards.layoutManager = LinearLayoutManager(this)
         binding.rvFlashcards.adapter = ankiAdapter
         ankiAdapter.onItemClick = { position ->
-            val intent = Intent(this, LearnByFlashcard::class.java)
+            val intent = Intent(this, FlashCardForMe::class.java)
 //            intent.putExtra("FLASHCARD_SET_ID", homeviewModel.getTopicByposition(position)?.id)
-//            startActivity(intent)
+            startActivity(intent)
         }
     }
     private fun observeViewModel(){
@@ -85,9 +87,6 @@ class AddFlashCard : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
-
 
     // setup su kien
     private fun setupFabEvents() {
@@ -211,30 +210,26 @@ class AddFlashCard : AppCompatActivity() {
         Toast.makeText(this, "Tạo bộ thẻ đã lọc", Toast.LENGTH_SHORT).show()
     }
 
+
+    @SuppressLint("MissingInflatedId")
     private fun handleCreateDeck() {
-        // Xử lý logic tạo bộ thẻ
-        val editext = EditText(this).apply {
-            hint = "Nhập tên bộ thẻ"
-        }
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_tag, null)
+        val nameTag = dialogView.findViewById<TextInputEditText>(R.id.etNameTag)
+
         AlertDialog.Builder(this)
             .setTitle("Thêm bộ từ vựng")
-            .setView(editext)
-            .setPositiveButton("Thêm") { _, _ ->
-                val  inputtext = editext.text.toString()
-                if (inputtext!= null){
-                    addFlashCardViewmodel.addFlashcardIntoAnki(inputtext)
-                    Toast.makeText(this, "Thêm bộ thẻ $inputtext", Toast.LENGTH_SHORT).show()
+            .setView(dialogView)
+            .setPositiveButton("Thêm") {dialog, _ ->
+                val inputText = nameTag.text.toString().trim()
+                if (inputText.isNotEmpty()){
+                    addFlashCardViewmodel.addFlashcardIntoAnki(inputText)
+                    Toast.makeText(this, "Thêm bộ thẻ $inputText", Toast.LENGTH_SHORT).show()
                     addFlashCardViewmodel.getBo()
                 } else{
-                    Toast.makeText(this, "Thêm that bai $inputtext", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Thêm thất bại $inputText", Toast.LENGTH_SHORT).show()
                 }
-
             }
-            .setNegativeButton("Hủy"){ dialog,_ ->
-                dialog.dismiss()
-
-            }
-            .create()
+            .setNegativeButton("Hủy", null)
             .show()
     }
 

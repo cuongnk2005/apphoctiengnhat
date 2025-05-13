@@ -14,7 +14,6 @@ private val ankiRepository = ankiRepository()
         viewModelScope.launch {
             ankiRepository.pushNameSetIntoAnki(name)
         }
-
     }
     fun getBo(){
         viewModelScope.launch {

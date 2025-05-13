@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MyProject"
         tools:targetApi="31">
         <activity
+            android:name=".View.FlashCardForMe"
+            android:exported="false" />
+        <activity
             android:name=".View.FormAddFlashCard"
             android:exported="false" />
         <activity

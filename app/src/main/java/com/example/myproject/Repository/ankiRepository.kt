@@ -20,6 +20,7 @@ class ankiRepository {
        var demoAnki = Anki()
         ankiref.child(userID).child(name).setValue("")
     }
+
     suspend fun pushflashcardIntoAnki(name:String,flashcardModel: AnkiFlashCard){
         val ankiref = db.getReference("anki")
         val userID = mAuth.currentUser?.uid.toString()
