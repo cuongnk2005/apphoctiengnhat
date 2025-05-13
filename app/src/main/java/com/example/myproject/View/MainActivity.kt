@@ -35,18 +35,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_study -> loadFragment(LearnVocabularyFragment())
                 R.id.nav_profile -> {
                     try {
-                        val user = homeviewModel.getUser {
-                            if (it != null) {
-                            val userForProfile: User = it
+
                             val intent = Intent(this, Profile::class.java)
-                            intent.putExtra("user121", userForProfile)
                             startActivity(intent)
-                        } else {
-                            Log.e("avatarClick", "User is null")
-                        }
-                        }
-
-
                     } catch (e: Exception) {
                         e.printStackTrace()
                         Log.e("avatarClick", "Error: ${e.message}")
@@ -81,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, targetActivity).apply {
             // Xóa các activity trước đó nếu cần
             if (clearTop) {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
 
             // Thêm dữ liệu nếu có

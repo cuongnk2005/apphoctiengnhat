@@ -23,5 +23,12 @@ class ProfileModel: ViewModel() {
     fun changePassword(oldPassword:String, newPassword:String, callback: (String) -> Unit){
         authReporitory.changePassword(oldPassword, newPassword, callback)
     }
+    fun getUser(){
+        authReporitory.getUserByID {
+            if (it != null) {
+                _user.postValue(it)
+            }
+        }
+    }
 
 }

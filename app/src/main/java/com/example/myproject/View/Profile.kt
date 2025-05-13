@@ -32,7 +32,6 @@ class Profile : AppCompatActivity() {
     private var url:String = ""
 //    private var username:String = ""
 //    private var password:String = ""
-    private var userfromIntent:User? = null
     private val profileModel: ProfileModel by viewModels()
 
     private val imagePickerLauncher = registerForActivityResult(
@@ -62,25 +61,23 @@ class Profile : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         writeInformation()
         events()
+        profileModel.getUser()
     }
 
     private fun writeInformation(){
-        userfromIntent = intent.getSerializableExtra("user121") as? User
-        userfromIntent?.let {
-            profileModel.setUserData(it)
-            profileModel.user.observe(this){user ->
-            binding.nameEditText.setText(it.username)
-            binding.emailEditText.setText(it.gmail)
-            if(user.url!= null){
-                Log.d("Url tu user", "${user.url}")
-                Glide.with(this)
-                    .load(user.url)
-                    .centerCrop()
-                    .error(R.drawable.avatar)
-                    .into(binding.profileImage)
-            }
-            }
-        }
+                profileModel.user.observe(this){user ->
+                    binding.nameEditText.setText(user.username)
+                    binding.emailEditText.setText(user.gmail)
+                    if(user.url!= null){
+                        Log.d("Url tu user", "${user.url}")
+                        Glide.with(this)
+                            .load(user.url)
+                            .centerCrop()
+                            .error(R.drawable.avatar)
+                            .into(binding.profileImage)
+                    }
+                }
+
 
     }
     private fun events() {
