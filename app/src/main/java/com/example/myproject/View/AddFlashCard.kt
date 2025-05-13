@@ -11,6 +11,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myproject.Adapter.AnkiAdapter
+import com.example.myproject.Adapter.Home_Adapter
 import com.example.myproject.R
 import com.example.myproject.ViewModel.AddFlashCardViewModel
 import com.example.myproject.databinding.ActivityAddFlashCardBinding
@@ -20,6 +23,7 @@ class AddFlashCard : AppCompatActivity() {
     private lateinit var binding:ActivityAddFlashCardBinding
     private var isFabMenuOpen = false
     private val addFlashCardViewmodel : AddFlashCardViewModel by viewModels()
+    private lateinit var ankiAdapter : AnkiAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,10 +32,28 @@ class AddFlashCard : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         events()
         setupFabEvents()
-
-
+        setupRecyclerView()
+        addFlashCardViewmodel.getBo()
+        observeViewModel()
     }
 
+    private fun setupRecyclerView(){
+        ankiAdapter = AnkiAdapter()
+        binding.rvFlashcards.layoutManager = LinearLayoutManager(this)
+        binding.rvFlashcards.adapter = ankiAdapter
+        ankiAdapter.onItemClick = { position ->
+            val intent = Intent(this, LearnByFlashcard::class.java)
+//            intent.putExtra("FLASHCARD_SET_ID", homeviewModel.getTopicByposition(position)?.id)
+//            startActivity(intent)
+        }
+    }
+    private fun observeViewModel(){
+        addFlashCardViewmodel.bo.observe(this){
+            ankiAdapter.updateData(it)
+            binding.emptyState.visibility= View.GONE
+        }
+
+    }
     private fun events() {
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -202,6 +224,7 @@ class AddFlashCard : AppCompatActivity() {
                 if (inputtext!= null){
                     addFlashCardViewmodel.addFlashcardIntoAnki(inputtext)
                     Toast.makeText(this, "Thêm bộ thẻ $inputtext", Toast.LENGTH_SHORT).show()
+                    addFlashCardViewmodel.getBo()
                 } else{
                     Toast.makeText(this, "Thêm that bai $inputtext", Toast.LENGTH_SHORT).show()
                 }

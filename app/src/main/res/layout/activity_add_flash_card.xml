@@ -20,8 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/backButton"
@@ -44,7 +43,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-
                 android:text="Thêm Thẻ Mới"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -53,7 +51,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/backButton"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -71,6 +68,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- RecyclerView for flashcards -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_flashcards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <!-- Empty state for when there are no flashcards -->
             <LinearLayout
                 android:id="@+id/empty_state"
@@ -83,7 +90,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/rv_flashcards">
 
                 <ImageView
                     android:layout_width="150dp"
@@ -107,31 +114,8 @@
                     android:text="Hãy thêm thẻ\nbằng biểu tượng +"
                     android:textColor="@color/secondaryTextColor" />
             </LinearLayout>
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fab_add_media"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:backgroundTint="@color/primaryColor"-->
-<!--        android:contentDescription="Thêm phương tiện"-->
-<!--        android:src="@drawable/ic_add_circle"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:tint="@color/white" />-->
-
-<!--    <include-->
-<!--        android:id="@+id/fab_menu_container"-->
-<!--        layout="@layout/activity_fab_main"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -144,7 +128,7 @@
             android:layout_height="match_parent"
             android:background="#80000000"
             android:alpha="0"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <!-- Container chứa toàn bộ menu FAB -->
         <LinearLayout
@@ -166,7 +150,7 @@
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_download"
-                app:iconTint="@color/white"/>
+                app:iconTint="@color/white" />
 
             <!-- Menu item 2: Tạo bộ thẻ đã lọc -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -179,7 +163,7 @@
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_filter"
-                app:iconTint="@color/white"/>
+                app:iconTint="@color/white" />
 
             <!-- Menu item 3: Tạo bộ thẻ -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -192,7 +176,7 @@
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_add_tag"
-                app:iconTint="@color/white"/>
+                app:iconTint="@color/white" />
 
             <!-- Menu item 4: Thêm -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -205,7 +189,8 @@
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_add_card"
-                app:iconTint="@color/white"/>
+                app:iconTint="@color/white" />
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_main"
