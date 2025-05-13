@@ -44,14 +44,8 @@ class HomeFragment : Fragment() {
 
         // set Action cho image, để chuyển sang profile
         binding.avatar.setOnClickListener {
-            val user = homeviewModel.getUserInViewModel()
-            if (user !== null) {
-                var userForProfile: User = user
                 val intent = Intent(requireContext(), Profile::class.java)
-
-                intent.putExtra("user121",userForProfile)
                 startActivity(intent)
-        }
         }
         binding.btnLearn.setOnClickListener{
             val activity = binding.root.context
