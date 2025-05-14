@@ -108,6 +108,7 @@ class AnkiScheduler(
         return newCard
     }
 
+
     // Xử lý thẻ trong giai đoạn ôn tập
     private fun handleReview(
         card: AnkiFlashCard,
@@ -153,5 +154,30 @@ class AnkiScheduler(
         }
 
         return newCard
+    }
+
+    fun handleReviewVersion2(
+        card: AnkiFlashCard
+    ): MutableList<String> {
+        val newCard = card.copy()
+        var list = mutableListOf<String>()
+        // Again: Chuyển sang Relearning
+                list.add("< ${learningSteps[1]} ph")
+                // Hard: Ôn lại sớm hơn
+                var interval = max(minimumInterval, (newCard.interval * hardInterval).toInt())
+                list.add("< ${interval} ng")
+             // Good: Tăng interval bình thường
+                 interval = max(
+                    minimumInterval,
+                    (newCard.interval * newCard.easeFactor * intervalModifier).toInt()
+                )
+                list.add("< ${interval} ng")
+             // Easy: Tăng interval nhiều hơn
+                 interval = max(
+                    minimumInterval,
+                    (newCard.interval * newCard.easeFactor * intervalModifier * easyBonus).toInt()
+                )
+                list.add("< ${interval} ng")
+        return list
     }
 }

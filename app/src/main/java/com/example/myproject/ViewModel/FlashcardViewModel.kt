@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myproject.Model.FlashcardModel
 import com.example.myproject.Model.FlashcardSetInfo
 import com.example.myproject.Model.OldTopic
-import com.example.myproject.Model.User
-import com.example.myproject.R
 import com.example.myproject.Repository.AuthRepository
 import com.example.myproject.Repository.TopicRepository
 import kotlinx.coroutines.launch

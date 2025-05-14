@@ -121,7 +121,7 @@ class DictionarySearchFragment : Fragment() {
                     message = "Không tìm thấy từ này!",
                     type = ToastType.ERROR
                 )
-//                Toast.makeText(requireContext(), "Không tìm thấy từ này", Toast.LENGTH_SHORT).show()
+
             }
         }
 
@@ -137,7 +137,7 @@ class DictionarySearchFragment : Fragment() {
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 viewModel.clearError()
             }
         }

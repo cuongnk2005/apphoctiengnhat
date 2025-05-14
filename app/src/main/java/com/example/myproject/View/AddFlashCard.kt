@@ -62,6 +62,7 @@ class AddFlashCard : AppCompatActivity() {
     private fun events() {
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+
         }
 
     }
