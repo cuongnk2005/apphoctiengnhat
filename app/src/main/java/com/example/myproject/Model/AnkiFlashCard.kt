@@ -5,16 +5,15 @@ import java.time.LocalDate
 class AnkiFlashCard( val id: Int = 1,
                      val tuvung: String = "",
                      val meaning: String = "",
-                     val romaji: String = "",
                      val exampleJapanese: String = "",
                      var easiness: Double = 2.5,
                      var repetition: Int = 0,
                      var interval: Int = 0,
                      var nextReviewDate: LocalDate = LocalDate.now()) {
 
-    constructor(): this(1,"","","","",2.5,0,0,LocalDate.now())
+    constructor(): this(1,"","","",2.5,0,0,LocalDate.now())
 
-//    fun  updateFlashCard(card: AnkiFlashCard, quality: Int){
+    //    fun  updateFlashCard(card: AnkiFlashCard, quality: Int){
 //        if(quality < 3){
 //            card.repetition = 0
 //            card.interval = 0
