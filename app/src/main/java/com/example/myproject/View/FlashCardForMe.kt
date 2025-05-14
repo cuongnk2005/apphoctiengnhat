@@ -78,10 +78,10 @@ class FlashCardForMe : AppCompatActivity() {
                     binding.btnGood.text = list[2]
                     binding.btnEasy.text = list[3]
                 } else {
-                    binding.btnAgain.text = list[0]
-                    binding.btnHard.text = list[1]
-                    binding.btnGood.text = list[2]
-                    binding.btnEasy.text = list[3]
+                    binding.btnAgain.text = ">1ph\nHọc lại"
+                    binding.btnHard.text = ">10ph \n Khó"
+                    binding.btnGood.text = ">1ng \n Tốt"
+                    binding.btnEasy.text = ">2ng \n Dễ"
                 }
                 tts = TextToSpeech(this) { status ->
                     if (status == TextToSpeech.SUCCESS) {
