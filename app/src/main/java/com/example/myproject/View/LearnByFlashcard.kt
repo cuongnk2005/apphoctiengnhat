@@ -74,11 +74,15 @@ class LearnByFlashcard : AppCompatActivity() {
             if(flashcard!= null){
                 updateFlashcardDisplay(flashcard)
             } else {
-
             viewModel.updateStatusOFLesson(flashcardSetId)
                 onBackPressed()
+                showCustomToast(
+                    context = this,
+                    title = "Thông báo",
+                    message = "Hoàn thành bài học!",
+                    type = ToastType.SUCCESS
+                )
             }
-
         }
 
         // Observe progress
