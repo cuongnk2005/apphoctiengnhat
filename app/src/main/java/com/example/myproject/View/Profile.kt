@@ -5,19 +5,26 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.myproject.Model.CloudinaryHelper
+import com.example.myproject.Model.ToastType
 import com.example.myproject.Model.User
 import com.example.myproject.R
 import com.example.myproject.Repository.AuthRepository
@@ -45,10 +52,16 @@ class Profile : AppCompatActivity() {
                 .placeholder(R.drawable.avatar)
                 .error(R.drawable.avatar)
                 .into(binding.profileImage)
-            Snackbar.make(binding.root, "Ảnh đã được tải lên.", Snackbar.LENGTH_LONG).apply {
-                view.translationY = (-70f)
-                    show()
-            }
+//            Snackbar.make(binding.root, "Ảnh đã được tải lên!", Snackbar.LENGTH_LONG).apply {
+//                view.translationY = (-70f)
+//                    show()
+//            }
+            showCustomToast(
+                context = this,
+                title = "Thành công",
+                message = "Ảnh đã được tải lên.",
+                type = ToastType.SUCCESS
+            )
         }
     }
 
@@ -117,7 +130,13 @@ class Profile : AppCompatActivity() {
                     val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
                     sharedPreferences.edit().clear().apply()
 
-                    showToast("Đăng xuất thành công")
+                    showCustomToast(
+                        context = this,
+                        title = "Thành công",
+                        message = "Đăng xuất thành công!",
+                        type = ToastType.SUCCESS
+                    )
+//                    showToast("Đăng xuất thành công")
 
                     // chuyen ve dang nhap
                     val intent = Intent(this, UI_Login::class.java)
@@ -179,10 +198,21 @@ class Profile : AppCompatActivity() {
                 if (newName.isNotEmpty()) {
                     // Gọi hàm thay đổi tên
                     changeName(newName)
-
-                    showToast("Đổi tên thành công!")
+                    showCustomToast(
+                        context = this,
+                        title = "Thành công",
+                        message = "Đổi tên thành công!",
+                        type = ToastType.SUCCESS
+                    )
+//                    showToast("Đổi tên thành công!")
                 } else {
-                    Toast.makeText(this, "Tên không được để trống", Toast.LENGTH_SHORT).show()
+                    showCustomToast(
+                        context = this,
+                        title = "Thành công",
+                        message = "Tên không được để trống!",
+                        type = ToastType.WARNING
+                    )
+//                    Toast.makeText(this, "Tên không được để trống", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Hủy", null)
@@ -231,11 +261,17 @@ class Profile : AppCompatActivity() {
                                 "url" to url
                             )
                             profileModel.updateUserByID(updatemap)
-                            Toast.makeText(
-                                this@Profile,
-                                "cập nhật thông tin thành công ",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                this@Profile,
+//                                "cập nhật thông tin thành công ",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            showCustomToast(
+                                context = this@Profile,
+                                title = "Thành công",
+                                message = "Cập nhật thông tin thành công!",
+                                type = ToastType.SUCCESS
+                            )
                             Log.d("sucesss", "upload Thanh cong$url")
                             callback()
                         }
@@ -282,21 +318,51 @@ class Profile : AppCompatActivity() {
 
                 when {
                     currentPassword.isEmpty() -> {
-                        Toast.makeText(this, "Vui lòng nhập mật khẩu hiện tại", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Vui lòng nhập mật khẩu hiện tại", Toast.LENGTH_SHORT).show()
+                        showCustomToast(
+                            context = this,
+                            title = "Cảnh báo",
+                            message = "Vui lòng nhập mật khẩu hiện tại!",
+                            type = ToastType.WARNING
+                        )
                     }
                     newPassword.isEmpty() -> {
-                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới", Toast.LENGTH_SHORT).show()
+                        showCustomToast(
+                            context = this,
+                            title = "Cảnh báo",
+                            message = "Vui lòng nhập mật khẩu mới!",
+                            type = ToastType.WARNING
+                        )
                     }
                     newPassword.length < 6 -> {
-                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới trên 5 kí tự", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới trên 5 kí tự", Toast.LENGTH_SHORT).show()
+                        showCustomToast(
+                            context = this,
+                            title = "Cảnh báo",
+                            message = "Vui lòng nhập mật khẩu mới trên 5 kí tự!",
+                            type = ToastType.WARNING
+                        )
+
                     }
                     newPassword != confirmPassword -> {
-                        Toast.makeText(this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show()
+                        showCustomToast(
+                            context = this,
+                            title = "Cảnh báo",
+                            message = "Mật khẩu mới không khớp!",
+                            type = ToastType.WARNING
+                        )
                     }
                     else -> {
                         // Gọi hàm thay đổi mật khẩu
                         changePassword(currentPassword, newPassword)
-
+                        showCustomToast(
+                            context = this,
+                            title = "Thành công",
+                            message = "Đổi mật khẩu thành công!",
+                            type = ToastType.SUCCESS
+                        )
                     }
                 }
             }
@@ -331,7 +397,13 @@ class Profile : AppCompatActivity() {
             .setPositiveButton("Xóa tài khoản") { dialog, _ ->
                 val password = passwordEditText.text.toString()
                 if (password.isEmpty()) {
-                    Toast.makeText(this, "Vui lòng nhập mật khẩu để xác nhận", Toast.LENGTH_SHORT).show()
+                    showCustomToast(
+                        context = this,
+                        title = "Thông báo",
+                        message = "Vui lòng nhập mật khẩu để xác nhận!",
+                        type = ToastType.INFO
+                    )
+//                    Toast.makeText(this, "Vui lòng nhập mật khẩu để xác nhận", Toast.LENGTH_SHORT).show()
                 } else {
                     // Gọi hàm xóa tài khoản
                     deleteAccount(password)
@@ -353,7 +425,13 @@ class Profile : AppCompatActivity() {
             sharedPreferences.edit().clear().apply()
 
             // Hiển thị thông báo và chuyển người dùng về màn hình đăng nhập
-            Toast.makeText(this, "Tài khoản đã được xóa", Toast.LENGTH_SHORT).show()
+            showCustomToast(
+                context = this,
+                title = "Thành công",
+                message = "Tài khoản đã được xóa thành công!",
+                type = ToastType.SUCCESS
+            )
+//            Toast.makeText(this, "Tài khoản đã được xóa", Toast.LENGTH_SHORT).show()
 
             // Chuyển đến màn hình đăng nhập và xóa stack hoạt động để người dùng không thể quay lại
             val intent = Intent(this, UI_Login::class.java)
@@ -361,11 +439,60 @@ class Profile : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            Toast.makeText(this, "Mật khẩu không đúng, không thể xóa tài khoản", Toast.LENGTH_SHORT).show()
+            showCustomToast(
+                context = this,
+                title = "Lỗi",
+                message = "Mật khẩu không đúng, không thể xóa tài khoản!",
+                type = ToastType.ERROR
+            )
+//            Toast.makeText(this, "Mật khẩu không đúng, không thể xóa tài khoản", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun showToast(msg:String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showCustomToast(context: Context, title: String, message: String, type: ToastType) {
+        val layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null)
+
+        // Thiết lập nội dung
+        layout.findViewById<TextView>(R.id.toast_title).text = title
+        layout.findViewById<TextView>(R.id.toast_message).text = message
+
+        // Thiết lập icon và màu sắc dựa trên loại thông báo
+        val iconView = layout.findViewById<ImageView>(R.id.toast_icon)
+        val container = layout.findViewById<LinearLayout>(R.id.custom_toast_container)
+
+        when (type) {
+            ToastType.SUCCESS -> {
+                iconView.setImageResource(R.drawable.ic_success)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_success_bg)
+            }
+            ToastType.ERROR -> {
+                iconView.setImageResource(R.drawable.ic_error)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_error_bg)
+            }
+            ToastType.WARNING -> {
+                iconView.setImageResource(R.drawable.ic_warning)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_warning_bg)
+            }
+            ToastType.INFO -> {
+                iconView.setImageResource(R.drawable.ic_info)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_info_bg)
+            }
+        }
+
+        // Tạo và hiển thị toast
+        val toast = Toast(context)
+        toast.setGravity(Gravity.TOP, 0, 100)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+
+        // Xử lý nút đóng
+        layout.findViewById<ImageView>(R.id.close_button).setOnClickListener {
+            toast.cancel()
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,13 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.myproject.Model.DictionaryEntry
+import com.example.myproject.Model.ToastType
 import com.example.myproject.R
 import com.example.myproject.Repository.DictionaryRepository
 import com.example.myproject.ViewModel.DictionaryViewModel
@@ -68,11 +73,23 @@ class DictionarySearchFragment : Fragment() {
         }
 
         binding.btnFavorite.setOnClickListener {
-            Toast.makeText(requireContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show()
+            showCustomToast(
+                context = requireContext(),
+                title = "Thành công",
+                message = "Đã thêm vào danh sách yêu thích!",
+                type = ToastType.SUCCESS
+            )
+//            Toast.makeText(requireContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnAudioResult.setOnClickListener {
-            Toast.makeText(requireContext(), "Chức năng phát âm đang được phát triển", Toast.LENGTH_SHORT).show()
+            showCustomToast(
+                context = requireContext(),
+                title = "Thông báo",
+                message = "Chức năng phát âm đang được phát triển!",
+                type = ToastType.INFO
+            )
+//            Toast.makeText(requireContext(), "Chức năng phát âm đang được phát triển", Toast.LENGTH_SHORT).show()
         }
 
 
@@ -98,7 +115,13 @@ class DictionarySearchFragment : Fragment() {
                 showResultCard()
             } else {
                 showEmptyState()
-                Toast.makeText(requireContext(), "Không tìm thấy từ này", Toast.LENGTH_SHORT).show()
+                showCustomToast(
+                    context = requireContext(),
+                    title = "Lỗi",
+                    message = "Không tìm thấy từ này!",
+                    type = ToastType.ERROR
+                )
+//                Toast.makeText(requireContext(), "Không tìm thấy từ này", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -125,9 +148,58 @@ class DictionarySearchFragment : Fragment() {
         if (query.isNotEmpty()) {
             viewModel.searchWord(query)
         } else {
-            Toast.makeText(requireContext(), "Vui lòng nhập từ cần tra cứu", Toast.LENGTH_SHORT).show()
+            showCustomToast(
+                context = requireContext(),
+                title = "Thông báo",
+                message = "Vui lòng nhập từ cần tra cứu!",
+                type = ToastType.WARNING
+            )
+//            Toast.makeText(requireContext(), "Vui lòng nhập từ cần tra cứu", Toast.LENGTH_SHORT).show()
         }
         hideKeyboard()
+    }
+
+    private fun showCustomToast(context: Context, title: String, message: String, type: ToastType) {
+        val layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null)
+
+        // Thiết lập nội dung
+        layout.findViewById<TextView>(R.id.toast_title).text = title
+        layout.findViewById<TextView>(R.id.toast_message).text = message
+
+        // Thiết lập icon và màu sắc dựa trên loại thông báo
+        val iconView = layout.findViewById<ImageView>(R.id.toast_icon)
+        val container = layout.findViewById<LinearLayout>(R.id.custom_toast_container)
+
+        when (type) {
+            ToastType.SUCCESS -> {
+                iconView.setImageResource(R.drawable.ic_success)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_success_bg)
+            }
+            ToastType.ERROR -> {
+                iconView.setImageResource(R.drawable.ic_error)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_error_bg)
+            }
+            ToastType.WARNING -> {
+                iconView.setImageResource(R.drawable.ic_warning)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_warning_bg)
+            }
+            ToastType.INFO -> {
+                iconView.setImageResource(R.drawable.ic_info)
+                container.background = ContextCompat.getDrawable(context, R.drawable.toast_info_bg)
+            }
+        }
+
+        // Tạo và hiển thị toast
+        val toast = Toast(context)
+        toast.setGravity(Gravity.TOP, 0, 100)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+
+        // Xử lý nút đóng
+        layout.findViewById<ImageView>(R.id.close_button).setOnClickListener {
+            toast.cancel()
+        }
     }
 
     private fun updateResultCard(entry: DictionaryEntry) {

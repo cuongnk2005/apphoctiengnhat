@@ -85,6 +85,7 @@ class FlashCardForMe : AppCompatActivity() {
         binding.tvAnswer.visibility = View.INVISIBLE
         binding.tvExample.visibility = View.INVISIBLE
         binding.tvFurigana.visibility = View.INVISIBLE
+
         binding.btnShowAnswer.visibility = View.VISIBLE
         binding.bottomActionBar.visibility = View.GONE
 
@@ -104,6 +105,7 @@ class FlashCardForMe : AppCompatActivity() {
         currentIndex = (currentIndex + 1) % flashCardList.size // Vòng lặp lại khi hết danh sách
         return flashCard
     }
+
     private val flashCardList = listOf(
         AnkiFlashCard(
             id = 1,
