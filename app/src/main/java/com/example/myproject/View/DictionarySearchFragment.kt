@@ -57,12 +57,6 @@ class DictionarySearchFragment : Fragment() {
     }
 
     private fun setupEvents() {
-        binding.btnBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-//            val intent = Intent(requireContext(), HomeFragment::class.java)
-//            startActivity(intent)
-        }
-
         binding.btnSearch.setOnClickListener {
             performSearch()
         }

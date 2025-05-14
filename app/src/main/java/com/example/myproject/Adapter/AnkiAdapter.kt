@@ -12,7 +12,6 @@ class AnkiAdapter:RecyclerView.Adapter<AnkiAdapter.AnkiViewHolder>(){
     private var listAnki = listOf<String>();
     inner class AnkiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtlessontitle: TextView = itemView.findViewById(R.id.lesson_title)
-        val imgLesson: ImageView = itemView.findViewById(R.id.lesson_image)
     }
     var onItemClick: ((Int) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnkiViewHolder {

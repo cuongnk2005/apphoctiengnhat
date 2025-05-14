@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Initially invisible and rotated 180 degrees -->
+    <!-- Ban đầu ẩn và xoay 180 độ -->
     <objectAnimator
         android:duration="0"
         android:propertyName="alpha"
@@ -13,7 +13,15 @@
         android:valueFrom="180"
         android:valueTo="180" />
 
-    <!-- Rotate back to 0 and make visible -->
+    <!-- Hiệu ứng hiển thị - cần thực hiện TRƯỚC khi xoay để tránh hiển thị view đang lật -->
+    <objectAnimator
+        android:duration="1"
+        android:propertyName="alpha"
+        android:startOffset="150"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+
+    <!-- Xoay về 0 độ -->
     <objectAnimator
         android:duration="300"
         android:propertyName="rotationY"
@@ -22,11 +30,4 @@
         android:valueTo="0"
         android:valueType="floatType"
         android:interpolator="@android:interpolator/accelerate_decelerate" />
-
-    <objectAnimator
-        android:duration="1"
-        android:propertyName="alpha"
-        android:startOffset="150"
-        android:valueFrom="0.0"
-        android:valueTo="1.0" />
 </set>

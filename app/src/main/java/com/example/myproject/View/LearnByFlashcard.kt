@@ -74,11 +74,15 @@ class LearnByFlashcard : AppCompatActivity() {
             if(flashcard!= null){
                 updateFlashcardDisplay(flashcard)
             } else {
-
             viewModel.updateStatusOFLesson(flashcardSetId)
                 onBackPressed()
+                showCustomToast(
+                    context = this,
+                    title = "Thông báo",
+                    message = "Hoàn thành bài học!",
+                    type = ToastType.SUCCESS
+                )
             }
-
         }
 
         // Observe progress
@@ -211,32 +215,32 @@ class LearnByFlashcard : AppCompatActivity() {
         }
     }
 
-    private fun playPronunciation() {
-        try {
-            // Get current flashcard audio resource
-//            val audioResId = viewModel.getCurrentFlashcardAudioResourceId()
-
-            // Release previous media player if exists
-            mediaPlayer?.release()
-
-            // Create and start new media player
-//            mediaPlayer = MediaPlayer.create(this, audioResId)
-//            mediaPlayer?.start()
-
-            // Set completion listener to release resources
-            mediaPlayer?.setOnCompletionListener {
-                it.release()
-            }
-        } catch (e: Exception) {
-//            Toast.makeText(this, "Không thể phát âm thanh", Toast.LENGTH_SHORT).show()
-            showCustomToast(
-                context = this,
-                title = "Thông báo",
-                message = "Chức năng phát âm thanh đang phát triển",
-                type = ToastType.INFO
-            )
-        }
-    }
+//    private fun playPronunciation() {
+//        try {
+//            // Get current flashcard audio resource
+////            val audioResId = viewModel.getCurrentFlashcardAudioResourceId()
+//
+//            // Release previous media player if exists
+//            mediaPlayer?.release()
+//
+//            // Create and start new media player
+////            mediaPlayer = MediaPlayer.create(this, audioResId)
+////            mediaPlayer?.start()
+//
+//            // Set completion listener to release resources
+//            mediaPlayer?.setOnCompletionListener {
+//                it.release()
+//            }
+//        } catch (e: Exception) {
+////            Toast.makeText(this, "Không thể phát âm thanh", Toast.LENGTH_SHORT).show()
+//            showCustomToast(
+//                context = this,
+//                title = "Thông báo",
+//                message = "Chức năng phát âm thanh đang phát triển",
+//                type = ToastType.INFO
+//            )
+//        }
+//    }
 
     private fun moveToNextCard() {
         // Thêm độ trễ nhỏ để người dùng kịp nhận phản hồi trước khi đổi thẻ.

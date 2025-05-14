@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Rotate -->
+    <!-- Hiển thị ban đầu ở trạng thái đầy đủ -->
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="alpha"
+        android:valueFrom="1.0"
+        android:valueTo="1.0" />
+
+    <!-- Ẩn khi đạt đến góc nhìn cạnh (khoảng giữa quá trình xoay)
+         Điều này đảm bảo view sẽ biến mất trước khi nó xoay quá 90 độ -->
+    <objectAnimator
+        android:propertyName="alpha"
+        android:duration="1"
+        android:startOffset="249"
+        android:valueFrom="1.0"
+        android:valueTo="0.0" />
+
+    <!-- Xoay từ 0 đến 180 độ -->
     <objectAnimator
         android:propertyName="rotationY"
         android:duration="500"
@@ -8,12 +24,4 @@
         android:valueTo="180"
         android:valueType="floatType"
         android:interpolator="@android:interpolator/accelerate_decelerate" />
-
-    <!-- Change alpha to handle halfway point visibility -->
-    <objectAnimator
-        android:propertyName="alpha"
-        android:duration="1"
-        android:startOffset="250"
-        android:valueFrom="1.0"
-        android:valueTo="0.0" />
 </set>

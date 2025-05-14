@@ -37,7 +37,6 @@ class LearnVocabularyFragment : Fragment() {
 
 
         observeViewModel()
-        events()
         setupUI()
 
     }
@@ -56,9 +55,7 @@ class LearnVocabularyFragment : Fragment() {
     }
 
 
-    private fun events() {
 
-    }
 
     private fun setUpRecycleView() {
         adapterLear = LearnVocabulary_Adapter()

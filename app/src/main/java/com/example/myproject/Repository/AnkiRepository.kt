@@ -19,7 +19,7 @@ class AnkiRepository {
         val ankiref = db.getReference("anki")
         val userID = mAuth.currentUser?.uid.toString()
        var demoAnki = Anki()
-        ankiref.child(userID).child(name).setValue("")
+       ankiref.child(userID).child(name).setValue("")
     }
 
     suspend fun pushflashcardIntoAnki(name:String,flashcardModel: AnkiFlashCard){
@@ -43,7 +43,7 @@ class AnkiRepository {
                 val snapshot = ankiref.child(userID).get().await()
                 for (item in snapshot.children) {
                     val key = item.key.toString()
-                    if (key != null) {
+                    if (key.isNotEmpty()) {
                         list.add(key)
 
                     }

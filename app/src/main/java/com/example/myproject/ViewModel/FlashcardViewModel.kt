@@ -57,9 +57,6 @@ class FlashcardViewModel : ViewModel() {
 
             }
         }
-
-
-
     }
 
 
@@ -120,14 +117,11 @@ class FlashcardViewModel : ViewModel() {
         updateProgress()
     }
 
-
-
     // Reset progress for all flashcards
     fun resetAllFlashcardsProgress() {
         flashcards.forEach { it.isKnown = false }
         learnFlashcards = flashcards.toMutableList()
         updateProgress()
-
     }
 
 
@@ -136,16 +130,16 @@ class FlashcardViewModel : ViewModel() {
         return flashcards
     }
 
-    // Get information about the current flashcard set
+    // Get infor
     fun getFlashcardSetInfo(): FlashcardSetInfo {
         return flashcardSet
     }
 
-    // Update progress indicators
+    // update progress
     private fun updateProgress() {
         val learnedCards = flashcards.count { it.isKnown }
         val totalCards = flashcards.size
-        val currentCard = currentPosition + 1
+//        val currentCard = currentPosition + 1
         _progressText.value = "$learnedCards/$totalCards từ"
         val progressPercentage = (learnedCards * 100) / totalCards
         _progressPercentage.value = progressPercentage
