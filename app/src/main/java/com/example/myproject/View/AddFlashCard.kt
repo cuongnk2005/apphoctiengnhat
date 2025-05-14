@@ -3,6 +3,7 @@ package com.example.myproject.View
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -45,7 +46,9 @@ class AddFlashCard : AppCompatActivity() {
         binding.rvFlashcards.adapter = ankiAdapter
         ankiAdapter.onItemClick = { position ->
             val intent = Intent(this, FlashCardForMe::class.java)
-//            intent.putExtra("FLASHCARD_SET_ID", homeviewModel.getTopicByposition(position)?.id)
+            var name = addFlashCardViewmodel.getAnkiByPosition(position);
+            Log.d("eenameeee", " co chay nayy $name")
+            intent.putExtra("FLASHCARD_SET_Name", addFlashCardViewmodel.getAnkiByPosition(position))
             startActivity(intent)
         }
     }
