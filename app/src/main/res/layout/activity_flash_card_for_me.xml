@@ -14,59 +14,6 @@
         android:elevation="2dp"
         android:background="@color/primaryColor"
         app:layout_constraintTop_toTopOf="parent">
-
-        <!-- Header -->
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/header"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/backButton"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                android:clickable="true"-->
-<!--                android:contentDescription="Quay lại"-->
-<!--                android:focusable="true"-->
-<!--                android:padding="4dp"-->
-<!--                android:src="@drawable/ic_back"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:tint="@color/white" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/header_title"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="16dp"-->
-<!--                android:text="Thêm Thẻ Mới"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/backButton"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/undoButton"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                android:clickable="true"-->
-<!--                android:contentDescription="Quay lại"-->
-<!--                android:focusable="true"-->
-<!--                android:padding="4dp"-->
-<!--                android:src="@drawable/ic_undo"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:tint="@color/white" />-->
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
         <LinearLayout
             android:id="@+id/header"
             android:orientation="horizontal"
@@ -154,14 +101,24 @@
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
-
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
     <!-- Phần flash card chính -->
     <FrameLayout
+        android:id="@+id/framelayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/statsBar">
 
         <!-- Phần flash card chính -->
@@ -286,7 +243,7 @@
             android:layout_weight="1"
             android:backgroundTint="#4CAF50"
             android:padding="16dp"
-            android:text="&lt;10ph\nTốt"
+            android:text="&lt;1ng\nTốt"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="0dp"/>
