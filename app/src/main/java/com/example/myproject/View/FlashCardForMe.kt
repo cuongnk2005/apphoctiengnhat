@@ -9,9 +9,11 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myproject.Model.Anki
+import com.example.myproject.Model.CardState
 import com.example.myproject.Model.AnkiFlashCard
+import com.example.myproject.Model.AnkiScheduler
 import com.example.myproject.Model.AnswerRatting
+
 import com.example.myproject.R
 import com.example.myproject.ViewModel.LearAnkiFlashCardModel
 
@@ -26,6 +28,7 @@ class FlashCardForMe : AppCompatActivity() {
     private var greenCount = 0
     private lateinit var tts: TextToSpeech
     private var currentCard:AnkiFlashCard? = null
+    private val ankiScheduler = AnkiScheduler()
     private val learFlashCardViewModel : LearAnkiFlashCardModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +42,7 @@ class FlashCardForMe : AppCompatActivity() {
 
         if (name != "") {
             learFlashCardViewModel.getAnkiFlashCardByName(name)
-
         }
-
         observeViewModel()
     }
    private fun observeViewModel(){
@@ -61,6 +62,13 @@ class FlashCardForMe : AppCompatActivity() {
                 binding.tvFurigana.text = currentCard.romaji
                 binding.progressBar.visibility = View.GONE
                 binding.framelayout.visibility = View.VISIBLE
+                if(currentCard.state == CardState.REVIEW){
+                   val list = ankiScheduler.handleReviewVersion2(currentCard)
+                    binding.btnAgain.text = list[0]
+                    binding.btnHard.text = list[1]
+                    binding.btnGood.text = list[2]
+                    binding.btnEasy.text = list[3]
+                }
                 tts = TextToSpeech(this) { status ->
                     if (status == TextToSpeech.SUCCESS) {
                         tts.language = Locale.JAPAN
@@ -89,10 +97,7 @@ class FlashCardForMe : AppCompatActivity() {
 
         }
         binding.btnHard.setOnClickListener {
-
             recordAnswer(AnswerRatting.HARD)
-
-
         }
         binding.btnGood.setOnClickListener {
 
@@ -130,18 +135,11 @@ class FlashCardForMe : AppCompatActivity() {
 
     private fun loadNextCard() {
 
-
          learFlashCardViewModel.getNextCurrentCard()
-
-
 
     }
 
-//    private fun getNextFlashCard(): AnkiFlashCard {
-//        val flashCard = flashCardList[currentIndex]
-//        currentIndex = (currentIndex + 1) % flashCardList.size // Vòng lặp lại khi hết danh sách
-//        return flashCard
-//    }
+
 
     private fun recordAnswer(rating: AnswerRatting) {
         currentCard?.let { card ->

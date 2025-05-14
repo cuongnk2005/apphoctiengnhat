@@ -19,13 +19,13 @@ private var _currentCard = MutableLiveData<AnkiFlashCard?>()
     val currentCard : LiveData<AnkiFlashCard?> get() = _currentCard
 private var currentpoint = 0
     private var listFlashCard = mutableListOf<AnkiFlashCard>()
-    private var listPrioritize = mutableListOf<AnkiFlashCard>()
+
     private var ankiScheduler = AnkiScheduler()
     private var nameAnki = ""
 fun getAnkiFlashCardByName(name: String){
     this.nameAnki = name
     viewModelScope.launch {
-        _ankiflashcard.value = ankiRepository.getAnkiFlasCardByNameForLear(name)
+        _ankiflashcard.value = ankiRepository.getAnkiFlasCardByName(name)
         val now = LocalDateTime.now()
         listFlashCard = _ankiflashcard.value?.sortedWith(compareBy(
             { LocalDateTime.parse(it.nextReviewDate).isAfter(now.plusMinutes(1)) },
