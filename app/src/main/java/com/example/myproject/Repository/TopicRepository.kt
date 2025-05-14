@@ -50,12 +50,8 @@ class TopicRepository {
     suspend fun getTopics(): MutableList<Topic>{
         return withContext(Dispatchers.IO){
             try {
-//
                 var list = ArrayList<Topic>()
-
                 var snapshotTheme = topicsRef.get().await()
-
-
                 for(item in snapshotTheme.children){
                     val key:String = item.key.toString()
                     var snapshotTopic = topicsRef.child(key).get().await()
@@ -71,8 +67,7 @@ class TopicRepository {
         } catch (e: Exception){
                Log.e("TopicRepository", "loi ${e}")
                 mutableListOf<Topic>()
-        }
-
+            }
         }
     }
 
