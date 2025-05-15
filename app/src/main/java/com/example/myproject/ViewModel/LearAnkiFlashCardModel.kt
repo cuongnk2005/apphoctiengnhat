@@ -25,7 +25,7 @@ class LearAnkiFlashCardModel: ViewModel() {
     fun getAnkiFlashCardByName(name: String){
         this.nameAnki = name
         viewModelScope.launch {
-            _ankiflashcard.value = ankiRepository.getAnkiFlasCardByName(name)
+            _ankiflashcard.value = ankiRepository.getAnkiFlasCardByNameForLear(name)
             val now = LocalDateTime.now()
             listFlashCard = _ankiflashcard.value?.sortedWith(compareBy(
                 { LocalDateTime.parse(it.nextReviewDate).isAfter(now.plusMinutes(1)) },

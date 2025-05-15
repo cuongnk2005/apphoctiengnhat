@@ -162,22 +162,22 @@ class AnkiScheduler(
         val newCard = card.copy()
         var list = mutableListOf<String>()
         // Again: Chuyển sang Relearning
-                list.add("< ${learningSteps[1]} ph")
+                list.add("< ${learningSteps[1]} ph\nHọc lại")
                 // Hard: Ôn lại sớm hơn
                 var interval = max(minimumInterval, (newCard.interval * hardInterval).toInt())
-                list.add("< ${interval} ng")
+                list.add("< ${interval} ng\nKhó")
              // Good: Tăng interval bình thường
                  interval = max(
                     minimumInterval,
                     (newCard.interval * newCard.easeFactor * intervalModifier).toInt()
                 )
-                list.add("< ${interval} ng")
+                list.add("< ${interval} ng\nTốt")
              // Easy: Tăng interval nhiều hơn
                  interval = max(
                     minimumInterval,
                     (newCard.interval * newCard.easeFactor * intervalModifier * easyBonus).toInt()
                 )
-                list.add("< ${interval} ng")
+                list.add("< ${interval} ng\nDễ")
         return list
     }
 }
