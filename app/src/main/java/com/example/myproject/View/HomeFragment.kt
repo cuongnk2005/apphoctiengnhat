@@ -51,7 +51,6 @@ class HomeFragment : Fragment() {
             val activity = binding.root.context
             if (activity is MainActivity) {
                 activity.loadLearFragment(LearnVocabularyFragment())
-
             }
         }
 
@@ -84,8 +83,6 @@ class HomeFragment : Fragment() {
         homeviewModel.topics.observe(viewLifecycleOwner) { topic ->
             topic?.let{
                 adaterLervocabulary.updateData(topic)
-                binding.loadingProgressBar.visibility = View.GONE
-                binding.mainContentLayout.visibility = View.VISIBLE
             }
 
         }
@@ -96,6 +93,8 @@ class HomeFragment : Fragment() {
         // Observe progress percentage
         homeviewModel.progressPercentage.observe(viewLifecycleOwner) { percentage ->
             binding.progressBar.progress = percentage
+            binding.loadingProgressBar.visibility = View.GONE
+            binding.mainContentLayout.visibility = View.VISIBLE
         }
     }
 

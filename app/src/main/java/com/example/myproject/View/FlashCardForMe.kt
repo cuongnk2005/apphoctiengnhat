@@ -45,7 +45,6 @@ class FlashCardForMe : AppCompatActivity() {
         setClickListeners()
         loadNextCard()
         var name = intent.getStringExtra("FLASHCARD_SET_Name").toString()
-
         if (name != "") {
             learFlashCardViewModel.getAnkiFlashCardByName(name)
         }
@@ -182,14 +181,14 @@ class FlashCardForMe : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_info -> {
-
-                true
-            }
-            R.id.action_reset -> {
-
-                true
-            }
+//            R.id.action_info -> {
+//
+//                true
+//            }
+//            R.id.action_reset -> {
+//
+//                true
+//            }
             R.id.action_delete -> {
                 learFlashCardViewModel.deleteFlashCard()
                 true

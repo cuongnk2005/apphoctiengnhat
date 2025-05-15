@@ -55,9 +55,16 @@ class AddFlashCard : AppCompatActivity() {
         setupFabEvents()
         setupRecyclerView()
         addFlashCardViewmodel.getBo()
+
         observeViewModel()
     }
-
+    override fun onResume() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.contentLayout.visibility = View.GONE
+        super.onResume()
+        addFlashCardViewmodel.getBo()
+        Log.d("cochay", "co chay resum")
+    }
     private fun setupRecyclerView(){
         ankiAdapter = AnkiAdapter()
         binding.rvFlashcards.layoutManager = LinearLayoutManager(this)
@@ -72,16 +79,17 @@ class AddFlashCard : AppCompatActivity() {
         }
     }
 
+
     private fun setupSwipeToDelete() {
         val swipeToDeleteCallback = object : ItemTouchHelper.SimpleCallback(
             0, ItemTouchHelper.LEFT
         ) {
-            private val deleteIcon = ContextCompat.getDrawable(
+             val deleteIcon = ContextCompat.getDrawable(
                 this@AddFlashCard,
                 R.drawable.ic_delete // Hãy đảm bảo bạn có ic_delete trong thư mục drawable
             )
 
-            private val background = ColorDrawable(Color.RED)
+             val background = ColorDrawable(Color.RED)
 
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -90,6 +98,7 @@ class AddFlashCard : AppCompatActivity() {
             ): Boolean {
                 return false // Không hỗ trợ di chuyển mục
             }
+
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
@@ -161,8 +170,20 @@ class AddFlashCard : AppCompatActivity() {
 
     private fun observeViewModel(){
         addFlashCardViewmodel.bo.observe(this){
-            ankiAdapter.updateData(it)
-            binding.emptyState.visibility= View.GONE
+            addFlashCardViewmodel.getListValue()
+            Log.d("jhfs", "${it.size}")
+            if (it.isNotEmpty()){
+                ankiAdapter.updateBo(it)
+                binding.emptyState.visibility= View.GONE
+            } else{
+                binding.emptyState.visibility= View.VISIBLE
+            }
+        }
+        addFlashCardViewmodel.countState.observe(this){
+            Log.d("jshvs", "co thay doi")
+            ankiAdapter.UpdateValue(it)
+            binding.progressBar.visibility = View.GONE
+            binding.contentLayout.visibility = View.VISIBLE
         }
 
     }
@@ -338,7 +359,6 @@ class AddFlashCard : AppCompatActivity() {
     private fun handleCreateDeck() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_tag, null)
         val nameTag = dialogView.findViewById<TextInputEditText>(R.id.etNameTag)
-
         AlertDialog.Builder(this)
             .setTitle("Thêm bộ từ vựng")
             .setView(dialogView)
@@ -422,6 +442,7 @@ class AddFlashCard : AppCompatActivity() {
         layout.findViewById<ImageView>(R.id.close_button).setOnClickListener {
             toast.cancel()
         }
+
     }
 
 }

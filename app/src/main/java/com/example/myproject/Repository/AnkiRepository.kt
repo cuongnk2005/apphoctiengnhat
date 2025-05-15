@@ -17,7 +17,7 @@ class AnkiRepository {
     //    private var topicsRef = db.getReference("topics")
     private var mAuth = FirebaseAuth.getInstance()
 
-    suspend fun pushNameSetIntoAnki(name:String){
+     fun pushNameSetIntoAnki(name:String){
         val ankiref = db.getReference("anki")
         val userID = mAuth.currentUser?.uid.toString()
         var demoAnki = Anki()
@@ -116,6 +116,9 @@ class AnkiRepository {
                     }
                 }
                 Log.d("listFlashcard","${list.size}")
+                for (itemt in list){
+                    Log.d("listFlashcard","${itemt.toString()}")
+                }
                 list
             } catch (e: Exception) {
                 Log.d("ksjkfs","$e")

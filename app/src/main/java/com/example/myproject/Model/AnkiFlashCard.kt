@@ -76,7 +76,6 @@ class AnkiScheduler(
             }
 
             1 -> { // Hard: Ôn lại sau bước hiện tại hoặc bước trước
-                newCard.learningStep = max(0, newCard.learningStep - 1)
                 newCard.nextReviewDate = currentTime.plusMinutes(learningSteps[newCard.learningStep].toLong()).toString()
                 if (isRelearning) {
                     newCard.easeFactor = max(1.3, newCard.easeFactor - 0.15)
