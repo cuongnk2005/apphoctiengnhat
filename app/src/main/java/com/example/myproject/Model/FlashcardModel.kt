@@ -30,19 +30,19 @@ data class FlashcardSetInfo(
 )
 
 // Status for tracking flashcard learning state
-enum class FlashcardStatus {
-    NEW,        // Not studied yet
-    LEARNING,   // Currently being learned
-    KNOWN,      // Marked as known
-    REVIEW      // Needs review
-}
-
-// User progress for a specific flashcard
-data class UserFlashcardProgress(
-    val flashcardId: Int,
-    var status: FlashcardStatus = FlashcardStatus.NEW,
-    var reviewCount: Int = 0,
-    var lastReviewed: Long = 0,  // Timestamp
-    var nextReviewDue: Long = 0, // Timestamp for next review based on SRS
-    var accuracyRate: Float = 0f // Accuracy rate in quizzes
-)
+//enum class FlashcardStatus {
+//    NEW,        // Not studied yet
+//    LEARNING,   // Currently being learned
+//    KNOWN,      // Marked as known
+//    REVIEW      // Needs review
+//}
+//
+//// User progress for a specific flashcard
+//data class UserFlashcardProgress(
+//    val flashcardId: Int,
+//    var status: FlashcardStatus = FlashcardStatus.NEW,
+//    var reviewCount: Int = 0,
+//    var lastReviewed: Long = 0,  // Timestamp
+//    var nextReviewDue: Long = 0, // Timestamp for next review based on SRS
+//    var accuracyRate: Float = 0f // Accuracy rate in quizzes
+//)

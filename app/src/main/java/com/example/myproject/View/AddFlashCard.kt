@@ -27,6 +27,10 @@ class AddFlashCard : AppCompatActivity() {
     private var isFabMenuOpen = false
     private val addFlashCardViewmodel : AddFlashCardViewModel by viewModels()
     private lateinit var ankiAdapter : AnkiAdapter
+    private var currentIndex = 0
+    private var blueCount = 0
+    private var redCount = 0
+    private var greenCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

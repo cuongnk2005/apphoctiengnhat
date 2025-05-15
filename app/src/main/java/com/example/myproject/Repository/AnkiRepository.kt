@@ -10,6 +10,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
+
 class AnkiRepository {
     private val db = FirebaseDatabase.getInstance()
 //    private var topicsRef = db.getReference("topics")
@@ -135,6 +136,26 @@ class AnkiRepository {
 
 
         }
+    }
+    fun deleteAnki(name: String){
+        val nodeRef = db.getReference("anki").child(mAuth.currentUser?.uid.toString()).child(name)
+        nodeRef.removeValue()
+            .addOnSuccessListener { aVoid: Void? ->
+                Log.d("Firebase", "Node đã được xóa")
+            }
+            .addOnFailureListener { e: java.lang.Exception? ->
+                Log.e("Firebase", "Lỗi khi xóa node", e)
+            }
+    }
+    fun deleteAnkiFlashCard(id:String, name:String){
+        val nodeRef = db.getReference("anki").child(mAuth.currentUser?.uid.toString()).child(name).child(id)
+        nodeRef.removeValue()
+            .addOnSuccessListener { aVoid: Void? ->
+                Log.d("Firebase", "Node đã được xóa")
+            }
+            .addOnFailureListener { e: java.lang.Exception? ->
+                Log.e("Firebase", "Lỗi khi xóa node", e)
+            }
     }
 
 }

@@ -63,4 +63,8 @@ class LearAnkiFlashCardModel: ViewModel() {
 
 
     }
+    fun deleteFlashCard(){
+        ankiRepository.deleteAnkiFlashCard(_currentCard.value?.id.toString(), this.nameAnki)
+        getAnkiFlashCardByName(nameAnki)
+    }
 }
