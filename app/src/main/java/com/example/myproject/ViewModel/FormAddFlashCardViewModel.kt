@@ -21,7 +21,10 @@ class FormAddFlashCardViewModel: ViewModel() {
         viewModelScope.launch {
             _bo.value = ankiRepository.getNameAnki()
         }
-
     }
+
+
+
+
 
 }
