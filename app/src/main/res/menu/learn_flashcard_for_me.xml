@@ -7,10 +7,10 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_info"
-        android:title="Xem thông tin bộ thẻ"
+        android:title="Sửa tên bộ thẻ"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_delete"
-        android:title="Xóa thẻ"
+        android:title="Xóa thẻ "
         app:showAsAction="never" />
 </menu>

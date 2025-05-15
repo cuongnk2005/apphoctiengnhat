@@ -50,7 +50,7 @@ class AddFlashCard : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityAddFlashCardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar)
         events()
         setupFabEvents()
         setupRecyclerView()
@@ -181,23 +181,23 @@ class AddFlashCard : AppCompatActivity() {
 
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_delete -> {
-
-                true
-            }
-            R.id.action_check -> {
-
-                true
-            }
-            R.id.action_manage -> {
-
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_delete -> {
+//
+//                true
+//            }
+//            R.id.action_check -> {
+//
+//                true
+//            }
+//            R.id.action_manage -> {
+//
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     // setup su kien
     private fun setupFabEvents() {
