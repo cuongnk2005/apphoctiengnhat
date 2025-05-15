@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
+import kotlin.math.log
 
 
 class AnkiRepository {
@@ -134,7 +135,21 @@ class AnkiRepository {
                     }
             } catch (e: Exception) {
 
+        }
+    }
 
+    fun deleteAnki(name: String) {
+        try {
+            val userID = mAuth.currentUser?.uid.toString()
+            val referent = db.getReference("anki").child(userID).child(name).removeValue()
+                .addOnSuccessListener {
+                    Log.d("deleteAnki", "xoa thanh cong")
+                }
+                .addOnFailureListener { error ->
+                    Log.e("deleteAnki", "loi ${error}")
+                }
+        } catch (e:Exception) {
+            Log.e("deleteAnki", "SDFS")
         }
     }
     fun deleteAnki(name: String){

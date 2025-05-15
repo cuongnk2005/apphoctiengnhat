@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myproject.R
 
 class AnkiAdapter:RecyclerView.Adapter<AnkiAdapter.AnkiViewHolder>(){
-    private var listAnki = listOf<String>();
+    private var listAnki = mutableListOf<String>()
     inner class AnkiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtlessontitle: TextView = itemView.findViewById(R.id.lesson_title)
     }
     var onItemClick: ((Int) -> Unit)? = null
+    var onItemDelete: ((String) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnkiViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_anki, parent, false)
         return AnkiViewHolder(view)
@@ -29,7 +31,15 @@ class AnkiAdapter:RecyclerView.Adapter<AnkiAdapter.AnkiViewHolder>(){
         return listAnki.size
     }
     fun updateData(newTopics: List<String>) {
-        listAnki = newTopics
+        listAnki = newTopics.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun deleteItem(position: Int): String {
+        val delete = listAnki[position]
+        listAnki.removeAt(position)
+        notifyItemRemoved(position)
+        onItemDelete?.invoke(delete)
+        return delete
     }
 }

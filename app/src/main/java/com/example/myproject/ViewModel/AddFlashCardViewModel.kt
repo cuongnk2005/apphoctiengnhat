@@ -9,7 +9,8 @@ import kotlinx.coroutines.launch
 class AddFlashCardViewModel: ViewModel() {
     private val _bo = MutableLiveData<List<String>>()
     val bo: MutableLiveData<List<String>> get() = _bo
-private val ankiRepository = AnkiRepository()
+    private val ankiRepository = AnkiRepository()
+
     fun addFlashcardIntoAnki(name:String){
         viewModelScope.launch {
             ankiRepository.pushNameSetIntoAnki(name)
@@ -28,6 +29,13 @@ private val ankiRepository = AnkiRepository()
             anki = list[position]
         }
         return anki
+    }
+
+
+    fun removeFlashcardFromAnki(name: String) {
+        viewModelScope.launch {
+            ankiRepository.deleteAnki(name)
+        }
     }
 
 }
