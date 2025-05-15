@@ -27,14 +27,13 @@ class AnkiRepository {
     suspend fun pushflashcardIntoAnki(name:String,flashcardModel: AnkiFlashCard){
         val ankiref = db.getReference("anki")
         val userID = mAuth.currentUser?.uid.toString()
-
-        var listFlashcard: MutableList<AnkiFlashCard> = getAnkiFlasCardByName(name)
-
-        listFlashcard.add(flashcardModel)
-        var map = mutableMapOf<String,Any>(
-            "ankiflashcard" to listFlashcard
-        )
-        ankiref.child(userID).child(name).updateChildren(map)
+//        var listFlashcard: MutableList<AnkiFlashCard> = getAnkiFlasCardByName(name)
+//
+//        listFlashcard.add(flashcardModel)
+//        var map = mutableMapOf<String,Any>(
+//            "ankiflashcard" to listFlashcard
+//        )
+        ankiref.child(userID).child(name).push().setValue(flashcardModel)
     }
     suspend fun getNameAnki() :MutableList<String>{
         return withContext(Dispatchers.IO) {
@@ -80,11 +79,11 @@ class AnkiRepository {
             try {
                 var list = mutableListOf<AnkiFlashCard>()
                 val userID = mAuth.currentUser?.uid.toString()
-                val snapshot = db.getReference("anki").child(userID).child(name).child("ankiflashcard").get().await()
+                val snapshot = db.getReference("anki").child(userID).child(name).get().await()
                 for (item in snapshot.children) {
                     val ankiFlashCard = item.getValue(AnkiFlashCard::class.java)
                     if (ankiFlashCard != null) {
-                        ankiFlashCard.id = item.key!!.toInt()
+                        ankiFlashCard.id = item.key!!
                         list.add(ankiFlashCard)
                     }
                 }
@@ -99,19 +98,21 @@ class AnkiRepository {
     suspend fun getAnkiFlasCardByNameForLear(name: String): MutableList<AnkiFlashCard> {
         return withContext(Dispatchers.IO) {
             try {
+
                 var list = mutableListOf<AnkiFlashCard>()
                 val userID = mAuth.currentUser?.uid.toString()
-                val snapshot = db.getReference("anki").child(userID).child(name).child("ankiflashcard").get().await()
+                val snapshot = db.getReference("anki").child(userID).child(name).get().await()
                 for (item in snapshot.children) {
-                    val ankiFlashCard = item.getValue(AnkiFlashCard::class.java)
+                    var snapshotversion2 = db.getReference("anki").child(userID).child(name)
+                        .child(item.key.toString()).get().await()
+                    val ankiFlashCard = snapshotversion2.getValue(AnkiFlashCard::class.java)
                     if (ankiFlashCard != null) {
-                        ankiFlashCard.id = item.key!!.toInt()
+                        ankiFlashCard.id = item.key!!
                         val now = LocalDateTime.now()
                         val ankiTime = LocalDateTime.parse(ankiFlashCard.nextReviewDate)
                         if(ankiTime.isBefore(now)){
                             list.add(ankiFlashCard)
                         }
-
                     }
                 }
                 Log.d("listFlashcard","${list.size}")
@@ -126,7 +127,7 @@ class AnkiRepository {
         try {
             var list = mutableListOf<AnkiFlashCard>()
             val userID = mAuth.currentUser?.uid.toString()
-            val referent = db.getReference("anki").child(userID).child(name).child("ankiflashcard").child(card.id.toString()).setValue(card)
+            val referent = db.getReference("anki").child(userID).child(name).child(card.id.toString()).setValue(card)
                 .addOnSuccessListener {
                     Log.d("sucessUpdateCard", "them thanh cong")
                 }
@@ -153,10 +154,10 @@ class AnkiRepository {
         }
     }
 
-    fun deleteAnkiFlashCard(id:Int, name:String){
+    fun deleteAnkiFlashCard(id:String, name:String){
         val nodeRef = db.getReference("anki").child(mAuth.currentUser?.uid.toString()).child(name).child(id.toString())
         nodeRef.removeValue()
-            .addOnSuccessListener { aVoid: Void? ->
+            .addOnSuccessListener {
                 Log.d("Firebase", "Node đã được xóa")
             }
             .addOnFailureListener { e: java.lang.Exception? ->

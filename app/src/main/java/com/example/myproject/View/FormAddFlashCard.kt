@@ -78,7 +78,7 @@ class FormAddFlashCard : AppCompatActivity() {
                 )
 //                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             } else{
-                val flashCard = AnkiFlashCard(1,front,back,example,tags)
+                val flashCard = AnkiFlashCard("",front,back,example,tags)
                 formAddFlashCardViewModel.pushFlashCardIntoAnki(nameAnki,flashCard)
                 showCustomToast(
                     context = this,

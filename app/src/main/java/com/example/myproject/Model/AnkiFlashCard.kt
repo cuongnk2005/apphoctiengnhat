@@ -10,7 +10,7 @@ enum class CardState {
     NEW, LEARNING, REVIEW, RELEARNING
 }
 
-data class AnkiFlashCard( var id: Int = 10,
+data class AnkiFlashCard( var id: String = "",
                           val tuvung: String = "",
                           val meaning: String = "",
                           val exampleJapanese: String = "",
@@ -22,7 +22,7 @@ data class AnkiFlashCard( var id: Int = 10,
                           var interval: Int = 0,
                           var nextReviewDate:String = LocalDateTime.now().toString()) {
 
-    constructor(): this(1,"","","","",CardState.NEW,2.5,0,0,0,LocalDateTime.now().toString())
+    constructor(): this("","","","","",CardState.NEW,2.5,0,0,0,LocalDateTime.now().toString())
 
     override fun toString(): String {
         return "AnkiFlashCard(id=$id, tuvung='$tuvung', meaning='$meaning', exampleJapanese='$exampleJapanese', romaji='$romaji', easiness=$easeFactor, repetition=$repetitions, interval=$interval, nextReviewDate=$nextReviewDate)"
