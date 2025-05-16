@@ -69,28 +69,34 @@ class FormAddFlashCard : AppCompatActivity() {
             val back = binding.editBack.text.toString()
             val example = binding.editExample.text.toString()
             val tags = binding.editTags.text.toString()
-            if(front.isEmpty() || back.isEmpty() || example.isEmpty() || tags.isEmpty()){
+            if(front.isEmpty() || back.isEmpty()){
                 showCustomToast(
                     context = this,
                     title = "Thông báo",
-                    message = "Vui lòng nhập đầy đủ thông tin!",
+                    message = "Vui lòng nhập thông tin mặt trước và mặt sau!",
                     type = ToastType.WARNING
                 )
 //                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             } else{
-                val flashCard = AnkiFlashCard(1,front,back,example,tags)
+                val flashCard = AnkiFlashCard("",front,back,example,tags)
                 formAddFlashCardViewModel.pushFlashCardIntoAnki(nameAnki,flashCard)
                 showCustomToast(
                     context = this,
                     title = "Thông báo",
                     message = "Thêm thẻ thành công!",
-                    type = ToastType.WARNING
+                    type = ToastType.SUCCESS
                 )
-//                Toast.makeText(this, "Thêm thẻ thành công", Toast.LENGTH_SHORT).show()
-//                onBackPressedDispatcher.onBackPressed()   
+                clearText()
+
             }
 
         }
+    }
+    private fun clearText(){
+        binding.editFront.setText("")
+        binding.editBack.setText("")
+        binding.editExample.setText("")
+        binding.editTags.setText("")
     }
 
     private fun showCustomToast(context: Context, title: String, message: String, type: ToastType) {

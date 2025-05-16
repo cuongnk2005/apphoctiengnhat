@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 data class JapaneseFlashcard(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-
     // Mặt trước thẻ
     val kanji: String,          // Chữ Kanji
     val hiragana: String,       // Phiên âm hiragana

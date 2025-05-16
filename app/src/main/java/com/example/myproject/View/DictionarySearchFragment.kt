@@ -3,6 +3,7 @@ package com.example.myproject.View
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
@@ -29,14 +30,15 @@ import com.example.myproject.Repository.DictionaryRepository
 import com.example.myproject.ViewModel.DictionaryViewModel
 import com.example.myproject.ViewModel.DictionaryViewModelFactory
 import com.example.myproject.databinding.FragmentDictionarySearchBinding
+import java.util.Locale
 
 class DictionarySearchFragment : Fragment() {
 
     private var _binding: FragmentDictionarySearchBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var tts: TextToSpeech
     private lateinit var viewModel: DictionaryViewModel
-
+    private var tuvung = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,12 +80,13 @@ class DictionarySearchFragment : Fragment() {
         }
 
         binding.btnAudioResult.setOnClickListener {
-            showCustomToast(
-                context = requireContext(),
-                title = "Thông báo",
-                message = "Chức năng phát âm đang được phát triển!",
-                type = ToastType.INFO
-            )
+            tts = TextToSpeech(requireContext()) { status ->
+                if (status == TextToSpeech.SUCCESS) {
+                    tts.language = Locale.JAPAN
+                    var nihongo = tuvung
+                    tts.speak(nihongo, TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+            }
 //            Toast.makeText(requireContext(), "Chức năng phát âm đang được phát triển", Toast.LENGTH_SHORT).show()
         }
 
@@ -200,6 +203,12 @@ class DictionarySearchFragment : Fragment() {
         binding.wordType.text = entry.wordType
         binding.wordTitle.text = "Mean: ${entry.meaning}"
         binding.wordDecribe.text = "Decribe: ${entry.decribe}"
+//
+//=======
+//        binding.wordType.text = entry.partOfSpeech
+//        binding.wordTitle.text = "1. ${entry.meaning}"
+//        binding.wordDecribe.text = entry.explanation
+        this.tuvung = entry.reading
 
         if (entry.example.isNotEmpty()) {
             binding.wordExample.visibility = View.VISIBLE

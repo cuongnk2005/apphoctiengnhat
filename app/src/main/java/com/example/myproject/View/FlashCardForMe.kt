@@ -31,10 +31,7 @@ import java.util.Locale
 
 class FlashCardForMe : AppCompatActivity() {
     private lateinit var binding : ActivityFlashCardForMeBinding
-    private var currentIndex = 0
-    private var blueCount = 0
-    private var redCount = 0
-    private var greenCount = 0
+
     private lateinit var tts: TextToSpeech
     private var currentCard:AnkiFlashCard? = null
     private val ankiScheduler = AnkiScheduler()
@@ -48,7 +45,6 @@ class FlashCardForMe : AppCompatActivity() {
         setClickListeners()
         loadNextCard()
         var name = intent.getStringExtra("FLASHCARD_SET_Name").toString()
-
         if (name != "") {
             learFlashCardViewModel.getAnkiFlashCardByName(name)
         }
@@ -142,8 +138,6 @@ class FlashCardForMe : AppCompatActivity() {
         binding.btnShowAnswer.visibility = View.VISIBLE
         binding.bottomActionBar.visibility = View.GONE
     }
-
-
     private fun showAnswer() {
         binding.tvAnswer.visibility = View.VISIBLE
         binding.tvExample.visibility = View.VISIBLE
@@ -154,9 +148,7 @@ class FlashCardForMe : AppCompatActivity() {
     }
 
     private fun loadNextCard() {
-
         learFlashCardViewModel.getNextCurrentCard()
-
     }
 
 
@@ -189,16 +181,16 @@ class FlashCardForMe : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_info -> {
-
-                true
-            }
-            R.id.action_reset -> {
-
-                true
-            }
+//            R.id.action_info -> {
+//
+//                true
+//            }
+//            R.id.action_reset -> {
+//
+//                true
+//            }
             R.id.action_delete -> {
-
+                learFlashCardViewModel.deleteFlashCard()
                 true
             }
             else -> super.onOptionsItemSelected(item)
