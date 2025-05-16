@@ -241,4 +241,5 @@ class DictionarySearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

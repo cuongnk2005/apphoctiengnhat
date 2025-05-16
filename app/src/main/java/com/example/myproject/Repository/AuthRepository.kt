@@ -56,7 +56,7 @@ class AuthRepository {
 
         return result
     }
-    fun register(email:String, mk:String): LiveData<String>{
+    fun register(email:String,strName: String, mk:String): LiveData<String>{
         val result = MutableLiveData<String>()
         mAuth.createUserWithEmailAndPassword(email,mk).addOnCompleteListener{ task ->
             if(task.isSuccessful){
@@ -65,7 +65,7 @@ class AuthRepository {
                     if (veritask.isSuccessful) {
                         result.postValue( "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.")
                         user.uid.let{
-                           var nUser = User(email,mk, username = "", url = "", listTopicStuded = ArrayList())
+                           var nUser = User(email,mk, strName, url = "", listTopicStuded = ArrayList())
                              pushUser(nUser, user.uid);
                         }
                     } else {

@@ -39,9 +39,10 @@ class Register : AppCompatActivity() {
     private fun events() {
         binding.btnSignUp.setOnClickListener {
         var gmail = binding.txtUser.text.toString()
+            var name = binding.txtName.text.toString()
             var password= binding.txtPassword.text.toString()
             var confirmPassword = binding.txtConfirmPassword.text.toString()
-            checkValid(gmail,password,confirmPassword)
+            checkValid(gmail,name,password,confirmPassword)
         }
         binding.btnLogin.setOnClickListener{
             binding.loading.visibility = View.VISIBLE
@@ -54,7 +55,7 @@ class Register : AppCompatActivity() {
         }
     }
 
-    private fun checkValid(username: String, password:String, confirmPassword: String) {
+    private fun checkValid(email:String,username: String, password:String, confirmPassword: String) {
         when {
             username.isEmpty() -> {
                 binding.txtUser.error = "Please enter username!"
@@ -74,7 +75,7 @@ class Register : AppCompatActivity() {
         if(password!= confirmPassword){
             binding.txtConfirmPassword.error = "Please enter the same password!"
         } else {
-            registerViewModel.register(username,password).observe(this){ msg ->
+            registerViewModel.register(email,username,password).observe(this){ msg ->
 //                showSusscessDialog(this,message)
                 showCustomToast(
                     context = this,

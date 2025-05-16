@@ -7,9 +7,9 @@ import com.example.myproject.Repository.AuthRepository
 
 class RegisterViewModel: ViewModel() {
     private val authRepository = AuthRepository()
-    fun register(strEmail: String, strMk: String): LiveData<String> {
+    fun register(strEmail: String, strName: String, strMk: String): LiveData<String> {
         Log.d("tesstham", "da chay ham nay")
-        val result = authRepository.register(strEmail, strMk)
+        val result = authRepository.register(strEmail, strName, strMk)
         return result
     }
 }
