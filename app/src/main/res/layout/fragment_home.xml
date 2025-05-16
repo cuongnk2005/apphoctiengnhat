@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
@@ -125,7 +125,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Learn with Dou Nihongo"
-                            android:textSize="20sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@+id/btnLearn"
                             app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +140,8 @@
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/learn_title"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/learn_title" />
+                            app:layout_constraintTop_toTopOf="@+id/learn_title"
+                            app:layout_constraintVertical_bias="0.0" />
 
                         <ProgressBar
                             android:id="@+id/progressBar"
