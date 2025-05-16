@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/nav_study"
-        android:title="Learn vocabulary"
+        android:title="Learn"
         android:icon="@drawable/ic_learn" />
 
     <item

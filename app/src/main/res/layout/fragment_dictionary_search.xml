@@ -192,7 +192,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Word Header -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -227,7 +226,6 @@
                         app:tint="@color/primaryColor" />
                 </LinearLayout>
 
-                <!-- Pronunciation -->
                 <TextView
                     android:id="@+id/result_pronunciation"
                     android:layout_width="match_parent"
@@ -237,7 +235,6 @@
                     android:textColor="@color/secondaryTextColor"
                     android:textSize="16sp" />
 
-                <!-- Word Types and Meanings -->
                 <TextView
                     android:id="@+id/wordType"
                     android:layout_width="match_parent"
@@ -294,7 +291,6 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>
 
-    <!-- Empty State (Shown when no search is performed) -->
     <LinearLayout
         android:id="@+id/empty_state"
         android:layout_width="match_parent"
@@ -309,7 +305,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:contentDescription="Hình ảnh trạng thái trống"
+            android:contentDescription="Image empty"
             android:src="@drawable/apple_example"
             app:tint="@color/primaryColorLight" />
 
@@ -317,7 +313,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Tìm kiếm từ vựng"
+            android:text="Search vocabulary"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -328,7 +324,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:text="Nhập từ cần tra cứu vào thanh tìm kiếm bên trên"
+            android:text="Enter the word you want to look up in the search bar above"
             android:textAlignment="center"
             android:textColor="@color/secondaryTextColor" />
     </LinearLayout>
