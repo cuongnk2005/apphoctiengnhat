@@ -96,7 +96,7 @@ class TopicRepository {
 
         }
     }
-    suspend fun getOldTopicsByHome(): MutableList<Topic>{
+    suspend fun getOldTopicsFromHome(): MutableList<Topic>{
         return withContext(Dispatchers.IO){
             try {
                 val UID = mAuth.currentUser?.uid.toString()
@@ -111,7 +111,7 @@ class TopicRepository {
                         }
 
                     }
-                    if (list.size == 3){
+                    if (list.size == 4){
                         break
                     }
 

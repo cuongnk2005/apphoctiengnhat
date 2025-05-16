@@ -27,7 +27,7 @@ class HomeViewmodel: ViewModel() {
     fun fetchTopics(){
         viewModelScope.launch {
             try {
-                val listTopics = topicRepository.getOldTopicsByHome()
+                val listTopics = topicRepository.getOldTopicsFromHome()
                 _topics.postValue(listTopics)
             }catch (e: Exception){
                 throw e
