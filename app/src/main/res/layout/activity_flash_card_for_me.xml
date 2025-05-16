@@ -198,7 +198,7 @@
             android:layout_weight="1"
             android:backgroundTint="#455A64"
             android:padding="16dp"
-            android:text="&lt;6ph\nHard"
+            android:text="&lt;10ph\nHard"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="0dp"/>
