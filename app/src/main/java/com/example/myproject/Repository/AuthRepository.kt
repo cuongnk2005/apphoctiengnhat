@@ -34,24 +34,24 @@ class AuthRepository {
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if(user!= null && user.isEmailVerified){
-                        result.postValue("Đăng nhập thành công: ${user?.email}")
+                        result.postValue("Login successful: ${user?.email}")
                     } else{
-                        result.postValue("Vui lòng xác thực email")
+                        result.postValue("Please verify your email")
                     }
 
                 } else {
                     val exception = task.exception
                     if (exception is FirebaseNetworkException) {
-                        result.postValue("Lỗi mạng: Vui lòng kiểm tra kết nối")
+                        result.postValue("Network error: Please check your connection")
                     } else {
-                        result.postValue("Đăng nhập thất bại: ${exception?.message}")
+                        result.postValue("Login failed: ${exception?.message}")
                         Log.e("DEBUGgg", "${exception?.message}")
                     }
                 }
             }
             .addOnFailureListener { exception ->
-                result.postValue("Lỗi đăng nhập. Vui lòng kiểm tra lại email hoặc password!")
-                Log.e("DEBUGgg", "Thất bại hoàn toàn: ${exception.message}")
+                result.postValue("Login error. Please check your email or password again!")
+                Log.e("DEBUGgg", "Complete failure: ${exception.message}")
             }
 
         return result
@@ -63,24 +63,24 @@ class AuthRepository {
                 val user = mAuth.currentUser
                 user?.sendEmailVerification()?.addOnCompleteListener{ veritask ->
                     if (veritask.isSuccessful) {
-                        result.postValue( "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.")
+                        result.postValue( "Registration successful. Please check your email to verify your account.")
                         user.uid.let{
                            var nUser = User(email,mk, strName, url = "", listTopicStuded = ArrayList())
                              pushUser(nUser, user.uid);
                         }
                     } else {
-                        result.postValue("Lỗi khi gửi email xác nhận")
+                        result.postValue("Error sending verification email")
                     }
                 }
             }else {
                 val exception = task.exception
-                result.postValue("Đăng ký thất bại: ${exception?.message}")
+                result.postValue("Register failed: ${exception?.message}")
                 Log.e("DEBUGgg", "${exception?.message}")
             }
     }
     .addOnFailureListener { exception ->
-        result.postValue("Lỗi đăng ký. Vui lòng kiểm tra lại mạng!")
-        Log.e("DEBUGgg", "Thất bại hoàn toàn: ${exception.message}")
+        result.postValue("Register error. Please check your email or password again!")
+        Log.e("DEBUGgg", "Complete failure: ${exception.message}")
         }
         return result
     }

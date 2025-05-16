@@ -41,10 +41,6 @@ class AddFlashCard : AppCompatActivity() {
     private var isFabMenuOpen = false
     private val addFlashCardViewmodel : AddFlashCardViewModel by viewModels()
     private lateinit var ankiAdapter : AnkiAdapter
-    private var currentIndex = 0
-    private var blueCount = 0
-    private var redCount = 0
-    private var greenCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -111,10 +107,10 @@ class AddFlashCard : AppCompatActivity() {
                 addFlashCardViewmodel.getBo()
 
                 // Hiển thị Snackbar cho phép người dùng hoàn tác
-                Snackbar.make(binding.rvFlashcards, "Đã xóa '$deletedItem'", Snackbar.LENGTH_LONG).apply {
+                Snackbar.make(binding.rvFlashcards, "Deleted '$deletedItem'", Snackbar.LENGTH_LONG).apply {
                     view.translationY = (-70f)
                 }
-                    .setAction("Hoàn tác") {
+                    .setAction("Undo") {
                         // Thêm lại mục đã xóa
                         addFlashCardViewmodel.addFlashcardIntoAnki(deletedItem)
                         addFlashCardViewmodel.getBo()
@@ -337,8 +333,8 @@ class AddFlashCard : AppCompatActivity() {
 //        Toast.makeText(this, "Nhận bộ thẻ đã chia sẻ", Toast.LENGTH_SHORT).show()
         showCustomToast(
             context = this,
-            title = "Thông báo",
-            message = "Nhận bộ thẻ đã chia sẻ",
+            title = "Notification",
+            message = "Receive shared flashcard set",
             type = ToastType.INFO
         )
     }
@@ -347,8 +343,8 @@ class AddFlashCard : AppCompatActivity() {
         // Xử lý logic tạo bộ thẻ đã lọc
         showCustomToast(
             context = this,
-            title = "Thông báo",
-            message = "Tạo bộ thẻ đã lọc",
+            title = "Notification",
+            message = "Create filtered flashcard set",
             type = ToastType.INFO
         )
 //        Toast.makeText(this, "Tạo bộ thẻ đã lọc", Toast.LENGTH_SHORT).show()
@@ -360,16 +356,16 @@ class AddFlashCard : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_tag, null)
         val nameTag = dialogView.findViewById<TextInputEditText>(R.id.etNameTag)
         AlertDialog.Builder(this)
-            .setTitle("Thêm bộ từ vựng")
+            .setTitle("Add vocabulary set")
             .setView(dialogView)
-            .setPositiveButton("Thêm") {dialog, _ ->
+            .setPositiveButton("Add") {dialog, _ ->
                 val inputText = nameTag.text.toString().trim()
                 if (inputText.isNotEmpty()){
                     addFlashCardViewmodel.addFlashcardIntoAnki(inputText)
                     showCustomToast(
                         context = this,
-                        title = "Thông báo",
-                        message = "Thêm bộ thẻ $inputText thành công!",
+                        title = "Notification",
+                        message = "Add flashcard set $inputText successful!",
                         type = ToastType.SUCCESS
                     )
 //                    Toast.makeText(this, "Thêm bộ thẻ $inputText", Toast.LENGTH_SHORT).show()
@@ -377,14 +373,14 @@ class AddFlashCard : AppCompatActivity() {
                 } else{
                     showCustomToast(
                         context = this,
-                        title = "Thông báo",
-                        message = "Thêm bộ thẻ $inputText thất bại!",
+                        title = "Notification",
+                        message = "Adding flashcard set $inputText failed!",
                         type = ToastType.ERROR
                     )
 //                    Toast.makeText(this, "Thêm thất bại $inputText", Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -394,8 +390,8 @@ class AddFlashCard : AppCompatActivity() {
         startActivity(intent)
         showCustomToast(
             context = this,
-            title = "Thông báo",
-            message = "Đã chuyển vào trang thêm",
+            title = "Notification",
+            message = "Navigated to the add page",
             type = ToastType.INFO
         )
 //        Toast.makeText(this, "Thêm", Toast.LENGTH_SHORT).show()

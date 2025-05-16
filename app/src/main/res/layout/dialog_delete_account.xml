@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xóa tài khoản"
+        android:text="Delete Account"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#F44336"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cảnh báo: Thao tác này sẽ xóa vĩnh viễn tài khoản của bạn và không thể khôi phục. Bạn có chắc chắn muốn tiếp tục?"
+        android:text="Warning: This action will permanently delete your account and cannot be undone. Are you sure you want to continue?"
         android:textSize="16sp"
         android:layout_marginBottom="16dp"/>
 
@@ -32,28 +32,8 @@
             android:id="@+id/etPasswordConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập mật khẩu để xác nhận"
+            android:hint="Enter your password to confirm"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:gravity="end">-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btnCancel"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Hủy"-->
-<!--            android:layout_marginEnd="8dp" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btnDelete"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Xóa tài khoản"-->
-<!--            android:backgroundTint="#F44336" />-->
-<!--    </LinearLayout>-->
 </LinearLayout>

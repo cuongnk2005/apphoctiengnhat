@@ -53,6 +53,7 @@ class DictionarySearchFragment : Fragment() {
         val repository = DictionaryRepository(requireContext())
         val factory = DictionaryViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[DictionaryViewModel::class.java]
+//        viewModel = DictionaryViewModel(repository)
 
         setupEvents()
         observeViewModel()
@@ -118,19 +119,16 @@ class DictionarySearchFragment : Fragment() {
                     message = "Không tìm thấy từ này!",
                     type = ToastType.ERROR
                 )
-
             }
         }
 
         // hien thi loading
-        val loadingLayout = view?.findViewById<LinearLayout>(R.id.loadingLayout)
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (loadingLayout != null) {
-                loadingLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
-            }
-
-
-        }
+//        val loadingLayout = view?.findViewById<LinearLayout>(R.id.loadingLayout)
+//        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+//            if (loadingLayout != null) {
+//                loadingLayout.visibility = if (isLoading) View.VISIBLE else View.GONE
+//            }
+//        }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
@@ -202,14 +200,16 @@ class DictionarySearchFragment : Fragment() {
     private fun updateResultCard(entry: DictionaryEntry) {
         binding.resultWord.text = entry.word
         binding.resultPronunciation.text = entry.reading
-        binding.wordType.text = entry.partOfSpeech
-        binding.wordTitle.text = "1. ${entry.meaning}"
-        binding.wordDecribe.text = entry.explanation
+        binding.wordType.text = entry.wordType
+        binding.wordTitle.text = "Mean: ${entry.meaning}"
+        binding.wordDecribe.text = "Decribe: ${entry.decribe}"
+
         this.tuvung = entry.reading
+
         if (entry.example.isNotEmpty()) {
             binding.wordExample.visibility = View.VISIBLE
             binding.wordMean.visibility = View.VISIBLE
-            binding.wordExample.text = "Ví dụ: ${entry.example}"
+            binding.wordExample.text = "Example: ${entry.example}"
             binding.wordMean.text = entry.exampleMeaning
         } else {
             binding.wordExample.visibility = View.GONE

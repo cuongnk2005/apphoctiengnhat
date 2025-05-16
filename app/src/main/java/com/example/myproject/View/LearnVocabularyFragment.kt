@@ -101,9 +101,6 @@ class LearnVocabularyFragment : Fragment() {
     fun creatChip() {
         viewModel.getTheme()
         viewModel.theme.observe(viewLifecycleOwner) { themes ->
-
-
-
                 val chipGroup = binding.chipGroup
             chipGroup.removeAllViews()
             themes.forEachIndexed { index, theme ->

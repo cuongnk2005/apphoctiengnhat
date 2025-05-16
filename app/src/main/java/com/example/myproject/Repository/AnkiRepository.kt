@@ -145,7 +145,7 @@ class AnkiRepository {
     fun deleteAnki(name: String) {
         try {
             val userID = mAuth.currentUser?.uid.toString()
-            val referent = db.getReference("anki").child(userID).child(name).removeValue()
+            db.getReference("anki").child(userID).child(name).removeValue()
                 .addOnSuccessListener {
                     Log.d("deleteAnki", "xoa thanh cong")
                 }

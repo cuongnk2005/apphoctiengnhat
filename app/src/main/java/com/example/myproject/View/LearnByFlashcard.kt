@@ -78,8 +78,8 @@ class LearnByFlashcard : AppCompatActivity() {
                 onBackPressed()
                 showCustomToast(
                     context = this,
-                    title = "Thông báo",
-                    message = "Hoàn thành bài học!",
+                    title = "Notification",
+                    message = "Lesson completed!",
                     type = ToastType.SUCCESS
                 )
             }
@@ -129,31 +129,25 @@ class LearnByFlashcard : AppCompatActivity() {
 
         }
 
-        // Back button
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
 
-        // More options button
         binding.btnMore.setOnClickListener {
             showOptionsMenu()
         }
 
-        // Flip card (front to back)
         binding.frontCard.setOnClickListener {
             if (isFrontVisible) {
                 flipCard()
             }
         }
 
-        // Flip card (back to front)
         binding.backCard.setOnClickListener {
             if (!isFrontVisible) {
                 flipCard()
             }
         }
-
-
 
         // Navigation buttons
 //        binding.btnPrevious.setOnClickListener {
@@ -164,7 +158,6 @@ class LearnByFlashcard : AppCompatActivity() {
             viewModel.nextFlashcard()
         }
 
-        // Knowledge tracking buttons
         binding.btnKnow.setOnClickListener {
             viewModel.markAsKnown()
             moveToNextCard()
@@ -177,7 +170,6 @@ class LearnByFlashcard : AppCompatActivity() {
     }
 
     private fun setupCardAnimations() {
-        // Load animations
         val scale = resources.displayMetrics.density
         binding.frontCard.cameraDistance = 8000 * scale
         binding.backCard.cameraDistance = 8000 * scale
@@ -195,7 +187,7 @@ class LearnByFlashcard : AppCompatActivity() {
 
     private fun flipCard() {
         isFrontVisible = if (isFrontVisible) {
-            // Flip to back
+
             frontToBackAnimation.setTarget(binding.frontCard)
             backToFrontAnimation.setTarget(binding.backCard)
             frontToBackAnimation.start()
@@ -204,7 +196,6 @@ class LearnByFlashcard : AppCompatActivity() {
             binding.backCard.visibility = View.VISIBLE
             false
         } else {
-            // Flip to front
             frontToBackAnimation.setTarget(binding.backCard)
             backToFrontAnimation.setTarget(binding.frontCard)
             backToFrontAnimation.start()
@@ -243,17 +234,17 @@ class LearnByFlashcard : AppCompatActivity() {
 //    }
 
     private fun moveToNextCard() {
-        // Thêm độ trễ nhỏ để người dùng kịp nhận phản hồi trước khi đổi thẻ.
+        // them do tre
         binding.root.postDelayed({
             viewModel.nextFlashcard()
         }, 300)
     }
 
     private fun showOptionsMenu() {
-        val options = arrayOf("Đánh dấu tất cả là chưa học", "Phát tất cả âm thanh", "Xem tất cả từ", "Thông tin bộ thẻ")
+        val options = arrayOf("Mark all as not learned", "Play all sounds", "View all words", "Flashcard set information")
 
         AlertDialog.Builder(this)
-            .setTitle("Tùy chọn")
+            .setTitle("Options")
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> {
@@ -262,8 +253,8 @@ class LearnByFlashcard : AppCompatActivity() {
                     1 -> {
                         showCustomToast(
                             context = this,
-                            title = "Thông báo",
-                            message = "Chức năng đang phát triển",
+                            title = "Notification",
+                            message = "Feature under development",
                             type = ToastType.INFO
                         )
                     }
@@ -279,9 +270,9 @@ class LearnByFlashcard : AppCompatActivity() {
         val flashcardTexts = flashcards.map { "${it.kanji} - ${it.hiragana} - ${it.meaning}" }.toTypedArray()
 
         AlertDialog.Builder(this)
-            .setTitle("Tất cả từ vựng")
+            .setTitle("All vocabulary")
             .setItems(flashcardTexts, null)
-            .setPositiveButton("Đóng", null)
+            .setPositiveButton("Close", null)
             .show()
     }
 
@@ -289,11 +280,11 @@ class LearnByFlashcard : AppCompatActivity() {
         val setInfo = viewModel.getFlashcardSetInfo()
         AlertDialog.Builder(this)
             .setTitle(setInfo.title)
-            .setMessage("Tổng số từ: ${setInfo.totalCards}\n" +
-                    "Đã học: ${setInfo.learnedCards}\n" +
-                    "Cấp độ: ${setInfo.level}\n" +
-                    "Chủ đề: ${setInfo.category}")
-            .setPositiveButton("Đóng", null)
+            .setMessage("Total words: ${setInfo.totalCards}\n" +
+                    "Learned: ${setInfo.learnedCards}\n" +
+                    "Level: ${setInfo.level}\n" +
+                    "Topic: ${setInfo.category}")
+            .setPositiveButton("Close", null)
             .show()
     }
 

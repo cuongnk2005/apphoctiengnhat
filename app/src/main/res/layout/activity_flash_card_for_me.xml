@@ -28,7 +28,7 @@
                 android:layout_marginStart="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:contentDescription="Quay lại"
+                android:contentDescription="Back"
                 android:focusable="true"
                 android:padding="4dp"
                 android:src="@drawable/ic_back"
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:text="Học Từ Vựng"
+                android:text="Learn Vocabulary"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -52,7 +52,7 @@
                 android:layout_marginStart="82dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:contentDescription="Quay lại"
+                android:contentDescription="Back"
                 android:focusable="true"
                 android:padding="4dp"
                 android:src="@drawable/ic_undo"
@@ -60,7 +60,6 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Thanh số liệu hiển thị ở dưới toolbar -->
     <LinearLayout
         android:id="@+id/statsBar"
         android:layout_width="match_parent"
@@ -71,8 +70,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -82,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-    <!-- Phần flash card chính -->
+
     <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="0dp"
@@ -167,11 +166,10 @@
             android:paddingTop="12dp"
             android:paddingEnd="24dp"
             android:paddingBottom="12dp"
-            android:text="Hiện đáp án"
+            android:text="Show answer"
             android:textColor="@color/white" />
     </FrameLayout>
 
-    <!-- Thanh điều khiển phía dưới -->
     <LinearLayout
         android:id="@+id/bottomActionBar"
         android:layout_width="match_parent"
@@ -181,7 +179,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Nút học lại (màu đỏ) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAgain"
             android:layout_width="0dp"
@@ -189,12 +186,11 @@
             android:layout_weight="1"
             android:backgroundTint="#D32F2F"
             android:padding="16dp"
-            android:text="&lt;1ph\nHọc lại"
+            android:text="&lt;1ph\nAgain"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="0dp"/>
 
-        <!-- Nút khó (màu xám đậm) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnHard"
             android:layout_width="0dp"
@@ -202,12 +198,11 @@
             android:layout_weight="1"
             android:backgroundTint="#455A64"
             android:padding="16dp"
-            android:text="&lt;6ph\nKhó"
+            android:text="&lt;6ph\nHard"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="0dp"/>
 
-        <!-- Nút tốt (màu xanh lá) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGood"
             android:layout_width="0dp"
@@ -215,12 +210,11 @@
             android:layout_weight="1"
             android:backgroundTint="#4CAF50"
             android:padding="16dp"
-            android:text="&lt;1ng\nTốt"
+            android:text="&lt;1ng\nGood"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="0dp"/>
 
-        <!-- Nút dễ (màu xanh dương) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEasy"
             android:layout_width="0dp"
@@ -228,7 +222,7 @@
             android:layout_weight="1"
             android:backgroundTint="#2196F3"
             android:padding="16dp"
-            android:text="4ng\nDễ"
+            android:text="4ng\nEasy"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="0dp"/>

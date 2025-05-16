@@ -58,8 +58,8 @@ class Profile : AppCompatActivity() {
 //            }
             showCustomToast(
                 context = this,
-                title = "Thành công",
-                message = "Ảnh đã được tải lên.",
+                title = "Notification",
+                message = "Image uploaded!",
                 type = ToastType.SUCCESS
             )
         }
@@ -97,8 +97,8 @@ class Profile : AppCompatActivity() {
         // back lại trang home
         binding.backButton.setOnClickListener{
             AlertDialog.Builder(this)
-                .setTitle("Xác nhận lưu")
-                .setPositiveButton("Xác nhận") { dialog, _ ->
+                .setTitle("Confirm save")
+                .setPositiveButton("Confirm") { dialog, _ ->
                     if(uriImage == null){
                         val updatemap = mapOf<String, Any>(
                             "username" to binding.nameEditText.text.toString(),
@@ -116,24 +116,24 @@ class Profile : AppCompatActivity() {
                     Log.d("Urltest", url)
 
                 }
-                .setNegativeButton("Hủy", null)
+                .setNegativeButton("Cancel", null)
                 .show()
 
         }
 
         binding.logoutButton.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("Xác nhận đăng xuất")
-                .setMessage("Bạn có chắc chắn muốn đăng xuất?")
-                .setPositiveButton("Đăng xuất") {dialog, _ ->
+                .setTitle("Confirm Logout")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Logout") {dialog, _ ->
                     // xoa thong tin dang nhap da luu
                     val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
                     sharedPreferences.edit().clear().apply()
 
                     showCustomToast(
                         context = this,
-                        title = "Thành công",
-                        message = "Đăng xuất thành công!",
+                        title = "Notification",
+                        message = "Logged out successfully!",
                         type = ToastType.SUCCESS
                     )
 //                    showToast("Đăng xuất thành công")
@@ -145,7 +145,7 @@ class Profile : AppCompatActivity() {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     finish()
                 }
-                .setNegativeButton("Hủy", null)
+                .setNegativeButton("Cancel", null)
                 .show()
         }
 
@@ -191,31 +191,31 @@ class Profile : AppCompatActivity() {
         val nameEditText = dialogView.findViewById<TextInputEditText>(R.id.etNewName)
 
         AlertDialog.Builder(this)
-            .setTitle("Đổi tên người dùng")
+            .setTitle("Change user name")
             .setView(dialogView)
-            .setPositiveButton("Xác nhận") { dialog, _ ->
+            .setPositiveButton("Confirm") { dialog, _ ->
                 val newName = nameEditText.text.toString().trim()
                 if (newName.isNotEmpty()) {
                     // Gọi hàm thay đổi tên
                     changeName(newName)
                     showCustomToast(
                         context = this,
-                        title = "Thành công",
-                        message = "Đổi tên thành công!",
+                        title = "Notification",
+                        message = "Name changed successfully!",
                         type = ToastType.SUCCESS
                     )
 //                    showToast("Đổi tên thành công!")
                 } else {
                     showCustomToast(
                         context = this,
-                        title = "Thành công",
-                        message = "Tên không được để trống!",
+                        title = "Notification",
+                        message = "Name cannot be empty!",
                         type = ToastType.WARNING
                     )
 //                    Toast.makeText(this, "Tên không được để trống", Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -268,8 +268,8 @@ class Profile : AppCompatActivity() {
 //                            ).show()
                             showCustomToast(
                                 context = this@Profile,
-                                title = "Thành công",
-                                message = "Cập nhật thông tin thành công!",
+                                title = "Notification",
+                                message = "Information updated successfully!",
                                 type = ToastType.SUCCESS
                             )
                             Log.d("sucesss", "upload Thanh cong$url")
@@ -309,9 +309,9 @@ class Profile : AppCompatActivity() {
         val confirmPasswordEditText = dialogView.findViewById<TextInputEditText>(R.id.etConfirmPassword)
 
         AlertDialog.Builder(this)
-            .setTitle("Đổi mật khẩu")
+            .setTitle("Change password")
             .setView(dialogView)
-            .setPositiveButton("Lưu") { dialog, _ ->
+            .setPositiveButton("Save") { dialog, _ ->
                 val currentPassword = currentPasswordEditText.text.toString()
                 val newPassword = newPasswordEditText.text.toString()
                 val confirmPassword = confirmPasswordEditText.text.toString()
@@ -321,8 +321,8 @@ class Profile : AppCompatActivity() {
 //                        Toast.makeText(this, "Vui lòng nhập mật khẩu hiện tại", Toast.LENGTH_SHORT).show()
                         showCustomToast(
                             context = this,
-                            title = "Cảnh báo",
-                            message = "Vui lòng nhập mật khẩu hiện tại!",
+                            title = "Warning",
+                            message = "Please enter your current password!",
                             type = ToastType.WARNING
                         )
                     }
@@ -330,8 +330,8 @@ class Profile : AppCompatActivity() {
 //                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới", Toast.LENGTH_SHORT).show()
                         showCustomToast(
                             context = this,
-                            title = "Cảnh báo",
-                            message = "Vui lòng nhập mật khẩu mới!",
+                            title = "Warning",
+                            message = "Please enter your new password!",
                             type = ToastType.WARNING
                         )
                     }
@@ -339,8 +339,8 @@ class Profile : AppCompatActivity() {
 //                        Toast.makeText(this, "Vui lòng nhập mật khẩu mới trên 5 kí tự", Toast.LENGTH_SHORT).show()
                         showCustomToast(
                             context = this,
-                            title = "Cảnh báo",
-                            message = "Vui lòng nhập mật khẩu mới trên 5 kí tự!",
+                            title = "Warning",
+                            message = "Please enter a new password with more than 5 characters!",
                             type = ToastType.WARNING
                         )
 
@@ -349,8 +349,8 @@ class Profile : AppCompatActivity() {
 //                        Toast.makeText(this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show()
                         showCustomToast(
                             context = this,
-                            title = "Cảnh báo",
-                            message = "Mật khẩu mới không khớp!",
+                            title = "Warning",
+                            message = "New passwords do not match!",
                             type = ToastType.WARNING
                         )
                     }
@@ -359,14 +359,14 @@ class Profile : AppCompatActivity() {
                         changePassword(currentPassword, newPassword)
                         showCustomToast(
                             context = this,
-                            title = "Thành công",
-                            message = "Đổi mật khẩu thành công!",
+                            title = "Notification",
+                            message = "Password changed successfully!",
                             type = ToastType.SUCCESS
                         )
                     }
                 }
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -378,7 +378,7 @@ class Profile : AppCompatActivity() {
     }
     private fun showSusscessDialog(context: Context, errorMessage: String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông Báo")
+        builder.setTitle("Notification")
         builder.setMessage(errorMessage)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
@@ -394,13 +394,13 @@ class Profile : AppCompatActivity() {
 
         AlertDialog.Builder(this)
             .setView(dialogView)
-            .setPositiveButton("Xóa tài khoản") { dialog, _ ->
+            .setPositiveButton("Delete account") { dialog, _ ->
                 val password = passwordEditText.text.toString()
                 if (password.isEmpty()) {
                     showCustomToast(
                         context = this,
-                        title = "Thông báo",
-                        message = "Vui lòng nhập mật khẩu để xác nhận!",
+                        title = "Notification",
+                        message = "Please enter your password to confirm!",
                         type = ToastType.INFO
                     )
 //                    Toast.makeText(this, "Vui lòng nhập mật khẩu để xác nhận", Toast.LENGTH_SHORT).show()
@@ -409,7 +409,7 @@ class Profile : AppCompatActivity() {
                     deleteAccount(password)
                 }
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -420,15 +420,13 @@ class Profile : AppCompatActivity() {
         val savedPassword = sharedPreferences.getString("password", "")
 
         if (password == savedPassword) {
-            // Thực hiện xóa tài khoản
-            // Xóa dữ liệu người dùng khỏi SharedPreferences hoặc gọi API xóa tài khoản
+
             sharedPreferences.edit().clear().apply()
 
-            // Hiển thị thông báo và chuyển người dùng về màn hình đăng nhập
             showCustomToast(
                 context = this,
-                title = "Thành công",
-                message = "Tài khoản đã được xóa thành công!",
+                title = "Notification",
+                message = "Please enter your password to confirm!",
                 type = ToastType.SUCCESS
             )
 //            Toast.makeText(this, "Tài khoản đã được xóa", Toast.LENGTH_SHORT).show()
@@ -441,8 +439,8 @@ class Profile : AppCompatActivity() {
         } else {
             showCustomToast(
                 context = this,
-                title = "Lỗi",
-                message = "Mật khẩu không đúng, không thể xóa tài khoản!",
+                title = "Error",
+                message = "Incorrect password, unable to delete account!",
                 type = ToastType.ERROR
             )
 //            Toast.makeText(this, "Mật khẩu không đúng, không thể xóa tài khoản", Toast.LENGTH_SHORT).show()

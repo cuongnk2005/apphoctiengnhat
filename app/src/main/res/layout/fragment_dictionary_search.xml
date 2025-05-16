@@ -25,23 +25,11 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/btn_back"-->
-<!--                android:layout_width="48dp"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                android:contentDescription="Quay lại"-->
-<!--                android:src="@drawable/ic_back"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:tint="@color/primaryColor" />-->
-
             <TextView
                android:id="@+id/title_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tra từ điển"
+                android:text="Dictionary Search"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -79,7 +67,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
-                android:hint="Nhập từ cần tra cứu..."
+                android:hint="Enter the word to look up..."
                 android:inputType="text"
                 android:padding="12dp"
                 android:textSize="16sp"

@@ -7,17 +7,17 @@
 
     <item
         android:id="@+id/nav_study"
-        android:title="Học từ vựng"
+        android:title="Learn vocabulary"
         android:icon="@drawable/ic_learn" />
 
     <item
         android:id="@+id/nav_home"
-        android:title="Ôn tập"
+        android:title="Review"
         android:icon="@drawable/ic_leaderboard" />
 
     <item
         android:id="@+id/nav_addFlashCard"
-        android:title="Thêm thẻ"
+        android:title="Add card"
         android:icon="@drawable/ic_add" />
 
     <item

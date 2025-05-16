@@ -43,8 +43,8 @@ class FormAddFlashCard : AppCompatActivity() {
                 nameAnki = selectedVocab
                 showCustomToast(
                     context = this,
-                    title = "Thông báo",
-                    message = "Đã chọn: $selectedVocab!",
+                    title = "Notification",
+                    message = "Selected: $selectedVocab!",
                     type = ToastType.INFO
                 )
 //                Toast.makeText(this, "Đã chọn: $selectedVocab", Toast.LENGTH_SHORT).show()
@@ -59,8 +59,8 @@ class FormAddFlashCard : AppCompatActivity() {
             if(nameAnki.isEmpty()){
                 showCustomToast(
                     context = this,
-                    title = "Thông báo",
-                    message = "Chưa chọn bộ thẻ",
+                    title = "Notification",
+                    message = "No flashcard set selected",
                     type = ToastType.INFO
                 )
 //                Toast.makeText(this, "Chưa chọn bộ thẻ", Toast.LENGTH_SHORT).show()
@@ -72,8 +72,8 @@ class FormAddFlashCard : AppCompatActivity() {
             if(front.isEmpty() || back.isEmpty()){
                 showCustomToast(
                     context = this,
-                    title = "Thông báo",
-                    message = "Vui lòng nhập thông tin mặt trước và mặt sau!",
+                    title = "Notification",
+                    message = "Please enter the front and back information!",
                     type = ToastType.WARNING
                 )
 //                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
@@ -82,12 +82,15 @@ class FormAddFlashCard : AppCompatActivity() {
                 formAddFlashCardViewModel.pushFlashCardIntoAnki(nameAnki,flashCard)
                 showCustomToast(
                     context = this,
-                    title = "Thông báo",
-                    message = "Thêm thẻ thành công!",
+                    title = "Notification",
+                    message = "Card added successfully!",
                     type = ToastType.SUCCESS
                 )
                 clearText()
+            }
 
+            binding.btnCancel.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
             }
 
         }
@@ -102,11 +105,9 @@ class FormAddFlashCard : AppCompatActivity() {
     private fun showCustomToast(context: Context, title: String, message: String, type: ToastType) {
         val layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null)
 
-        // Thiết lập nội dung
         layout.findViewById<TextView>(R.id.toast_title).text = title
         layout.findViewById<TextView>(R.id.toast_message).text = message
 
-        // Thiết lập icon và màu sắc dựa trên loại thông báo
         val iconView = layout.findViewById<ImageView>(R.id.toast_icon)
         val container = layout.findViewById<LinearLayout>(R.id.custom_toast_container)
 

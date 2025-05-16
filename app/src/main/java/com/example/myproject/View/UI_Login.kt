@@ -58,20 +58,18 @@ class UI_Login : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-
         }
-
     }
 
     private fun checkValid(username: String, password: String) {
         when {
             username.isEmpty() -> {
-                binding.txtUser.error = "Vui lòng nhập email!"
+                binding.txtUser.error = "Please enter your email!"
                 binding.txtUser.requestFocus()
             }
 
             password.isEmpty() -> {
-                binding.txtPassword.error = "Vui lòng nhập password!"
+                binding.txtPassword.error = "Please enter your password!"
                 binding.txtPassword.requestFocus()
             }
             else -> {
@@ -87,32 +85,32 @@ class UI_Login : AppCompatActivity() {
 //                showErrorDialog(this, "Không nhận được phản hồi.")
                 showCustomToast(
                     context = this,
-                    title = "Lỗi",
-                    message = "Không nhận được phản hồi!",
+                    title = "Error",
+                    message = "No response received!",
                     type = ToastType.ERROR
                 )
-            }else if(msg == "Vui lòng xác thực email!"){
+            }else if(msg == "Please verify your email!"){
 //                showErrorDialog(this,messenger)
                 showCustomToast(
                     context = this,
-                    title = "Lỗi",
+                    title = "Error",
                     message = msg,
                     type = ToastType.ERROR
                 )
             }
-            else if (msg.contains("lỗi", ignoreCase = true)) {
+            else if (msg.contains("error", ignoreCase = true)) {
 //                showErrorDialog(this, messenger)
                 showCustomToast(
                     context = this,
-                    title = "Lỗi",
+                    title = "Error",
                     message = msg,
                     type = ToastType.ERROR
                 )
             } else {
                 showCustomToast(
                     context = this,
-                    title = "Thành công",
-                    message = "Đăng nhập thành công!",
+                    title = "Notification",
+                    message = "Login successful!",
                     type = ToastType.SUCCESS
                 )
                 loading(this)
@@ -120,19 +118,16 @@ class UI_Login : AppCompatActivity() {
             }
         }
     }
-
-    private fun showToast(msg:String) {
-        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show()
-    }
+//    private fun showToast(msg:String) {
+//        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show()
+//    }
 
     private fun showCustomToast(context: Context, title: String, message: String, type: ToastType) {
         val layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null)
 
-        // Thiết lập nội dung
         layout.findViewById<TextView>(R.id.toast_title).text = title
         layout.findViewById<TextView>(R.id.toast_message).text = message
 
-        // Thiết lập icon và màu sắc dựa trên loại thông báo
         val iconView = layout.findViewById<ImageView>(R.id.toast_icon)
         val container = layout.findViewById<LinearLayout>(R.id.custom_toast_container)
 
@@ -155,7 +150,6 @@ class UI_Login : AppCompatActivity() {
             }
         }
 
-        // Tạo và hiển thị toast
         val toast = Toast(context)
         toast.setGravity(Gravity.TOP, 0, 100)
         toast.duration = Toast.LENGTH_SHORT

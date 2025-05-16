@@ -44,11 +44,11 @@ class FlashcardViewModel : ViewModel() {
                 learnFlashcards = flashcards.toMutableList()
                 flashcardSet = FlashcardSetInfo(
                     id = 1,
-                    title = "Từ vựng tiếng Nhật cơ bản",
+                    title = "Basic Japanese vocabulary",
                     totalCards = flashcards.size,
                     learnedCards = 0,
                     level = "N5",
-                    category = "Cơ bản"
+                    category = "Basic"
                 )
                 if (flashcards.isNotEmpty()) {
                     _currentFlashcard.value = flashcards[0]
@@ -65,11 +65,11 @@ class FlashcardViewModel : ViewModel() {
 //        flashcards = getSampleFlashcards()
         flashcardSet = FlashcardSetInfo(
             id = 1,
-            title = "Từ vựng tiếng Nhật cơ bản",
+            title = "Basic Japanese vocabulary",
             totalCards = flashcards.size,
             learnedCards = 0,
             level = "N5",
-            category = "Cơ bản"
+            category = "Basic"
         )
 
         // Set initial flashcard
@@ -140,7 +140,7 @@ class FlashcardViewModel : ViewModel() {
         val learnedCards = flashcards.count { it.isKnown }
         val totalCards = flashcards.size
 //        val currentCard = currentPosition + 1
-        _progressText.value = "$learnedCards/$totalCards từ"
+        _progressText.value = "$learnedCards/$totalCards word"
         val progressPercentage = (learnedCards * 100) / totalCards
         _progressPercentage.value = progressPercentage
 
