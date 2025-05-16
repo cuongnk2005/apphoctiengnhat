@@ -31,4 +31,8 @@ class ProfileModel: ViewModel() {
         }
     }
 
+    fun deleteAccount(password:String, callback: (String) -> Unit, onfail:(String)->Unit) {
+       authReporitory.deleteAccount(password,callback,onfail)
+    }
+
 }

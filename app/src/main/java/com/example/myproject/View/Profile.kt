@@ -221,12 +221,10 @@ class Profile : AppCompatActivity() {
 
     // Hàm xử lý đổi tên
     private fun changeName(name: String) {
-        // Ở đây bạn sẽ thực hiện gọi API hoặc cập nhật dữ liệu vào SharedPreferences hoặc bất kỳ cơ sở dữ liệu nào
-        // Ví dụ:
+
         val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("user_name", name).apply()
 
-        // Cập nhật UI nếu cần
          binding.nameEditText.setText(name)
         Log.d("testname", "${binding.nameEditText.text.toString()}")
 
@@ -373,19 +371,19 @@ class Profile : AppCompatActivity() {
     // Hàm xử lý đổi mật khẩu
     private fun changePassword(currentPassword: String, newPassword: String) {
          profileModel.changePassword(currentPassword, newPassword){
-             showSusscessDialog(this, it)
+//             showSusscessDialog(this, it)
          }
     }
-    private fun showSusscessDialog(context: Context, errorMessage: String) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Notification")
-        builder.setMessage(errorMessage)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = builder.create()
-        dialog.show()
-    }
+//    private fun showSusscessDialog(context: Context, errorMessage: String) {
+//        val builder = AlertDialog.Builder(context)
+//        builder.setTitle("Notification")
+//        builder.setMessage(errorMessage)
+//        builder.setPositiveButton("OK") { dialog, _ ->
+//            dialog.dismiss()
+//        }
+//        val dialog = builder.create()
+//        dialog.show()
+//    }
 
     // Hiển thị dialog xác nhận xóa tài khoản
     private fun showDeleteAccountDialog() {
@@ -416,40 +414,53 @@ class Profile : AppCompatActivity() {
     // Hàm xử lý xóa tài khoản
     private fun deleteAccount(password: String) {
         // Kiểm tra mật khẩu có đúng không
-        val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val savedPassword = sharedPreferences.getString("password", "")
+//        val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+//        val savedPassword = sharedPreferences.getString("password", "")
+//
+//        if (password == savedPassword) {
+//
+//            sharedPreferences.edit().clear().apply()
+//
+//            showCustomToast(
+//                context = this,
+//                title = "Notification",
+//                message = "Please enter your password to confirm!",
+//                type = ToastType.SUCCESS
+//            )
+////            Toast.makeText(this, "Tài khoản đã được xóa", Toast.LENGTH_SHORT).show()
 
-        if (password == savedPassword) {
+        profileModel.deleteAccount(
+            password = password,
+            callback = {
+                // ✅ Xử lý khi thành công:
+                // Chuyển đến màn hình đăng nhập và xóa stack hoạt động để người dùng không thể quay lại
+                val intent = Intent(this, UI_Login::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
 
-            sharedPreferences.edit().clear().apply()
-
-            showCustomToast(
-                context = this,
-                title = "Notification",
-                message = "Please enter your password to confirm!",
-                type = ToastType.SUCCESS
-            )
-//            Toast.makeText(this, "Tài khoản đã được xóa", Toast.LENGTH_SHORT).show()
-
-            // Chuyển đến màn hình đăng nhập và xóa stack hoạt động để người dùng không thể quay lại
-            val intent = Intent(this, UI_Login::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
-        } else {
-            showCustomToast(
-                context = this,
-                title = "Error",
-                message = "Incorrect password, unable to delete account!",
-                type = ToastType.ERROR
-            )
-//            Toast.makeText(this, "Mật khẩu không đúng, không thể xóa tài khoản", Toast.LENGTH_SHORT).show()
+                // Hiển thị thông báo thành công
+                showCustomToast(
+                    context = this,
+                    title = "Notification",
+                    message = "Your account has been successfully deleted!",
+                    type = ToastType.SUCCESS
+                )
+            },
+            onfail = {
+                showCustomToast(
+                    context = this,
+                    title = "Error",
+                    message = "Incorrect password, unable to delete account!",
+                    type = ToastType.ERROR
+                )
+            }
+        )
         }
-    }
 
-    private fun showToast(msg:String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
+//    private fun showToast(msg:String) {
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+//    }
 
     private fun showCustomToast(context: Context, title: String, message: String, type: ToastType) {
         val layout = LayoutInflater.from(context).inflate(R.layout.custom_toast, null)

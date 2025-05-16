@@ -150,8 +150,6 @@ class AuthRepository {
     }
     fun changePassword(oldPassword:String, newPassword:String, callback: (String) -> Unit){
         val user = mAuth.currentUser
-
-
         val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(user?.email.toString(), oldPassword)
        user?.let {
            user.reauthenticate(credential)
@@ -176,8 +174,33 @@ class AuthRepository {
 
                }
        }
+    }
+
+    fun deleteAccount(currentPassword: String, callback: (String) -> Unit, onfail:(String)-> Unit) {
+        val user = mAuth.currentUser
+        val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(user?.email.toString(), currentPassword)
+        user?.let {
+            user.reauthenticate(credential)
+                .addOnCompleteListener { reAuthTask ->
+                    val userUID = user.uid
+                   user.delete()
+                       .addOnCompleteListener { deleteTask ->
+                           if (deleteTask.isSuccessful) {
+                               usersRef.child("users").child(userUID).removeValue()
+                               callback("deleted successfully")
+                           }
 
 
+                       }
+                       .addOnFailureListener { e->
+                           onfail("delete fail")
+                       }
+
+                }
+                .addOnFailureListener {
+                    callback("incorrect password")
+                }
+        }
     }
 
 }
