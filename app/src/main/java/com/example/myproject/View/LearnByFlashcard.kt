@@ -149,11 +149,6 @@ class LearnByFlashcard : AppCompatActivity() {
             }
         }
 
-        // Navigation buttons
-//        binding.btnPrevious.setOnClickListener {
-//            viewModel.previousFlashcard()
-//        }
-
         binding.btnNext.setOnClickListener {
             viewModel.nextFlashcard()
         }
@@ -164,7 +159,6 @@ class LearnByFlashcard : AppCompatActivity() {
         }
 
         binding.btnDontKnow.setOnClickListener {
-//            viewModel.markAsUnknown()
             moveToNextCard()
         }
     }
@@ -206,33 +200,6 @@ class LearnByFlashcard : AppCompatActivity() {
         }
     }
 
-//    private fun playPronunciation() {
-//        try {
-//            // Get current flashcard audio resource
-////            val audioResId = viewModel.getCurrentFlashcardAudioResourceId()
-//
-//            // Release previous media player if exists
-//            mediaPlayer?.release()
-//
-//            // Create and start new media player
-////            mediaPlayer = MediaPlayer.create(this, audioResId)
-////            mediaPlayer?.start()
-//
-//            // Set completion listener to release resources
-//            mediaPlayer?.setOnCompletionListener {
-//                it.release()
-//            }
-//        } catch (e: Exception) {
-////            Toast.makeText(this, "Không thể phát âm thanh", Toast.LENGTH_SHORT).show()
-//            showCustomToast(
-//                context = this,
-//                title = "Thông báo",
-//                message = "Chức năng phát âm thanh đang phát triển",
-//                type = ToastType.INFO
-//            )
-//        }
-//    }
-
     private fun moveToNextCard() {
         // them do tre
         binding.root.postDelayed({
@@ -249,7 +216,13 @@ class LearnByFlashcard : AppCompatActivity() {
                 when (which) {
                     0 -> {
                         viewModel.updateStatusOFLesson(flashcardSetId,false)
-                        viewModel.resetAllFlashcardsProgress()}
+                        viewModel.resetAllFlashcardsProgress()
+                        showCustomToast(
+                            context = this,
+                            title = "Notification",
+                            message = "Marked as not learned",
+                            type = ToastType.INFO
+                        )}
                     1 -> {
                         showCustomToast(
                             context = this,
