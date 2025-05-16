@@ -14,7 +14,7 @@
             android:id="@+id/etNewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập tên mới"
+            android:hint="Enter new name"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 

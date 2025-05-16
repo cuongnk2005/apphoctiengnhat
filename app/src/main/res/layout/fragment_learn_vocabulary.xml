@@ -7,7 +7,6 @@
     android:background="@color/background_color"
     tools:context=".View.LearnVocabularyFragment">
 
-    <!-- Header -->
     <androidx.cardview.widget.CardView
         android:id="@+id/header_card"
         android:layout_width="match_parent"
@@ -26,23 +25,11 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/btn_back"-->
-<!--                android:layout_width="48dp"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                android:contentDescription="Quay lại"-->
-<!--                android:src="@drawable/ic_back"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:tint="@color/primaryColor" />-->
-
             <TextView
                 android:id="@+id/title_vocab_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Danh sách từ vựng"
+                android:text="Vocabulary List"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -65,7 +52,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Danh mục chủ đề -->
     <androidx.cardview.widget.CardView
         android:id="@+id/categories_card"
         android:layout_width="0dp"
@@ -88,7 +74,7 @@
                 android:id="@+id/categories_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chủ đề"
+                android:text="Topic"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +110,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- RecyclerView hiển thị danh sách từ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/word_recycler_view"
         android:visibility="gone"
@@ -139,5 +124,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_vocabulary" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

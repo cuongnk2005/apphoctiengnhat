@@ -83,7 +83,7 @@ class LearVocabularyViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val listTheme = topicRepository.getTheme()
-                listTheme.add(0, "Tất cả")
+                listTheme.add(0, "All")
                _theme.postValue(listTheme)
             } catch (e: Exception) {
                 throw e

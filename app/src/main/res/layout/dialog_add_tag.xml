@@ -14,7 +14,7 @@
             android:id="@+id/etNameTag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập tên bộ thẻ"
+            android:hint="Enter deck name"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 

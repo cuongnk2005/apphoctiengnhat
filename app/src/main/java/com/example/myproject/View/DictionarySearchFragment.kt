@@ -203,11 +203,7 @@ class DictionarySearchFragment : Fragment() {
         binding.wordType.text = entry.wordType
         binding.wordTitle.text = "Mean: ${entry.meaning}"
         binding.wordDecribe.text = "Decribe: ${entry.decribe}"
-//
-//=======
-//        binding.wordType.text = entry.partOfSpeech
-//        binding.wordTitle.text = "1. ${entry.meaning}"
-//        binding.wordDecribe.text = entry.explanation
+
         this.tuvung = entry.reading
 
         if (entry.example.isNotEmpty()) {

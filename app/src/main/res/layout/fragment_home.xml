@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- ProgressBar loading toàn màn hình -->
     <ProgressBar
         android:id="@+id/loadingProgressBar"
         android:layout_width="wrap_content"
@@ -13,13 +12,12 @@
         android:layout_gravity="center"
         android:visibility="visible" />
 
-    <!-- Layout nội dung chính -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainContentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
@@ -56,7 +54,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- ScrollView cho phần nội dung -->
         <ScrollView
             android:id="@+id/content_scroll_view"
             android:layout_width="match_parent"
@@ -71,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Banner -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/banner_card"
                     android:layout_width="match_parent"
@@ -94,10 +90,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:text="Chào mừng bạn đến với Dou Nihongo!"
+                            android:text="Welcome to Dou Nihongo!"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textSize="20sp"
+                            android:textSize="22sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +102,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Learning Section -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/learning_card"
                     android:layout_width="match_parent"
@@ -129,8 +124,8 @@
                             android:id="@+id/learn_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Học cùng Dou Nihongo"
-                            android:textSize="24sp"
+                            android:text="Learn with Dou Nihongo"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@+id/btnLearn"
                             app:layout_constraintStart_toStartOf="parent"
@@ -141,7 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/primaryColor"
-                            android:text="Vào học"
+                            android:text="Start"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/learn_title"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -164,21 +159,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Tiến độ học tập: 70%"
+                            android:text="Learning progress: 70%"
                             android:textColor="@color/secondaryTextColor"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/progressBar" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Recent Lessons Section -->
                 <TextView
                     android:id="@+id/recent_lessons_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Bài học gần đây"
+                    android:text="Recent lessons"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"

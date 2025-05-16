@@ -62,7 +62,7 @@ class HomeViewmodel: ViewModel() {
                 if (it != null) {
                     var leanerd =   it.listTopicStuded.count { it.status == true }
                     var percent = (leanerd*100)/total
-                    _progressText.postValue("Tiến độ học tập: ${percent}%")
+                    _progressText.postValue("Learning progress: ${percent}%")
                     _progressPercentage.postValue((leanerd*100)/total)
                 }
 

@@ -42,9 +42,9 @@
                 android:id="@+id/title_vocab"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Từ vựng tiếng Nhật"
+                android:text="Japanese Vocabulary"
                 android:textAlignment="center"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_more"
@@ -65,7 +65,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/lesson_progress"
         style="?android:attr/progressBarStyleHorizontal"
@@ -91,7 +90,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lesson_progress" />
 
-    <!-- Flashcard container with flip animation -->
     <androidx.cardview.widget.CardView
         android:id="@+id/flashcard_container"
         android:layout_width="0dp"
@@ -107,14 +105,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_text">
 
-        <!-- Front side of card -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/front_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
 
-            <!-- Kanji image container -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/kanji_image_container"
                 android:layout_width="0dp"
@@ -138,7 +134,6 @@
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
-            <!-- Japanese word container -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/japanese_word_container"
                 android:layout_width="match_parent"
@@ -210,14 +205,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Hint text -->
             <TextView
                 android:id="@+id/tap_to_flip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="Chạm để lật thẻ"
+                android:text="Tap to flip the card"
                 android:textColor="@color/secondaryTextColor"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/japanese_word_container"
@@ -225,14 +219,12 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Back side of card -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/back_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
 
-            <!-- Meaning section -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/meaning_container"
                 android:layout_width="match_parent"
@@ -253,7 +245,7 @@
                         android:id="@+id/meaning_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ý nghĩa"
+                        android:text="Meaning"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -274,7 +266,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Definition section -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/definition_container"
                 android:layout_width="match_parent"
@@ -296,7 +287,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Định nghĩa:"
+                        android:text="Definition:"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -310,7 +301,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Example section -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/example_container"
                 android:layout_width="match_parent"
@@ -332,7 +322,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ví dụ:"
+                        android:text="Example:"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -364,13 +354,12 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Hint text -->
             <TextView
                 android:id="@+id/tap_to_flip_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Chạm để lật thẻ"
+                android:text="Tap to flip the card"
                 android:textColor="@color/secondaryTextColor"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -388,7 +377,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/errorColor"
-        android:text="Không biết"
+        android:text="Don’t know"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_know"
@@ -402,7 +391,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/successColor"
-        android:text="Đã biết"
+        android:text="Known"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -432,5 +421,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/flashcard_container"
         app:tint="@color/white" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

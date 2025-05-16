@@ -74,10 +74,10 @@ class FlashCardForMe : AppCompatActivity() {
                     binding.btnGood.text = list[2]
                     binding.btnEasy.text = list[3]
                 } else {
-                    binding.btnAgain.text = ">1ph\nHọc lại"
-                    binding.btnHard.text = ">10ph \n Khó"
-                    binding.btnGood.text = ">1ng \n Tốt"
-                    binding.btnEasy.text = ">2ng \n Dễ"
+                    binding.btnAgain.text = ">1m\n Again"
+                    binding.btnHard.text = ">10m \n Hard"
+                    binding.btnGood.text = ">1d \n Good"
+                    binding.btnEasy.text = ">2d \n Easy"
                 }
                 tts = TextToSpeech(this) { status ->
                     if (status == TextToSpeech.SUCCESS) {
@@ -89,8 +89,8 @@ class FlashCardForMe : AppCompatActivity() {
             } else {
                 showCustomToast(
                     context = this,
-                    title = "Thông báo",
-                    message = "Hoàn thành bài học",
+                    title = "Notification",
+                    message = "Lesson completed",
                     type = ToastType.SUCCESS
                 )
                 onBackPressed()
@@ -181,16 +181,32 @@ class FlashCardForMe : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-//            R.id.action_info -> {
-//
-//                true
-//            }
-//            R.id.action_reset -> {
-//
-//                true
-//            }
+            R.id.action_info -> {
+                showCustomToast(
+                    context = this,
+                    title = "Notification",
+                    message = "Feature under development!",
+                    type = ToastType.INFO
+                )
+                true
+            }
+            R.id.action_reset -> {
+                showCustomToast(
+                    context = this,
+                    title = "Notification",
+                    message = "Feature under development!",
+                    type = ToastType.INFO
+                )
+                true
+            }
             R.id.action_delete -> {
                 learFlashCardViewModel.deleteFlashCard()
+                showCustomToast(
+                    context = this,
+                    title = "Notification",
+                    message = "Deleted successfully!",
+                    type = ToastType.SUCCESS
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)

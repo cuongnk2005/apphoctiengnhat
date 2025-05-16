@@ -16,7 +16,6 @@
         android:background="@color/primaryColor"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Header -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -29,7 +28,7 @@
                 android:layout_marginStart="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:contentDescription="Quay lại"
+                android:contentDescription="Back"
                 android:focusable="true"
                 android:padding="4dp"
                 android:src="@drawable/ic_back"
@@ -43,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Thêm Thẻ Mới"
+                android:text="Add New Card"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -53,6 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="48dp"
@@ -66,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    <!-- Content -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:id="@+id/contentLayout"
@@ -82,7 +82,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- RecyclerView for flashcards -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_flashcards"
                 android:layout_width="match_parent"
@@ -92,7 +91,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Empty state for when there are no flashcards -->
             <LinearLayout
                 android:id="@+id/empty_state"
                 android:layout_width="match_parent"
@@ -109,14 +107,14 @@
                 <ImageView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:contentDescription="Hộp thẻ trống"
+                    android:contentDescription="Box empty"
                     android:src="@drawable/ic_empty_box" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Bộ sưu tập đang trống"
+                    android:text="The collection is empty"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -125,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="Hãy thêm thẻ\nbằng biểu tượng +"
+                    android:text="Please add cards\nusing the + icon"
                     android:textColor="@color/secondaryTextColor" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -135,7 +133,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Nền mờ khi mở menu -->
         <View
             android:id="@+id/fab_overlay"
             android:layout_width="match_parent"
@@ -144,7 +141,6 @@
             android:alpha="0"
             android:visibility="gone" />
 
-        <!-- Container chứa toàn bộ menu FAB -->
         <LinearLayout
             android:id="@+id/fab_container"
             android:layout_width="wrap_content"
@@ -153,52 +149,48 @@
             android:layout_margin="16dp"
             android:orientation="vertical">
 
-            <!-- Menu item 1: Nhận bộ thẻ đã chia sẻ -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_shared_decks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Nhận các bộ thẻ"
+                android:text="Receive flashcard sets"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_download"
                 app:iconTint="@color/white" />
 
-            <!-- Menu item 2: Tạo bộ thẻ đã lọc -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_filter_decks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Bộ thẻ đã lọc"
+                android:text="Filtered flashcards"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_filter"
                 app:iconTint="@color/white" />
 
-            <!-- Menu item 3: Tạo bộ thẻ -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_create_deck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Tạo bộ thẻ"
+                android:text="Create flashcard set"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"
                 app:icon="@drawable/ic_add_tag"
                 app:iconTint="@color/white" />
 
-            <!-- Menu item 4: Thêm -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_add_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Thêm"
+                android:text="Add"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/primaryColor"
                 android:visibility="gone"

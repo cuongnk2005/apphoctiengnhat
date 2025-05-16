@@ -78,7 +78,7 @@ class Register : AppCompatActivity() {
 //                showSusscessDialog(this,message)
                 showCustomToast(
                     context = this,
-                    title = "Thành công",
+                    title = "Notification",
                     message = msg,
                     type = ToastType.SUCCESS
                 )
