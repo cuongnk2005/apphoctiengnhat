@@ -47,6 +47,7 @@ class LearnVocabularyFragment : Fragment() {
         // Cập nhật danh sách topics hoặc trạng thái từ ViewModel
       viewModel.fetchTopics()
         viewModel.getListIdOldTopic()
+
     }
     private fun setupUI() {
 //        setupChips()
